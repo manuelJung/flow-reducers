@@ -25,7 +25,7 @@ export type FetchProductFailureAction = {
 export type SetFilterValueAction = {
   type: typeof at.SET_FILTER_VALUE,
   meta: {filter:Filter, filterKey:FilterKey},
-  payload: FilterOption
+  payload: FilterOption | null
 }
 
 export type CreateProductAction = {
@@ -49,7 +49,7 @@ export type Action =
   | CreateFilterAction
 
 
-export const setFilterValue = (filter:Filter, filterKey:FilterKey, filterOption:FilterOption):SetFilterValueAction => ({
+export const setFilterValue = (filter:Filter, filterKey:FilterKey, filterOption:FilterOption|null):SetFilterValueAction => ({
   type: at.SET_FILTER_VALUE,
   meta: {filter, filterKey},
   payload: filterOption

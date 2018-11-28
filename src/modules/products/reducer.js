@@ -108,7 +108,7 @@ export default function reducer(state:State=defaultState, action:Action):State {
       const {filter, filterKey} = action.meta
       const newState = Object.assign({}, state)
 
-      if(!action.payload.selectable){
+      if(action.payload && !action.payload.selectable){
         newState.filters = {
           ...newState.filters,
           [filter.productId]: Object.keys(newState.filters[filter.productId])
