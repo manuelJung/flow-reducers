@@ -1,9 +1,5 @@
 // @flow
 
-// global
-
-export const REDUCER_KEY:'products' = 'products'
-
 // Action Types
 
 export const FETCH_REQUEST:'products/FETCH_REQUEST' = 'products/FETCH_REQUEST'

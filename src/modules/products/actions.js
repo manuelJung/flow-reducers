@@ -1,6 +1,7 @@
 // @flow
 import * as at from './const'
 import {hasArticles} from './selectors'
+import type {RootState} from '../../store/rootReducer'
 
 import type {Article, FilterKey, FilterValue, Filter, FilterOption} from './entities.flow'
 
@@ -65,8 +66,8 @@ const fetchProduct = (number, productId) => dispatch => {
 
 export const createProduct = (number:string, productId:string, override:boolean=true) => 
   (dispatch:Function, getState:Function) => {
-    const state = getState()
-    const articlesExist = hasArticles(state[at.REDUCER_KEY], number)
+    const state:RootState = getState()
+    const articlesExist = hasArticles(state.products, number)
     dispatch(({
       type: at.CREATE_PRODUCT,
       meta: {number, override, createFilters: articlesExist},
