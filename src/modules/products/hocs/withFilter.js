@@ -29,14 +29,14 @@ function mapProps (state,{productId, filterKey}) {
   })
 }
 
-function merge (props, {filter}, dispatchProps) {
+function merge (props, {filter}, {setFilteValue}) {
   return {
     filter: filter,
-    setValue: opt => dispatchProps.setFilterValue(filter, opt),
-    clearValue: () => dispatchProps.setFilterValue(filter, null),
+    setValue: opt => setFilterValue(filter, filter.key, opt),
+    clearValue: () => setFilterValue(filter, filter.key, null),
     toggleValue: opt => filter.value && filter.value.label === opt.value.label
-      ? dispatchProps.setFilterValue(filter, opt)
-      : dispatchProps.setFilterValue(filter, null)
+      ? setFilterValue(filter, filter.key, opt)
+      : setFilterValue(filter, filter.key, null)
   }
 }
 
