@@ -2,7 +2,7 @@
 import * as at from './const'
 import {getArticles} from './selectors'
 
-import type {Article, FilterKey, FilterValue, Number, ProductNumber, ProductId} from './entities.flow'
+import type {Article, FilterKey, FilterValue, Number, ProductNumber, ProductId, FilterValues} from './entities.flow'
 import type {Action} from './actions'
 
 export type State = {
@@ -10,7 +10,7 @@ export type State = {
   fetchErrors: {[productId:ProductId]: string },
   articles: {[productNumber:ProductNumber]: Article[] },
   numberToProductNumber: {[number:Number]: string},
-  filters: {[productId:ProductId]: {[filterKey:FilterKey]:FilterValue}},
+  filters: {[productId:ProductId]: FilterValues},
   productIdsToNumber: {[productId:ProductId]: Number}
 }
 

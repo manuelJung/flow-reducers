@@ -12,10 +12,12 @@ export type FilterKey = 'color' | 'brand' | 'variant' | 'style'
 
 export type FilterType = 'EMPTY' | 'DROPDOWN' | 'TEXT' | 'IMAGE'
 
+export type FilterValues = {[filterKey:FilterKey]: FilterValue}
+
 export type FilterValue = {
   label: string,
   image?:string
-}
+} | null
 
 export type FilterOption = {
   value: FilterValue,
@@ -24,15 +26,15 @@ export type FilterOption = {
 }
 
 export type Filter = {
-  value: FilterValue | null,
+  value: FilterValue,
   options: FilterOption[],
   key: FilterKey,
   type: FilterType,
-  productId: string
+  productId: ProductId
 }
 
 export type Article = {
-  ordernumber: string,
-  filterValues: {[filterKey:FilterKey]: FilterValue},
-  productNumber: string
+  ordernumber: Ordernumber,
+  filterValues: FilterValues,
+  productNumber: ProductNumber
 }

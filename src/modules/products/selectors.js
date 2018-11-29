@@ -2,59 +2,58 @@
 import createReSelector from 're-reselect'
 
 import type {State} from './reducer'
-import type {Article, Filter, FilterKey, FilterType, ProductNumber, ProductId, Number} from './entities.flow'
+import type {Article, Filter, FilterKey, FilterType, ProductNumber, ProductId, Number, FilterValue} from './entities.flow'
 
 export const hasArticles = (state:State, pNumber:ProductNumber):boolean => Boolean(state.articles[state.numberToProductNumber[pNumber]])
 export const getArticles = (state:State, pNumber:ProductNumber):Article[] => state.articles[state.numberToProductNumber[pNumber]] || []
-export const getProductNumberFromNumber = (state:State, number:Number):ProductNumber|null => state.numberToProductNumber[number] || null
-export const getProductNumberFromProductId = (state:State, pId:ProductId):ProductNumber|null => {
+
+const getProductNumberFromNumber = (state:State, number:Number):ProductNumber|null => state.numberToProductNumber[number] || null
+const getProductNumberFromProductId = (state:State, pId:ProductId):ProductNumber|null => {
   const number = state.productIdsToNumber[pId]
   if(!number) return null
   return getProductNumberFromNumber(state, number)
 }
-
-
-const getFilterType:(state:State,pNumber:ProductNumber,filterKey:FilterKey) => FilterType = createReSelector(
-  getArticles,
+const getArticlesByProductId = (state:State, pId:ProductId):Article[] => {
+  const pNumber = getProductNumberFromProductId(state, pId)
+  if(pNumber === null) return []
+  return getArticles(state, pNumber)
+}
+const getFilterType:(state:State,pId:ProductNumber,filterKey:FilterKey) => FilterType = createReSelector(
+  getArticlesByProductId,
   (_,__,filterKey) => filterKey,
   (articles, filterKey) => {
     return 'EMPTY'
   }
 )((_,pNumber,filterKey) => `${pNumber}:${filterKey}`)
 
-const getFilter:(state:State,pNumber:ProductNumber,filterKey:FilterKey) => Filter = createReSelector(
-  (state,pNumber) => state.articles[pNumber],
+export const getFilter:(state:State,pId:ProductNumber,filterKey:FilterKey) => Filter = createReSelector(
+  getArticlesByProductId,
   (_,__,filterKey) => filterKey,
   getFilterType,
-  (articles, filterKey, filterType):Filter => {
+  (_,pId) => pId,
+  (articles, filterKey, filterType, pId):Filter => {
     return {
       options: [],//calcFilterOptions(product, filterKey),
       value: null,
       key: filterKey,
       type: filterType,
-      productId: 'missing'
+      productId: pId
     }
   }
 )((_,pNumber,filterKey) => `${pNumber}:${filterKey}`)
 
-export const getDisplayProduct:(state:State,id:ProductNumber) => Article|null = createReSelector(
-  (state,id:ProductNumber) => state.articles[id],
-  (articles) => {
-    return null
+export const getDisplayArticle:(state:State,pId:ProductId) => Article|null = createReSelector(
+  getArticlesByProductId,
+  (state,pId) => state.filters[pId],
+  (articles, filterValues) => {
+    let filterValueList = ((Object.entries(filterValues):any):[FilterKey, FilterValue][])
+    filterValueList = filterValueList.filter(([_,val]) => val)
+    const matchFilters = article => !filterValueList.find(([key,val]) => 
+      article.filterValues[key]
+      && val
+      && article.filterValues[key].label === val.label 
+    )
+    return articles.find(matchFilters) || null
   }
-)((_, id:string) => id)
+)((_, pId) => pId)
 
-// export const getDisplayProduct = createReSelector(
-//   (state,id) => state.byId[id].articles,
-//   (state,id) => state.byId[id].filters,
-//   (articles:Article[], filters) => {
-//     const filterList:any = Object.values(filters)
-//     return articles.find((article:Article) => !filterList.find((filter:Filter) => !(
-//       filter.type === 'EMPTY' ||
-//       filter.type === 'TEXT' ||
-//       !filter.value ||
-//       !article.filterValues[filter.key] ||
-//       filter.value.label === article.filterValues[filter.key].label
-//     )))
-//   }
-// )((_, id:string) => id)
