@@ -4,7 +4,8 @@ import {connect} from 'react-redux'
 import {getFilter} from '../selectors'
 import {setFilterValue} from '../actions'
 
-import type {Filter as FilterType, FilterOption} from '../entities.flow'
+import type {RootState} from 'store/rootReducer'
+import type {Filter as FilterType, FilterOption, ProductId, FilterKey} from '../entities.flow'
 
 type InjectedProps = {
   filter: FilterType,
@@ -14,8 +15,8 @@ type InjectedProps = {
 }
 
 type RequiredProps = {
-  productId: string,
-  filterKey: string,
+  productId: ProductId,
+  filterKey: FilterKey,
   render?: (props:InjectedProps) => any
 }
 
@@ -23,7 +24,7 @@ type Hoc = (
   Component:React.ComponentType<InjectedProps&RequiredProps>
 ) => React.ComponentType<RequiredProps>
 
-function mapProps (state,{productId, filterKey}) {
+function mapProps (state:RootState,{productId, filterKey}) {
   return ({
     filter: getFilter(state.products, productId, filterKey)
   })
@@ -53,6 +54,7 @@ export const Filter = hoc(function Filter ({render, ...props}){
 
 class Test extends React.Component<RequiredProps> {
   render(){
-    return <Filter filterKey='a' productId='b' render={props => null}/>
+    let {filterKey, productId} = this.props
+    return <Filter filterKey={filterKey} productId={productId} render={props => null}/>
   }
 }
