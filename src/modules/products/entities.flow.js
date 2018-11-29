@@ -1,5 +1,13 @@
 // @flow
 
+export type ProductNumber = string
+
+export type ProductId = string
+
+export type Ordernumber = string
+
+export type Number = ProductNumber | Ordernumber
+
 export type FilterKey = 'color' | 'brand' | 'variant' | 'style'
 
 export type FilterType = 'EMPTY' | 'DROPDOWN' | 'TEXT' | 'IMAGE'

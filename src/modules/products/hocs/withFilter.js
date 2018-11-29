@@ -29,6 +29,8 @@ function mapProps (state,{productId, filterKey}) {
   })
 }
 
+const mapDispatch = {setFilterValue}
+
 function merge (props, {filter}, {setFilteValue}) {
   return {
     filter: filter,
@@ -40,7 +42,7 @@ function merge (props, {filter}, {setFilteValue}) {
   }
 }
 
-const hoc:Hoc = connect(mapProps, {setFilterValue}, merge)
+const hoc:Hoc = connect(mapProps, mapDispatch, merge)
 
 export default hoc
 
