@@ -32,14 +32,15 @@ function mapProps (state:RootState,{productId, filterKey}) {
 
 const mapDispatch = {setFilterValue}
 
-function merge (props, {filter}, {setFilteValue}) {
+function merge ({filter}, {setFilteValue}, ownProps) {
   return {
     filter: filter,
     setValue: opt => setFilterValue(filter, filter.key, opt),
     clearValue: () => setFilterValue(filter, filter.key, null),
     toggleValue: opt => filter.value && filter.value.label === opt.value.label
       ? setFilterValue(filter, filter.key, opt)
-      : setFilterValue(filter, filter.key, null)
+      : setFilterValue(filter, filter.key, null),
+    ...ownProps
   }
 }
 
