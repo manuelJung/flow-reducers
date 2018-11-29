@@ -2,16 +2,16 @@
 import * as at from './const'
 import {getArticles} from './selectors'
 
-import type {Article, FilterKey, FilterValue} from './entities.flow'
+import type {Article, FilterKey, FilterValue, Number, ProductNumber, ProductId} from './entities.flow'
 import type {Action} from './actions'
 
 export type State = {
-  fetching: {[number:string]: boolean},
-  fetchErrors: {[productId:string]: string },
-  articles: {[productNumber:string]: Article[] },
-  numberToProductNumber: {[number:string]: string},
-  filters: {[productId:string]: {[filterKey:FilterKey]:FilterValue}},
-  productIds: {[productId:string]: boolean}
+  fetching: {[number:Number]: boolean},
+  fetchErrors: {[productId:ProductId]: string },
+  articles: {[productNumber:ProductNumber]: Article[] },
+  numberToProductNumber: {[number:Number]: string},
+  filters: {[productId:ProductId]: {[filterKey:FilterKey]:FilterValue}},
+  productIdsToNumber: {[productId:ProductId]: Number}
 }
 
 export const defaultState = {
@@ -20,7 +20,7 @@ export const defaultState = {
   articles: {},
   numberToProductNumber: {},
   filters: {},
-  productIds: {}
+  productIdsToNumber: {}
 }
 
 export default function reducer(state:State=defaultState, action:Action):State {
@@ -75,8 +75,8 @@ export default function reducer(state:State=defaultState, action:Action):State {
 
     case at.CREATE_PRODUCT: {
       const newState = Object.assign({}, state, {
-        productIds: {
-          ...state.productIds,
+        productIdsToNumber: {
+          ...state.productIdsToNumber,
           [action.payload]: action.meta.number
         }
       })

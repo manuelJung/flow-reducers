@@ -2,10 +2,16 @@
 import createReSelector from 're-reselect'
 
 import type {State} from './reducer'
-import type {Article, Filter, FilterKey, FilterType, ProductNumber, ProductId} from './entities.flow'
+import type {Article, Filter, FilterKey, FilterType, ProductNumber, ProductId, Number} from './entities.flow'
 
 export const hasArticles = (state:State, pNumber:ProductNumber):boolean => Boolean(state.articles[state.numberToProductNumber[pNumber]])
-export const getArticles = (state:State, pNumber:ProductNumber):Article[] => state.articles[state.numberToProductNumber[pNumber]]
+export const getArticles = (state:State, pNumber:ProductNumber):Article[] => state.articles[state.numberToProductNumber[pNumber]] || []
+export const getProductNumberFromNumber = (state:State, number:Number):ProductNumber|null => state.numberToProductNumber[number] || null
+export const getProductNumberFromProductId = (state:State, pId:ProductId):ProductNumber|null => {
+  const number = state.productIdsToNumber[pId]
+  if(!number) return null
+  return getProductNumberFromNumber(state, number)
+}
 
 
 const getFilterType:(state:State,pNumber:ProductNumber,filterKey:FilterKey) => FilterType = createReSelector(
