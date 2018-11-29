@@ -57,3 +57,4 @@ export const getDisplayArticle:(state:State,pId:ProductId) => Article|null = cre
   }
 )((_, pId) => pId)
 
+export const getDisplayPrice:(state:State,pId:ProductId) => number = () => 100
