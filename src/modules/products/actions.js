@@ -2,6 +2,7 @@
 import * as at from './const'
 import {hasArticles} from './selectors'
 import type {RootState} from '../../store/rootReducer'
+import * as api from './utils/api'
 
 import type {Article, FilterKey, FilterValue, Filter, FilterOption} from './entities.flow'
 
@@ -62,7 +63,7 @@ const fetchProduct = (number, productId) => dispatch => {
     meta 
   }:FetchProductRequestAction))
   
-  return fetch('').then(res => res.json()).then(
+  return api.fetchProduct(number).then(
     payload => dispatch(({ type: at.FETCH_SUCCESS, meta, payload }:FetchProductSuccessAction)),
     error => dispatch(({ type: at.FETCH_FAILURE, meta, payload: error.toString() }:FetchProductFailureAction))
   )
