@@ -83,10 +83,11 @@ export default function reducer(state:State=defaultState, action:Action):State {
       if(action.meta.createFilters){
         const {number} = action.meta
         const article = getArticles(state, number).find(art => art.ordernumber === number)
-        if(!article) throw new Error('could not find article')
         newState.filters = {
           ...state.filters,
-          [action.payload]: article.filterValues
+          [action.payload]: article 
+            ? article.filterValues // number is ordernumber
+            : {color:null, variant:null,style:null,size:null} // number is productnumber
         }
       }
       return newState
@@ -95,11 +96,12 @@ export default function reducer(state:State=defaultState, action:Action):State {
     case at.CREATE_FILTER: {
       const {number} = action.meta
       const article = getArticles(state, number).find(art => art.ordernumber === number)
-      if(!article) throw new Error('could not find article')
       return Object.assign({}, state, {
         filters: {
           ...state.filters,
-          [action.payload]: article.filterValues
+          [action.payload]: article 
+            ? article.filterValues // number is ordernumber
+            : {color:null, variant:null,style:null,size:null} // number is productnumber
         }
       })
     }

@@ -57,7 +57,11 @@ export const setFilterValue = (filter:Filter, filterKey:FilterKey, filterOption:
 
 const fetchProduct = (number, productId) => dispatch => {
   const meta = {number, productId}
-  dispatch(({ type: at.FETCH_REQUEST, meta }:FetchProductRequestAction))
+  dispatch(({ 
+    type: at.FETCH_REQUEST, 
+    meta 
+  }:FetchProductRequestAction))
+  
   return fetch('').then(res => res.json()).then(
     payload => dispatch(({ type: at.FETCH_SUCCESS, meta, payload }:FetchProductSuccessAction)),
     error => dispatch(({ type: at.FETCH_FAILURE, meta, payload: error.toString() }:FetchProductFailureAction))
@@ -68,11 +72,13 @@ export const createProduct = (number:string, productId:string, override:boolean=
   (dispatch:Function, getState:Function) => {
     const state:RootState = getState()
     const articlesExist = hasArticles(state.products, number)
+
     dispatch(({
       type: at.CREATE_PRODUCT,
       meta: {number, override, createFilters: articlesExist},
       payload: productId
     }:CreateProductAction))
+
     if(!articlesExist){
       dispatch(fetchProduct(number, productId)).then(() => dispatch(({
         type: at.CREATE_FILTER,
