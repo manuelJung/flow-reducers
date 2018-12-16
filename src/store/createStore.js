@@ -1,7 +1,6 @@
 // @flow
 import {applyMiddleware, compose, createStore} from 'redux'
 import makeRootReducer from './rootReducer'
-import thunk from 'redux-thunk'
 
 import type {RootState} from './rootReducer'
 
@@ -9,7 +8,7 @@ export default (initialState:any = {}) => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  let middleware = [thunk]
+  let middleware = []
 
   // ======================================================
   // Store Enhancers

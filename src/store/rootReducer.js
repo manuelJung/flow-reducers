@@ -1,18 +1,17 @@
 // @flow
 import {combineReducers} from 'redux'
 
-import productsReducer from '../modules/products/reducer'
-import type {State as ProductsState} from '../modules/products/reducer'
+import todoReducer from 'modules/todos/reducer'
+import type {State as TodoState} from 'modules/todos/reducer'
 
 export type AsyncReducers = {}
 export type RootState = AsyncReducers & {
-  products: ProductsState,
-  xy: {}
+  todos: TodoState
 }
 
 const makeRootReducer = (asyncReducers?:AsyncReducers):RootState => {
   return combineReducers({
-    products: productsReducer,
+    todos: todoReducer,
     ...asyncReducers
   })
 }
