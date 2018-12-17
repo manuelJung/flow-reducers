@@ -4,16 +4,26 @@ import {combineReducers} from 'redux'
 import todoReducer from 'modules/todos/reducer'
 import type {State as TodoState} from 'modules/todos/reducer'
 
+import pageReducer from 'modules/pages/reducer'
+import type {State as PageState} from 'modules/pages/reducer'
+
+import staticBlockReducer from 'modules/staticBlocks/reducer'
+import type {State as StaticBlockState} from 'modules/staticBlocks/reducer'
+
 export type AsyncReducers = {}
 export type RootState = AsyncReducers & {
-  todos: TodoState
+  todos: TodoState,
+  pages: PageState,
+  staticBlocks: StaticBlockState
 }
 
 const makeRootReducer = (asyncReducers?:AsyncReducers):RootState => {
-  return combineReducers({
+  return combineReducers(({
     todos: todoReducer,
+    pages: pageReducer,
+    staticBlocks: staticBlockReducer,
     ...asyncReducers
-  })
+  }))
 }
 
 export default makeRootReducer
