@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 
 import type {RootState} from 'store/rootReducer'
 import type {Identifier, StaticBlock as StaticBlockType} from '../entities'
+import {isFetching, getFetchError, getStaticBlock} from '../selectors'
 
 type InjectedProps = {
   isFetching: boolean,
@@ -30,9 +31,9 @@ type Hoc = (
 
 function mapProps (state:RootState,{identifier}):InjectedProps {
   return {
-    isFetching: false,
-    fetchError: null,
-    block: null
+    isFetching: isFetching(state.staticBlocks, identifier),
+    fetchError: getFetchError(state.staticBlocks, identifier),
+    block: getStaticBlock(state.staticBlocks, identifier)
   }
 }
 
