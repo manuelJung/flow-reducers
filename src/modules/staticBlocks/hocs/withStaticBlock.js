@@ -13,7 +13,7 @@ type InjectedProps = {
 
 type RequiredProps = {
   identifier: Identifier,
-  render?: (props:$Diff<Result,{render:any}>) => React.StatelessFunctionalComponent<$Diff<Result,{render:any}>>
+  render?: (props:$Diff<Result,{render:any}>) => any
 }
 
 type Result = {
@@ -21,12 +21,12 @@ type Result = {
   fetchError: string | null,
   block: StaticBlockType | null,
   identifier: Identifier,
-  render?: (props:$Diff<Result,{render:any}>) => React.StatelessFunctionalComponent<$Diff<Result,{render:any}>>
+  render?: (props:$Diff<Result,{render:any}>) => any
 }
 
 type Hoc = (
   Component:React.ComponentType<Result>
-) => React.ComponentType<Result>
+) => React.ComponentType<RequiredProps>
 
 function mapProps (state:RootState,{identifier}):InjectedProps {
   return {
