@@ -2,8 +2,6 @@
 import {applyMiddleware, compose, createStore} from 'redux'
 import makeRootReducer from './rootReducer'
 
-import type {RootState} from './rootReducer'
-
 export default (initialState:any = {}) => {
   // ======================================================
   // Middleware Configuration
