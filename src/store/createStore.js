@@ -1,12 +1,13 @@
 // @flow
 import {applyMiddleware, compose, createStore} from 'redux'
 import makeRootReducer from './rootReducer'
+import ruleMiddleware from 'redux-interrupt'
 
 export default (initialState:any = {}) => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  let middleware = []
+  let middleware = [ruleMiddleware]
 
   // ======================================================
   // Store Enhancers

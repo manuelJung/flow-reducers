@@ -4,7 +4,7 @@ import type {Identifier, StaticBlock} from '../entities'
 const wait = (ms:number) => new Promise(resolve => setTimeout(() => resolve(),ms))
 
 export function fetchBlock(identifier:Identifier):Promise<StaticBlock> {
-  return wait(600)
+  return wait(6000)
     .then(() => dict[identifier])
     .then(result => result ? result : Promise.reject(`could not find cms with identifier "${identifier}"`))
 }

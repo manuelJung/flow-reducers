@@ -5,7 +5,7 @@ import {fetchSuccess, fetchFailure} from './actions'
 
 import type {FetchRequestAction} from './actions'
 
-export const fetchRule = {
+export const fetchBlockRule = {
   id: 'core/FETCH_STATIC_BLOCK',
   target: FETCH_REQUEST,
   consequence: (_:any, action:FetchRequestAction) => fetchBlock(action.meta.identifier).then(
