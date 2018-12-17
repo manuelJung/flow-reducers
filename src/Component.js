@@ -44,13 +44,16 @@ export default function Component(){
   return (
     <div id='Component'>
       <StaticBlock identifier='sale-top' render={Content}/>
+      <StaticBlock identifier='sale-bottom' render={Content}/>
+      <StaticBlock identifier='sale-middle' render={Content}/>
     </div>
   )
 }
 
 function Content ({isFetching, block}) {
-  if(isFetching || !block){
+  if(isFetching){
     return <div>fetching...</div>
   }
+  if(!block) return null
   return <div>{block.content}</div>
 }
