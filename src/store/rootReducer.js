@@ -9,6 +9,7 @@ import pageReducer from 'modules/pages/reducer'
 import type {State as PageState} from 'modules/pages/reducer'
 
 import {fetchBlockRule} from 'modules/staticBlocks/rules'
+import {fetchPageRule} from 'modules/pages/rules'
 import staticBlockReducer from 'modules/staticBlocks/reducer'
 import type {State as StaticBlockState} from 'modules/staticBlocks/reducer'
 import { routerReducer } from 'react-router-redux'
@@ -35,3 +36,4 @@ export default makeRootReducer
 
 
 addRule(fetchBlockRule)
+addRule(fetchPageRule)
