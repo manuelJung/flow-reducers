@@ -6,6 +6,8 @@ import {addRule} from 'redux-interrupt'
 import {fetchRequest} from 'modules/staticBlocks/actions'
 import * as at from 'modules/staticBlocks/const'
 
+const wait = ms => new Promise(resolve => setTimeout(() => resolve(),ms))
+
 addRule({
   id: 'feature/HANDLE_ERROR',
   target: at.FETCH_FAILURE,
@@ -17,7 +19,7 @@ addRule({
   id: 'feature/DELAY_ERROR',
   target: at.FETCH_FAILURE,
   position: 'INSERT_INSTEAD',
-  consequence: (store,action) => {
+  consequence: ({action}) => {
     action = {
       ...action,
       meta: {
@@ -25,7 +27,7 @@ addRule({
         skipRule: 'feature/DELAY_ERROR'
       }
     }
-    setTimeout(() => store.dispatch(action), 500)
+    return wait(500).then(() => action)
   }
 })
 

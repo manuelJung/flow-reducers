@@ -5,10 +5,14 @@ import {fetchSuccess, fetchFailure} from './actions'
 
 import type {FetchRequestAction} from './actions'
 
+type Consequence = {
+  action: FetchRequestAction
+}
+
 export const fetchPageRule = {
   id: 'core/FETCH_PAGE',
   target: FETCH_REQUEST,
-  consequence: (_:any, action:FetchRequestAction) => fetchPage(action.meta.slug).then(
+  consequence: ({action}:Consequence) => fetchPage(action.meta.slug).then(
     result => fetchSuccess(result),
     error => fetchFailure(action.meta.slug, error)
   )
