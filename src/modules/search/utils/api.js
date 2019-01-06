@@ -1,5 +1,5 @@
 // @flow
-import type {Product} from '../entities'
+import type {Product, FilterOption, CategoryOption} from '../entities'
 
 export type SearchResult = {
   hits: Product[],
@@ -9,11 +9,11 @@ export type SearchResult = {
   numPages:number,
   numHits:number,
   tags:string[],
-  colorOptions:string[],
-  sizeOptions:string[],
-  brandOptions:string[],
-  shopOptions:string[],
-  categories:mixed[],
+  colorOptions:FilterOption[],
+  sizeOptions:FilterOption[],
+  brandOptions:FilterOption[],
+  shopOptions:FilterOption[],
+  categories:CategoryOption[],
   maxPrice:number,
   minPrice:number,
   queryString:string

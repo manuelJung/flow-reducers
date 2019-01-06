@@ -6,6 +6,10 @@ export type FilterKey = 'brand' | 'color' | 'shop' | 'size'
 
 export type FilterValue = string
 
+export type FilterOption = string
+
+export type CategoryOption = string
+
 export type Product = {
   imageMediumURL: string,
   productPrice: number,

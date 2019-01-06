@@ -1,7 +1,7 @@
 // @flow
 import * as at from './const'
 
-import type {SearchKey, FilterKey, FilterValue} from './entities'
+import type {SearchKey, FilterKey, FilterValue, FilterOption, CategoryOption} from './entities'
 import type {SearchResult} from './utils/api'
 
 export type FetchRequestAction = {
@@ -85,6 +85,18 @@ export type ToggleTagAction = {
   payload: string
 }
 
+export type SetFilterOptionsAction = {
+  type: typeof at.SET_FILTER_OPTIONS,
+  meta: {searchKey:SearchKey, filterKey:FilterKey},
+  payload: FilterOption[]
+}
+
+export type SetCategoryOptionsAction = {
+  type: typeof at.SET_CATEGORY_OPTIONS,
+  meta: {searchKey:SearchKey},
+  payload: CategoryOption[]
+}
+
 export type Action = FetchRequestAction 
 | FetchSuccessAction 
 | FetchFailureAction 
@@ -96,6 +108,8 @@ export type Action = FetchRequestAction
 | SetPageAction
 | SetQueryAction
 | ToggleTagAction
+| SetFilterOptionsAction
+| SetCategoryOptionsAction
 
 const queryStringToFilterValues = (queryString?:string):Object => ({})
 
@@ -165,4 +179,16 @@ export const toggleTag = (searchKey:SearchKey, tag:string):ToggleTagAction => ({
   type: at.TOGGLE_TAG,
   meta: {searchKey},
   payload: tag
+})
+
+export const setFilterOptions = (searchKey:SearchKey, filterKey:FilterKey, options:FilterOption[]):SetFilterOptionsAction => ({
+  type: at.SET_FILTER_OPTIONS,
+  meta: {searchKey, filterKey},
+  payload: options
+})
+
+export const setCategoryOptions = (searchKey:SearchKey, options:CategoryOption[]):SetCategoryOptionsAction => ({
+  type: at.SET_CATEGORY_OPTIONS,
+  meta: {searchKey},
+  payload: options
 })

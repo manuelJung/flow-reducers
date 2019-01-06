@@ -1,18 +1,18 @@
 // @flow
 import * as at from './const'
 
-import type {SearchKey, Product} from './entities'
+import type {SearchKey, Product, FilterOption, CategoryOption} from './entities'
 import type {Action} from './actions'
 
 export type State = {
   +[id:SearchKey]: SearchState
 }
 
-type SearchState = {
+type SearchState = {|
   +isFetching: boolean,
   +fetchError: string | null,
   +hits: Product[],
-  +filters: {
+  +filters: {|
     +color: string[],
     +size: string[],
     +shop: string[],
@@ -23,21 +23,21 @@ type SearchState = {
     +tags: string[],
     +context: string,
     +page: number
-  },
-  +filterOptions: {
-    +brand: string[],
-    +size: string[],
-    +color: string[],
-    +shop: string[],
+  |},
+  +filterOptions: {|
+    +brand: FilterOption[],
+    +size: FilterOption[],
+    +color: FilterOption[],
+    +shop: FilterOption[],
     +price: [number,number],
-    +category: mixed,
+    +category: CategoryOption[],
     +exhaustive: boolean
-  },
+  |},
   +exhaustive: boolean,
   +numPages: number,
   +numHits: number,
   queryString: string
-}
+|}
 
 export default function reducer(state:State={}, action:Action):State{
   switch(action.type){
@@ -51,9 +51,8 @@ export default function reducer(state:State={}, action:Action):State{
     case at.SET_PAGE:
     case at.SET_QUERY:
     case at.TOGGLE_TAG:
-    // case at.FETCH_FILTER_REQUEST:
-    // case at.FETCH_FILTER_SUCCESS:
-    // case at.FETCH_FILTER_FAILURE:
+    case at.SET_FILTER_OPTIONS:
+    case at.SET_CATEGORY_OPTIONS:
       return Object.assign({}, state, {
         [action.meta.searchKey]: searchReducer(state[action.meta.searchKey], action)
       })
@@ -228,6 +227,25 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
         filters: {
           ...state.filters,
           tags: tags.includes(payload) ? tags.filter(t => t !== payload) : [...tags, payload]
+        }
+      }
+    }
+    case at.SET_FILTER_OPTIONS: {
+      const {filterKey} = action.meta
+      return {
+        ...state,
+        filterOptions: {
+          ...state.filterOptions,
+          [filterKey]: action.payload
+        }
+      }
+    }
+    case at.SET_CATEGORY_OPTIONS: {
+      return {
+        ...state,
+        filterOptions: {
+          ...state.filterOptions,
+          category: action.payload
         }
       }
     }
