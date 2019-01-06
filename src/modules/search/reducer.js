@@ -35,7 +35,8 @@ type SearchState = {
   },
   +exhaustive: boolean,
   +numPages: number,
-  +numHits: number
+  +numHits: number,
+  queryString: string
 }
 
 export default function reducer(state:State={}, action:Action):State{
@@ -87,7 +88,8 @@ const initialSearchState:SearchState = {
   },
   numPages: 1,
   numHits: 1,
-  exhaustive: true
+  exhaustive: true,
+  queryString: ''
 }
 
 function searchReducer(state=initialSearchState, action:Action):SearchState{
@@ -142,6 +144,7 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
         numHits: action.payload.numHits,
         numPages: action.payload.numPages,
         exhaustive: action.payload.exhausitve,
+        queryString: action.payload.queryString,
         filterOptions: {
           ...state.filterOptions,
           brand: action.payload.brandOptions,

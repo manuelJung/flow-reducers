@@ -15,7 +15,8 @@ export type SearchResult = {
   shopOptions:string[],
   categories:mixed[],
   maxPrice:number,
-  minPrice:number
+  minPrice:number,
+  queryString:string
 }
 
 // import type {Identifier, StaticBlock} from '../entities'
