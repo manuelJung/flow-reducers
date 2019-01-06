@@ -25,6 +25,7 @@ export type InitAction = {
   type: typeof at.INIT,
   meta: {
     initialValues: {
+      page?:number,
       query?: string,
       tags?: string[],
       color?:FilterValue[],
