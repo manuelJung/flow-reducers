@@ -52,9 +52,9 @@ export default function reducer(state:State={}, action:Action):State{
     case at.SET_PAGE:
     case at.SET_QUERY:
     case at.TOGGLE_TAG:
-    case at.FETCH_FILTER_REQUEST:
-    case at.FETCH_FILTER_SUCCESS:
-    case at.FETCH_FILTER_FAILURE:
+    // case at.FETCH_FILTER_REQUEST:
+    // case at.FETCH_FILTER_SUCCESS:
+    // case at.FETCH_FILTER_FAILURE:
       return Object.assign({}, state, {
         [action.meta.searchKey]: searchReducer(state[action.meta.searchKey], action)
       })
@@ -96,6 +96,22 @@ const initialSearchState:SearchState = {
 
 function searchReducer(state=initialSearchState, action:Action):SearchState{
   switch(action.type){
+    case at.INIT: {
+      return {
+        ...state,
+        filters: {
+          color: action.meta.initialValues.color || initialSearchState.filters.color,
+          size: action.meta.initialValues.size || initialSearchState.filters.size,
+          shop: action.meta.initialValues.shop || initialSearchState.filters.shop,
+          brand: action.meta.initialValues.brand || initialSearchState.filters.brand,
+          category: action.meta.initialValues.category || initialSearchState.filters.category,
+          price: action.meta.initialValues.price || initialSearchState.filters.price
+        },
+        query: action.meta.initialValues.query || initialSearchState.query,
+        tags: action.meta.initialValues.tags || initialSearchState.tags,
+        context: action.meta.initialValues.context || initialSearchState.context
+      }
+    }
     default: return state
   }
 }
