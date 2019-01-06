@@ -97,7 +97,16 @@ export type Action = FetchRequestAction
 | SetQueryAction
 | ToggleTagAction
 
+const queryStringToFilterValues = (queryString?:string):Object => ({})
 
+export const init = (searchKey:SearchKey, initialValues?:Object, queryString?:string):InitAction => ({
+  type: at.INIT,
+  meta: {initialValues:{
+    ...queryStringToFilterValues(queryString),
+    ...initialValues
+  }},
+  payload: searchKey
+})
 
 export const fetchRequest = (searchKey:SearchKey):FetchRequestAction => ({
   type: at.FETCH_REQUEST,
@@ -114,4 +123,46 @@ export const fetchFailure = (searchKey:SearchKey, error:string):FetchFailureActi
   type: at.FETCH_FAILURE,
   meta: {searchKey},
   payload: error
+})
+
+export const toggleFilter = (searchKey:SearchKey, filterKey:FilterKey, filterValue:FilterValue):ToggleFilterAction => ({
+  type: at.TOGGLE_FILTER,
+  meta: {searchKey, filterKey},
+  payload: filterValue
+})
+
+export const setPrice = (searchKey:SearchKey, price:[number,number]):SetPriceAction => ({
+  type: at.SET_PRICE,
+  meta: {searchKey},
+  payload: price
+})
+
+export const toggleCategory = (searchKey:SearchKey, category:string):ToggleCategoryAction => ({
+  type: at.TOGGLE_CATEGORY,
+  meta: {searchKey},
+  payload: category
+})
+
+export const setContext = (searchKey:SearchKey, context:string):SetContextAction => ({
+  type: at.SET_CONTEXT,
+  meta: {searchKey},
+  payload: context
+})
+
+export const setPage = (searchKey:SearchKey, page:number):SetPageAction => ({
+  type: at.SET_PAGE,
+  meta: {searchKey},
+  payload: page
+})
+
+export const setQuery = (searchKey:SearchKey, query:string):SetQueryAction => ({
+  type: at.SET_QUERY,
+  meta: {searchKey},
+  payload: query
+})
+
+export const toggleTag = (searchKey:SearchKey, tag:string):ToggleTagAction => ({
+  type: at.TOGGLE_TAG,
+  meta: {searchKey},
+  payload: tag
 })
