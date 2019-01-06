@@ -110,6 +110,124 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
         }
       }
     }
+    case at.FETCH_REQUEST: {
+      return {
+        ...state,
+        isFetching: true,
+        fetchError: null
+      }
+    }
+    case at.FETCH_FAILURE: {
+      return {
+        ...state,
+        isFetching: false,
+        fetchError: action.payload
+      }
+    }
+    case at.FETCH_SUCCESS: {
+      const priceMin = (action => {
+        if(state.filters.price[0] === state.filterOptions.price[0]) return action.payload.minPrice
+        if(action.payload.minPrice > state.filters.price[0]) return action.payload.minPrice
+        return state.filters.price[0]
+      })(action)
+      const priceMax = (action => {
+        if(state.filters.price[1] === state.filterOptions.price[1]) return action.payload.maxPrice
+        if(action.payload.maxPrice > state.filters.price[1]) return action.payload.maxPrice
+        return state.filters.price[1]
+      })(action)
+      return {
+        ...state,
+        isFetching: false,
+        hits: action.payload.hits,
+        numHits: action.payload.numHits,
+        numPages: action.payload.numPages,
+        exhaustive: action.payload.exhausitve,
+        filterOptions: {
+          ...state.filterOptions,
+          brand: action.payload.brandOptions,
+          color: action.payload.colorOptions,
+          shop: action.payload.shopOptions,
+          size: action.payload.sizeOptions,
+          category: action.payload.categories,
+          price: [
+            action.payload.minPrice,
+            action.payload.maxPrice
+          ]
+        },
+        // update price value
+        filters: {
+          ...state.filters,
+          price: [priceMin, priceMax]
+        }
+      }
+    }
+    case at.TOGGLE_FILTER: {
+      const {meta:{filterKey}, payload} = action
+      const filter = state.filters[filterKey]
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          [filterKey]: filter.includes(payload) ? filter.filter(s => s !== payload) : [...filter, payload]
+        }
+      }
+    }
+    case at.SET_PRICE: {
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          price: action.payload
+        }
+      }
+    }
+    case at.TOGGLE_CATEGORY: {
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          category: state.filters.category === action.payload ? '' : action.payload
+        }
+      }
+    }
+    case at.SET_CONTEXT: {
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          context: action.payload
+        }
+      }
+    }
+    case at.SET_PAGE: {
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          page: action.payload
+        }
+      }
+    }
+    case at.SET_QUERY: {
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          query: action.payload
+        }
+      }
+    }
+    case at.TOGGLE_TAG: {
+      const {payload} = action
+      const {tags} = state.filters
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          tags: tags.includes(payload) ? tags.filter(t => t !== payload) : [...tags, payload]
+        }
+      }
+    }
     default: return state
   }
 }
