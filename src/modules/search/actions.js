@@ -111,7 +111,19 @@ export type Action = FetchRequestAction
 | SetFilterOptionsAction
 | SetCategoryOptionsAction
 
-const queryStringToFilterValues = (queryString?:string):Object => ({})
+// q=Hose&p=2&dFR[wunderSizes][0]=36D&hFR[categories][0]=Bademode%20%26%20Strandkleidung&nR[productPrice][<=][0]=70&nR[productPrice][>=][0]=36&tR[0]=sale
+const queryStringToFilterValues = (queryString?:string):Object => !queryString ? ({}) : ({
+  page: queryString.match(/&p=/g).replace(/^[^=]*/,''),
+  query: '',
+  tags: [],
+  color: [],
+  brand: [],
+  size: [],
+  shop: [],
+  category: '',
+  price: [0,100],
+  context: ''
+})
 
 export const init = (searchKey:SearchKey, initialValues?:Object, queryString?:string):InitAction => ({
   type: at.INIT,
