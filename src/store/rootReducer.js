@@ -14,12 +14,16 @@ import staticBlockReducer from 'modules/staticBlocks/reducer'
 import type {State as StaticBlockState} from 'modules/staticBlocks/reducer'
 import { routerReducer } from 'react-router-redux'
 
+import searchReducer from 'modules/search/reducer'
+import type {State as SearchState} from 'modules/search/reducer'
+
 export type AsyncReducers = {}
 export type RootState = AsyncReducers & {
   todos: TodoState,
   pages: PageState,
   staticBlocks: StaticBlockState,
   routing: any,
+  search: SearchState
 }
 
 const makeRootReducer = (asyncReducers?:AsyncReducers):RootState => {
@@ -28,6 +32,7 @@ const makeRootReducer = (asyncReducers?:AsyncReducers):RootState => {
     todos: todoReducer,
     pages: pageReducer,
     staticBlocks: staticBlockReducer,
+    search: searchReducer,
     ...asyncReducers
   }))
 }

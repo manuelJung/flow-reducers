@@ -3,20 +3,20 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import type {RootState} from 'store/rootReducer'
 
-import type {SearchKey, InitialValues} from '../entities'
+import type {SearchKey, FilterValues} from '../entities'
 import {isFetching, getHits} from '../selectors'
 import {init} from '../actions'
 
 type InjectedProps = {
   searchKey: SearchKey,
-  initialValues?: $Shape<InitialValues>,
+  initialValues?: $Shape<FilterValues>,
   init: () => void,
   render?: (props:$Diff<InjectedProps,{render:any}>) => any
 }
 
 type RequiredProps = {
   searchKey: SearchKey,
-  initialValues?: $Shape<InitialValues>,
+  initialValues?: $Shape<FilterValues>,
   render?: (props:$Diff<InjectedProps,{render:any}>) => any
 }
 

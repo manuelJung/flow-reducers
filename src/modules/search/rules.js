@@ -1,12 +1,13 @@
 // @flow
 import * as at from './const'
-// import {searchProducts} from './utils/api'
-import {fetchSuccess, fetchFailure} from './actions'
+import {search} from './utils/api'
+import {fetchSuccess, fetchFailure, fetchRequest} from './actions'
+import {getFilterValues} from './selectors'
 
-// import type {FetchRequestAction} from './actions'
+import type {FetchRequestAction} from './actions'
 
-export const searchProductsRule = {
-  id: 'core/SEARCH_PRODUCTS',
+export const triggerSearchRule = {
+  id: 'core/TRIGGER_SEARCH',
   target: [
     at.INIT, 
     at.FETCH_REQUEST, 
@@ -17,5 +18,19 @@ export const searchProductsRule = {
     at.TOGGLE_FILTER, 
     at.TOGGLE_TAG
   ],
-  consequence: () => console.log('TODO: fetch products')
+  consequence: ({action}) => fetchRequest(action.meta.searchKey)
+}
+
+export const searchRule = {
+  id: 'core/SEARCH',
+  target: at.FETCH_REQUEST,
+  concurrency: 'SWITCH',
+  consequence: ({action, getState}) => {
+    const state = getState()
+    const {searchKey} = action.meta
+    return search(state.search, searchKey).then(
+      result => fetchSuccess(searchKey, result),
+      error => fetchFailure(searchKey, error.toString())
+    )
+  }
 }

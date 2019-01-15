@@ -1,7 +1,7 @@
 // @flow
 import * as at from './const'
 
-import type {SearchKey, Product, FilterOption, CategoryOption} from './entities'
+import type {SearchKey, Product, FilterOption, CategoryOption, FilterValues} from './entities'
 import type {Action} from './actions'
 
 export type State = {
@@ -12,18 +12,7 @@ type SearchState = {|
   +isFetching: boolean,
   +fetchError: string | null,
   +hits: Product[],
-  +filters: {|
-    +color: string[],
-    +size: string[],
-    +shop: string[],
-    +brand: string[],
-    +category: string,
-    +price: [number, number],
-    +query: string,
-    +tags: string[],
-    +context: string,
-    +page: number
-  |},
+  +filterValues: FilterValues,
   +filterOptions: {|
     +brand: FilterOption[],
     +size: FilterOption[],
@@ -64,7 +53,7 @@ const initialSearchState:SearchState = {
   isFetching: false,
   fetchError: null,
   hits: [],
-  filters: {
+  filterValues: {
     color: [],
     size: [],
     shop: [],
@@ -96,18 +85,18 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
     case at.INIT: {
       return {
         ...state,
-        filters: {
-          ...state.filters,
-          color: action.meta.initialValues.color || initialSearchState.filters.color,
-          size: action.meta.initialValues.size || initialSearchState.filters.size,
-          shop: action.meta.initialValues.shop || initialSearchState.filters.shop,
-          brand: action.meta.initialValues.brand || initialSearchState.filters.brand,
-          category: action.meta.initialValues.category || initialSearchState.filters.category,
-          price: action.meta.initialValues.price || initialSearchState.filters.price,
-          page: action.meta.initialValues.page || initialSearchState.filters.page,
-          query: action.meta.initialValues.query || initialSearchState.filters.query,
-          tags: action.meta.initialValues.tags || initialSearchState.filters.tags,
-          context: action.meta.initialValues.context || initialSearchState.filters.context
+        filterValues: {
+          ...state.filterValues,
+          color: action.meta.initialValues.color || initialSearchState.filterValues.color,
+          size: action.meta.initialValues.size || initialSearchState.filterValues.size,
+          shop: action.meta.initialValues.shop || initialSearchState.filterValues.shop,
+          brand: action.meta.initialValues.brand || initialSearchState.filterValues.brand,
+          category: action.meta.initialValues.category || initialSearchState.filterValues.category,
+          price: action.meta.initialValues.price || initialSearchState.filterValues.price,
+          page: action.meta.initialValues.page || initialSearchState.filterValues.page,
+          query: action.meta.initialValues.query || initialSearchState.filterValues.query,
+          tags: action.meta.initialValues.tags || initialSearchState.filterValues.tags,
+          context: action.meta.initialValues.context || initialSearchState.filterValues.context
         }
       }
     }
@@ -127,14 +116,14 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
     }
     case at.FETCH_SUCCESS: {
       const priceMin = (action => {
-        if(state.filters.price[0] === state.filterOptions.price[0]) return action.payload.minPrice
-        if(action.payload.minPrice > state.filters.price[0]) return action.payload.minPrice
-        return state.filters.price[0]
+        if(state.filterValues.price[0] === state.filterOptions.price[0]) return action.payload.minPrice
+        if(action.payload.minPrice > state.filterValues.price[0]) return action.payload.minPrice
+        return state.filterValues.price[0]
       })(action)
       const priceMax = (action => {
-        if(state.filters.price[1] === state.filterOptions.price[1]) return action.payload.maxPrice
-        if(action.payload.maxPrice > state.filters.price[1]) return action.payload.maxPrice
-        return state.filters.price[1]
+        if(state.filterValues.price[1] === state.filterOptions.price[1]) return action.payload.maxPrice
+        if(action.payload.maxPrice > state.filterValues.price[1]) return action.payload.maxPrice
+        return state.filterValues.price[1]
       })(action)
       return {
         ...state,
@@ -157,19 +146,19 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
           ]
         },
         // update price value
-        filters: {
-          ...state.filters,
+        filterValues: {
+          ...state.filterValues,
           price: [priceMin, priceMax]
         }
       }
     }
     case at.TOGGLE_FILTER: {
       const {meta:{filterKey}, payload} = action
-      const filter = state.filters[filterKey]
+      const filter = state.filterValues[filterKey]
       return {
         ...state,
-        filters: {
-          ...state.filters,
+        filterValues: {
+          ...state.filterValues,
           [filterKey]: filter.includes(payload) ? filter.filter(s => s !== payload) : [...filter, payload]
         }
       }
@@ -177,8 +166,8 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
     case at.SET_PRICE: {
       return {
         ...state,
-        filters: {
-          ...state.filters,
+        filterValues: {
+          ...state.filterValues,
           price: action.payload
         }
       }
@@ -186,17 +175,17 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
     case at.TOGGLE_CATEGORY: {
       return {
         ...state,
-        filters: {
-          ...state.filters,
-          category: state.filters.category === action.payload ? '' : action.payload
+        filterValues: {
+          ...state.filterValues,
+          category: state.filterValues.category === action.payload ? '' : action.payload
         }
       }
     }
     case at.SET_CONTEXT: {
       return {
         ...state,
-        filters: {
-          ...state.filters,
+        filterValues: {
+          ...state.filterValues,
           context: action.payload
         }
       }
@@ -204,8 +193,8 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
     case at.SET_PAGE: {
       return {
         ...state,
-        filters: {
-          ...state.filters,
+        filterValues: {
+          ...state.filterValues,
           page: action.payload
         }
       }
@@ -213,19 +202,19 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
     case at.SET_QUERY: {
       return {
         ...state,
-        filters: {
-          ...state.filters,
+        filterValues: {
+          ...state.filterValues,
           query: action.payload
         }
       }
     }
     case at.TOGGLE_TAG: {
       const {payload} = action
-      const {tags} = state.filters
+      const {tags} = state.filterValues
       return {
         ...state,
-        filters: {
-          ...state.filters,
+        filterValues: {
+          ...state.filterValues,
           tags: tags.includes(payload) ? tags.filter(t => t !== payload) : [...tags, payload]
         }
       }
