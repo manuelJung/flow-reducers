@@ -21,3 +21,16 @@ export type Product = {
   deliveryTime: string,
   groupedId?: string
 }
+
+export type InitialValues = {|
+  page: number,
+  query: string,
+  tags: string[],
+  color: string[],
+  brand: string[],
+  size: string[],
+  shop: string[],
+  category: string,
+  price: [number,number],
+  context: string
+|}

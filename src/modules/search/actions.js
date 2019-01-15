@@ -1,7 +1,7 @@
 // @flow
 import * as at from './const'
 
-import type {SearchKey, FilterKey, FilterValue, FilterOption, CategoryOption} from './entities'
+import type {SearchKey, FilterKey, FilterValue, FilterOption, CategoryOption, InitialValues} from './entities'
 import type {SearchResult} from './utils/api'
 
 export type FetchRequestAction = {
@@ -23,20 +23,7 @@ export type FetchFailureAction = {
 
 export type InitAction = {
   type: typeof at.INIT,
-  meta: {
-    initialValues: {
-      page?:number,
-      query?: string,
-      tags?: string[],
-      color?:FilterValue[],
-      brand?:FilterValue[],
-      size?:FilterValue[],
-      shop?:FilterValue[],
-      category?:string,
-      price?:[number,number],
-      context?:string
-    }
-  },
+  meta: { initialValues: InitialValues },
   payload: SearchKey
 }
 
@@ -112,29 +99,37 @@ export type Action = FetchRequestAction
 | SetCategoryOptionsAction
 
 // q=Hose&p=2&dFR[wunderSizes][0]=36D&hFR[categories][0]=Bademode%20%26%20Strandkleidung&nR[productPrice][<=][0]=70&nR[productPrice][>=][0]=36&tR[0]=sale
-const queryStringToFilterValues = (queryString?:string):Object => !queryString ? ({}) : ({
-  page: (s => {
-    const regex = s.match(/&p=/g)
-    if(!regex) return 0
-    return parseInt(regex[0].replace(/^[^=]*/,''))
-  })(queryString),
-  query: '',
-  tags: [],
-  color: [],
-  brand: [],
-  size: [],
-  shop: [],
-  category: '',
-  price: [0,100],
-  context: ''
-})
+// const queryStringToFilterValues = (queryString?:string):Object => !queryString ? ({}) : ({
+//   page: (s => {
+//     const regex = s.match(/&p=/g)
+//     if(!regex) return 0
+//     return parseInt(regex[0].replace(/^[^=]*/,''))
+//   })(queryString),
+//   query: '',
+//   tags: [],
+//   color: [],
+//   brand: [],
+//   size: [],
+//   shop: [],
+//   category: '',
+//   price: [0,100],
+//   context: ''
+// })
 
-export const init = (searchKey:SearchKey, initialValues?:Object, queryString?:string):InitAction => ({
+export const init = (searchKey:SearchKey, initialValues?:$Shape<InitialValues>):InitAction => ({
   type: at.INIT,
-  meta: {initialValues:{
-    ...queryStringToFilterValues(queryString),
-    ...initialValues
-  }},
+  meta: {initialValues: Object.assign({
+    page: 0,
+    query: '',
+    tags: [],
+    color: [],
+    brand: [],
+    size: [],
+    shop: [],
+    category: '',
+    price: [0,100],
+    context: ''
+  }, initialValues)},
   payload: searchKey
 })
 
