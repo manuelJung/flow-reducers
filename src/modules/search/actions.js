@@ -113,7 +113,11 @@ export type Action = FetchRequestAction
 
 // q=Hose&p=2&dFR[wunderSizes][0]=36D&hFR[categories][0]=Bademode%20%26%20Strandkleidung&nR[productPrice][<=][0]=70&nR[productPrice][>=][0]=36&tR[0]=sale
 const queryStringToFilterValues = (queryString?:string):Object => !queryString ? ({}) : ({
-  page: queryString.match(/&p=/g).replace(/^[^=]*/,''),
+  page: (s => {
+    const regex = s.match(/&p=/g)
+    if(!regex) return 0
+    return parseInt(regex[0].replace(/^[^=]*/,''))
+  })(queryString),
   query: '',
   tags: [],
   color: [],
