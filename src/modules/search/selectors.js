@@ -1,8 +1,10 @@
 // @flow
 import type {State} from './reducer'
-// import type {Identifier, StaticBlock} from './entities'
+import type {SearchKey, Product} from './entities'
 
-// export const shouldFetch = (state:State, identifier:Identifier):boolean => !state[identifier]
-// export const isFetching = (state:State, identifier:Identifier):boolean => state[identifier] && state[identifier].isFetching
-// export const getFetchError = (state:State, identifier:Identifier):string|null => state[identifier] ? state[identifier].fetchError : null
-// export const getStaticBlock = (state:State, identifier:Identifier):StaticBlock|null => state[identifier] ? state[identifier].block : null
+export const getHits: (state:State, searchKey:SearchKey) => Product[]
+= (state, searchKey) => state[searchKey].hits
+
+export const isFetching: (state:State, searchKey:SearchKey) => boolean
+= (state, searchKey) => state[searchKey].isFetching
+
