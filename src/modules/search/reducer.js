@@ -131,7 +131,7 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
         hits: action.payload.hits,
         numHits: action.payload.numHits,
         numPages: action.payload.numPages,
-        exhaustive: action.payload.exhausitve,
+        exhaustive: action.payload.exhaustiveFacetsCount,
         queryString: action.payload.queryString,
         filterOptions: {
           ...state.filterOptions,

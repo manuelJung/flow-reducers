@@ -42,7 +42,7 @@ const hoc:Hoc = connect(mapProps, mapDispatch, mergeProps, {
 
 export default hoc
 
-export const Hits = hoc(class Hits extends React.Component<InjectedProps> {
+export const Search = hoc(class Search extends React.Component<InjectedProps> {
   componentWillMount(){
     this.props.init()
   }

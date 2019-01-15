@@ -7,7 +7,7 @@ export type SearchResult = {
   hits: Product[],
   page: number,
   exhaustiveNBHits:boolean,
-  exhausitve:boolean,
+  exhaustiveFacetsCount:boolean,
   numPages:number,
   numHits:number,
   tags:string[],
@@ -29,9 +29,9 @@ const getCategoryOptions = (filter:Object):CategoryOption[] => !filter ? [] : Ob
 }))
 
 export const search = (filterValues:FilterValues):Promise<SearchResult> => {
-  const client = algoliasearch('applicationID', 'apiKey')
+  const client = algoliasearch('0BYMLMXGLI', '7058207f486c5d9c0a0e2d31fd10e7e5')
   const helper = algoliasearchHelper(client, 'products', {
-    disjunctiveFacets: ['wunderSizes', 'productManufacturerBrand', 'merchantName', 'filterColor'],
+    disjunctiveFacets: ['wunderSizes', 'productManufacturerBrand', 'merchantName', 'filterColor', 'productPrice'],
     hierarchicalFacets: [{
       name: 'categories',
       attributes: ['wunderCategoriesHierarchical.lvl0', 'wunderCategoriesHierarchical.lvl1', 'wunderCategoriesHierarchical.lvl2'],
@@ -58,10 +58,10 @@ export const search = (filterValues:FilterValues):Promise<SearchResult> => {
     attributesToHighlight: []
   })
 
-  filterValues.color.forEach(value => helper.addDisjunctiveFacetRefinement('color', value))
-  filterValues.brand.forEach(value => helper.addDisjunctiveFacetRefinement('brand', value))
-  filterValues.size.forEach(value => helper.addDisjunctiveFacetRefinement('size', value))
-  filterValues.shop.forEach(value => helper.addDisjunctiveFacetRefinement('shop', value))
+  filterValues.color.forEach(value => helper.addDisjunctiveFacetRefinement('filterColor', value))
+  filterValues.brand.forEach(value => helper.addDisjunctiveFacetRefinement('productManufacturerBrand', value))
+  filterValues.size.forEach(value => helper.addDisjunctiveFacetRefinement('wunderSizes', value))
+  filterValues.shop.forEach(value => helper.addDisjunctiveFacetRefinement('merchantName', value))
   filterValues.tags.forEach(tag => helper.addTag(tag))
 
   filterValues.category && helper.addHierarchicalFacetRefinement('categories', filterValues.category)
@@ -73,21 +73,22 @@ export const search = (filterValues:FilterValues):Promise<SearchResult> => {
 
   return helper.searchOnce()
     .then(result => result.content)
+    .then(content => console.log(content) || content)
     .then(content => ({
       hits: content.hits,
       page: content.page,
       exhaustiveNBHits: content.exhaustiveNBHits,
-      exhausitve: content.exhaustive,
-      numPages: content.numPages,
-      numHits: content.numHits,
-      tags: content.tags,
-      colorOptions: getFilterOptions(content.colorOptions),
-      sizeOptions: getFilterOptions(content.sizeOptions),
-      brandOptions: getFilterOptions(content.brandOptions),
-      shopOptions: getFilterOptions(content.shopOptions),
-      categories: getCategoryOptions(content.categories),
-      maxPrice: content.maxPrice,
-      minPrice: content.minPrice,
-      queryString: content.queryString
+      exhaustiveFacetsCount: content.exhaustiveFacetsCount,
+      numPages: content.nbPages,
+      numHits: content.nbHits,
+      tags: content._state.tagRefinements,
+      colorOptions: getFilterOptions(content.disjunctiveFacets[3]),
+      sizeOptions: getFilterOptions(content.disjunctiveFacets[0]),
+      brandOptions: getFilterOptions(content.disjunctiveFacets[1]),
+      shopOptions: getFilterOptions(content.disjunctiveFacets[2]),
+      categories: getCategoryOptions(content.hierarchicalFacets[0]),
+      maxPrice: content.disjunctiveFacets[4].stats.max,
+      minPrice: content.disjunctiveFacets[4].stats.min,
+      queryString: content._rawResults[0].params
     }))
 }

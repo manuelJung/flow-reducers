@@ -118,18 +118,21 @@ export type Action = FetchRequestAction
 
 export const init = (searchKey:SearchKey, initialValues?:$Shape<FilterValues>):InitAction => ({
   type: at.INIT,
-  meta: {initialValues: Object.assign({
-    page: 0,
-    query: '',
-    tags: [],
-    color: [],
-    brand: [],
-    size: [],
-    shop: [],
-    category: '',
-    price: [0,100],
-    context: ''
-  }, initialValues)},
+  meta: {
+    searchKey: searchKey,
+    initialValues: Object.assign({
+      page: 0,
+      query: '',
+      tags: [],
+      color: [],
+      brand: [],
+      size: [],
+      shop: [],
+      category: '',
+      price: [0,100],
+      context: ''
+    }, initialValues)
+  },
   payload: searchKey
 })
 

@@ -10,7 +10,6 @@ export const triggerSearchRule = {
   id: 'core/TRIGGER_SEARCH',
   target: [
     at.INIT, 
-    at.FETCH_REQUEST, 
     at.SET_PAGE, 
     at.SET_PRICE, 
     at.SET_QUERY, 
@@ -28,7 +27,8 @@ export const searchRule = {
   consequence: ({action, getState}) => {
     const state = getState()
     const {searchKey} = action.meta
-    return search(state.search, searchKey).then(
+    const filterValues = getFilterValues(state.search, searchKey)
+    return search(filterValues).then(
       result => fetchSuccess(searchKey, result),
       error => fetchFailure(searchKey, error.toString())
     )

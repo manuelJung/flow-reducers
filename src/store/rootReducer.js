@@ -16,6 +16,7 @@ import { routerReducer } from 'react-router-redux'
 
 import searchReducer from 'modules/search/reducer'
 import type {State as SearchState} from 'modules/search/reducer'
+import {triggerSearchRule, searchRule} from 'modules/search/rules'
 
 export type AsyncReducers = {}
 export type RootState = AsyncReducers & {
@@ -42,3 +43,5 @@ export default makeRootReducer
 
 addRule(fetchBlockRule)
 addRule(fetchPageRule)
+addRule(triggerSearchRule)
+addRule(searchRule)
