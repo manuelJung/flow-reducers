@@ -30,6 +30,7 @@ type SearchState = {|
 
 export default function reducer(state:State={}, action:Action):State{
   switch(action.type){
+    case at.INIT:
     case at.FETCH_REQUEST:
     case at.FETCH_SUCCESS:
     case at.FETCH_FAILURE: 

@@ -23,7 +23,7 @@ export type FetchFailureAction = {
 
 export type InitAction = {
   type: typeof at.INIT,
-  meta: { initialValues: FilterValues },
+  meta: { searchKey: SearchKey, initialValues: FilterValues },
   payload: SearchKey
 }
 

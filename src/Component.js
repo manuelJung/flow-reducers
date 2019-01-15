@@ -14,7 +14,10 @@ export default function Component(){
   
   return (
     <div id='Component'>
-      <Search searchKey='test'/>
+      <Search searchKey='test' initialValues={{
+        shop: ['SAMOON'],
+        page: 3
+      }}/>
     </div>
   )
 }
