@@ -1,7 +1,7 @@
 // @flow
 import * as at from './const'
 
-import type {SearchKey, FilterKey, FilterValue, FilterOption, CategoryOption, InitialValues} from './entities'
+import type {SearchKey, FilterKey, FilterValue, FilterOption, CategoryOption, FilterValues} from './entities'
 import type {SearchResult} from './utils/api'
 
 export type FetchRequestAction = {
@@ -23,7 +23,7 @@ export type FetchFailureAction = {
 
 export type InitAction = {
   type: typeof at.INIT,
-  meta: { initialValues: InitialValues },
+  meta: { initialValues: FilterValues },
   payload: SearchKey
 }
 
@@ -116,7 +116,7 @@ export type Action = FetchRequestAction
 //   context: ''
 // })
 
-export const init = (searchKey:SearchKey, initialValues?:$Shape<InitialValues>):InitAction => ({
+export const init = (searchKey:SearchKey, initialValues?:$Shape<FilterValues>):InitAction => ({
   type: at.INIT,
   meta: {initialValues: Object.assign({
     page: 0,

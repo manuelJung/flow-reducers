@@ -8,7 +8,11 @@ export type FilterValue = string
 
 export type FilterOption = string
 
-export type CategoryOption = string
+export type CategoryOption = {
+  name: string,
+  selected: boolean,
+  options: CategoryOption[]
+}
 
 export type Product = {
   imageMediumURL: string,
@@ -22,7 +26,7 @@ export type Product = {
   groupedId?: string
 }
 
-export type InitialValues = {|
+export type FilterValues = {|
   page: number,
   query: string,
   tags: string[],
