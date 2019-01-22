@@ -14,6 +14,7 @@ type InjectedProps = {
 }
 
 type RequiredProps = {
+  static?:boolean,
   searchKey: SearchKey,
   render?: (props:$Diff<InjectedProps,{render:any}>) => any
 }
@@ -36,7 +37,7 @@ function mergeProps (stateProps, _, ownProps) {
 }
 
 const hoc:Hoc = connect(mapProps, mapDispatch, mergeProps, {
-  areOwnPropsEqual: (a,b) => (
+  areOwnPropsEqual: (a,b) => b.static && (
     a.searchKey === b.searchKey
   )
 })

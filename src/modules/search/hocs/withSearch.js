@@ -15,6 +15,7 @@ type InjectedProps = {
 }
 
 type RequiredProps = {
+  static?: boolean,
   searchKey: SearchKey,
   initialValues?: $Shape<FilterValues>,
   render?: (props:$Diff<InjectedProps,{render:any}>) => any
@@ -37,7 +38,7 @@ function mergeProps (stateProps, {init}, ownProps) {
 }
 
 const hoc:Hoc = connect(mapProps, mapDispatch, mergeProps, {
-  areOwnPropsEqual: (a,b) => true
+  areOwnPropsEqual: (a,b) => b.static && true
 })
 
 export default hoc

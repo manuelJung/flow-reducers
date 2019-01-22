@@ -60,7 +60,7 @@ const initialSearchState:SearchState = {
     shop: [],
     brand: [],
     category: '',
-    price: [0,100],
+    price: null,
     query: '',
     tags: [],
     page: 0,
@@ -116,12 +116,15 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
       }
     }
     case at.FETCH_SUCCESS: {
+      const priceSet = Boolean(state.filterValues.price)
       const priceMin = (action => {
+        if(!state.filterValues.price) return 0
         if(state.filterValues.price[0] === state.filterOptions.price[0]) return action.payload.minPrice
         if(action.payload.minPrice > state.filterValues.price[0]) return action.payload.minPrice
         return state.filterValues.price[0]
       })(action)
       const priceMax = (action => {
+        if(!state.filterValues.price) return 0
         if(state.filterValues.price[1] === state.filterOptions.price[1]) return action.payload.maxPrice
         if(action.payload.maxPrice > state.filterValues.price[1]) return action.payload.maxPrice
         return state.filterValues.price[1]
@@ -149,7 +152,7 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
         // update price value
         filterValues: {
           ...state.filterValues,
-          price: [priceMin, priceMax]
+          price: priceSet ? [priceMin, priceMax] : null
         }
       }
     }

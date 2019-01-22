@@ -68,6 +68,9 @@ export const search = (filterValues:FilterValues):Promise<SearchResult> => {
   filterValues.query && helper.setQuery(filterValues.query)
   filterValues.context && helper.setQueryParameter('ruleContexts', [filterValues.context])
 
+  filterValues.price && helper.addNumericRefinement('productPrice', '>=', filterValues.price[0])
+  filterValues.price && helper.addNumericRefinement('productPrice', '<=', filterValues.price[1])
+
   // must be set last
   filterValues.page && helper.setPage(filterValues.page)
 
