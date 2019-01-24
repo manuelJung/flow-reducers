@@ -1,8 +1,14 @@
 // @flow
 
-export type Slug = string
+export type UrlKey = string
 
 export type Page = {
-  slug: Slug,
-  content: string
+  title: string,
+  urlKey: UrlKey,
+  metaDescription: string,
+  story: Object,
+  useStory: boolean,
+  authors: mixed[],
+  authorsUrlKey: string[],
+  objectID: string
 }

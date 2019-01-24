@@ -12,8 +12,8 @@ type Consequence = {
 export const fetchPageRule = {
   id: 'core/FETCH_PAGE',
   target: FETCH_REQUEST,
-  consequence: ({action}:Consequence) => fetchPage(action.meta.slug).then(
+  consequence: ({action}:Consequence) => fetchPage(action.meta.urlKey).then(
     result => fetchSuccess(result),
-    error => fetchFailure(action.meta.slug, error)
+    error => fetchFailure(action.meta.urlKey, error)
   )
 }

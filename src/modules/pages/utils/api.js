@@ -1,21 +1,21 @@
 // @flow
-import type {Slug, Page} from '../entities'
+import algoliasearchHelper from 'algoliasearch-helper'
+import algoliasearch from 'algoliasearch'
+import type {UrlKey, Page} from '../entities'
 
-const wait = (ms:number) => new Promise(resolve => setTimeout(() => resolve(),ms))
+const client = algoliasearch('0BYMLMXGLI', '7058207f486c5d9c0a0e2d31fd10e7e5')
 
-export function fetchPage(slug:Slug):Promise<Page> {
-  return wait(600)
-    .then(() => dict[slug])
-    .then(result => result ? result : Promise.reject(`could not find page with slug "${slug}"`))
+const getClient = urlKey => {
+  const helper = algoliasearchHelper(client, 'pages', {
+    disjunctiveFacets: ['urlKey'],
+  })
+
+  helper.addDisjunctiveFacetRefinement('urlKey', urlKey)
+  return helper
 }
 
-const dict = {
-  'page1': {
-    slug: 'page1',
-    content: 'page1'
-  },
-  'page2': {
-    slug: 'page2',
-    content: 'page2'
-  }
+export function fetchPage(urlKey:UrlKey):Promise<Page> {
+  return getClient(urlKey)
+    .searchOnce()
+    .then(result => result.content.hits[0])
 }

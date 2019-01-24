@@ -3,7 +3,7 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 
 import type {RootState} from 'store/rootReducer'
-import type {Slug, Page as PageType} from '../entities'
+import type {UrlKey, Page as PageType} from '../entities'
 import {isFetching, getFetchError, getPage, shouldFetch} from '../selectors'
 import {fetchRequest} from '../actions'
 
@@ -16,7 +16,7 @@ type InjectedProps = {
 }
 
 type RequiredProps = {
-  slug: Slug,
+  urlKey: UrlKey,
   render?: (props:$Diff<AllProps,{render:any}>) => any
 }
 
@@ -26,20 +26,20 @@ type AllProps = {
   page: PageType | null,
   shouldFetch: boolean,
   fetch: () => void,
-  slug: Slug,
+  urlKey: UrlKey,
   render?: (props:$Diff<AllProps,{render:any}>) => any
 }
 
 type Hoc = (
   Component:React.ComponentType<AllProps>
-) => React.ComponentType<AllProps>
+) => React.ComponentType<RequiredProps>
 
-function mapProps (state:RootState,{slug}) {
+function mapProps (state:RootState,{urlKey}) {
   return {
-    isFetching: isFetching(state.pages, slug),
-    fetchError: getFetchError(state.pages, slug),
-    page: getPage(state.pages, slug),
-    shouldFetch: shouldFetch(state.pages, slug)
+    isFetching: isFetching(state.pages, urlKey),
+    fetchError: getFetchError(state.pages, urlKey),
+    page: getPage(state.pages, urlKey),
+    shouldFetch: shouldFetch(state.pages, urlKey)
   }
 }
 
@@ -47,7 +47,7 @@ const mapDispatch = {fetchRequest}
 
 function mergeProps (stateProps, {fetchRequest}, ownProps) {
   return Object.assign({}, stateProps, ownProps, {
-    fetch: () => fetchRequest(ownProps.slug)
+    fetch: () => fetchRequest(ownProps.urlKey)
   })
 }
 

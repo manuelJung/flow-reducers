@@ -6,6 +6,8 @@ import { ConnectedRouter } from 'react-router-redux'
 import { createBrowserHistory } from 'history'
 import {Switch, Route} from 'react-router'
 
+import PageRoute from 'theme/pages/PageRoute'
+
 const history = createBrowserHistory()
 
 export default class App extends React.Component {
@@ -15,7 +17,8 @@ export default class App extends React.Component {
         <ConnectedRouter history={history}>
           <div className="App">
             <Switch>
-              <Route path='/' component={Component} />
+              <Route exact path='/' component={Component} />
+              <Route path='/page' component={PageRoute} />
             </Switch>
           </div>
         </ConnectedRouter>
