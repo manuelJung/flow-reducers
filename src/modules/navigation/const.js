@@ -1,0 +1,6 @@
+// @flow
+
+export const SET_CATEGORIES:'navigation/SET_CATEGORIES' = 'navigation/SET_CATEGORIES'
+export const FETCH_CONTEXT_REQUEST:'navigation/FETCH_CONTEXT_REQUEST' = 'navigation/FETCH_CONTEXT_REQUEST'
+export const FETCH_CONTEXT_SUCCESS:'navigation/FETCH_CONTEXT_SUCCESS' = 'navigation/FETCH_CONTEXT_SUCCESS'
+export const FETCH_CONTEXT_FAILURE:'navigation/FETCH_CONTEXT_FAILURE' = 'navigation/FETCH_CONTEXT_FAILURE'
