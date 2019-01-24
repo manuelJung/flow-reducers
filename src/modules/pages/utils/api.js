@@ -8,6 +8,7 @@ const client = algoliasearch('0BYMLMXGLI', '7058207f486c5d9c0a0e2d31fd10e7e5')
 const getClient = urlKey => {
   const helper = algoliasearchHelper(client, 'pages', {
     disjunctiveFacets: ['urlKey'],
+    attributesToHighlight: []
   })
 
   helper.addDisjunctiveFacetRefinement('urlKey', urlKey)
