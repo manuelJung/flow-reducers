@@ -21,9 +21,9 @@ export const fetchCategories = ():Promise<FetchCategoriesResponse> => {
 
 export const fetchCategoryContext = (category:Category):Promise<Context> => {
   return algoliasearchHelper(client, 'navigation', {
-    disjunctiveFacets: ['urlKey'],
+    disjunctiveFacets: ['objectID'],
     attributesToHighlight: []
-  }).addDisjunctiveFacetRefinement('objectId', category.id)
+  }).addDisjunctiveFacetRefinement('objectID', category.id)
     .searchOnce()
     .then(result => result.content.hits[0])
 }
