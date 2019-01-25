@@ -44,9 +44,19 @@ const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,P
 export default hoc
 
 export const CategoryContext = hoc(class CategoryContext extends React.Component<InjectedProps  & {render:Function}> {
-  componentDidMount(){
-    if(this.props.shouldFetch) this.props.fetch()
+  static fetchedCategoryIds = {}
+
+  fetch = () => {
+    const {categoryId} = this.props
+    if(this.props.shouldFetch && !CategoryContext.fetchedCategoryIds[categoryId]){
+      this.props.fetch()
+      CategoryContext.fetchedCategoryIds[categoryId] = true
+    }
   }
+
+  componentDidMount = this.fetch
+  componentDidUpdate = this.fetch
+
   render() {
     const {render, ...props} = this.props
     return render ? render(props) : null
