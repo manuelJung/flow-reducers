@@ -10,5 +10,7 @@ export type Page = {
   useStory: boolean,
   authors: mixed[],
   authorsUrlKey: string[],
-  objectID: string
+  objectID: string,
+  body: mixed,
+  bodyOverflow: mixed
 }
