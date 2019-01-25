@@ -1,21 +1,16 @@
 // @flow
+import algoliasearchHelper from 'algoliasearch-helper'
+import algoliasearch from 'algoliasearch'
 import type {Identifier, StaticBlock} from '../entities'
 
-const wait = (ms:number) => new Promise(resolve => setTimeout(() => resolve(),ms))
+const client = algoliasearch('0BYMLMXGLI', '7058207f486c5d9c0a0e2d31fd10e7e5')
 
 export function fetchBlock(identifier:Identifier):Promise<StaticBlock> {
-  return wait(6000)
-    .then(() => dict[identifier])
-    .then(result => result ? result : Promise.reject(`could not find cms with identifier "${identifier}"`))
-}
-
-const dict = {
-  'sale-top': {
-    identifier: 'sale-top',
-    content: 'cms for sale page (top)'
-  },
-  'sale-bottom': {
-    identifier: 'sale-bottom',
-    content: 'cms for sale page (bottom)'
-  }
+  return algoliasearchHelper(client, 'staticblocks', {
+    disjunctiveFacets: ['identifier'],
+    attributesToHighlight: []
+  }).addDisjunctiveFacetRefinement('identifier', identifier)
+    .searchOnce()
+    .then(result => result.content.hits[0])
+    .then(result => result ? result : Promise.reject('404'))
 }

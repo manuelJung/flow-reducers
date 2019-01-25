@@ -58,7 +58,7 @@ export default hoc
 
 export const StaticBlock = hoc(class StaticBlock extends React.Component<AllProps> {
   componentDidMount(){
-    // if(this.props.shouldFetch) this.props.fetch()
+    if(this.props.shouldFetch) this.props.fetch()
   }
   render() {
     const {render, ...props} = this.props

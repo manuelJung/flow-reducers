@@ -20,7 +20,7 @@ export default function Component(){
       <CategoryContext position='top' categoryId='/shop/bekleidung/kleider/abendkleider' />
       <ProductSearch searchKey='default' />
       <PageArticle urlKey='looks' />
-      <StaticBlock identifier='Sale_Category_SEO_Text' />
+      <StaticBlock identifier='Sale_Category_Text1' />
       <CategoryContext position='bottom' categoryId='/shop/bekleidung/kleider/abendkleider' />
     </div>
   )
