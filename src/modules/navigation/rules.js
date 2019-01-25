@@ -29,3 +29,23 @@ addRule({
     )
   }
 })
+
+addRule({
+  id:'core/LAZY_FETCH',
+  target: at.FETCH_CONTEXT_REQUEST,
+  position: 'INSERT_INSTEAD',
+  consequence: ({action, addRule}) => addRule({
+    id: 'core/LAZY_FETCH/dispatch',
+    target: at.SET_CATEGORIES,
+    consequence: () => action
+  }),
+  addWhen: function* (_,getState) {
+    const state = getState()
+    const hasFetched = hasFetchedCategories(state.navigation)
+    return hasFetched ? 'ABORT' : 'ADD_RULE'
+  },
+  addUntil: function* (action) {
+    yield action(at.SET_CATEGORIES)
+    return 'REMOVE_RULE'
+  }
+})

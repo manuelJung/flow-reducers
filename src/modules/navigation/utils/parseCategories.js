@@ -20,7 +20,7 @@ export default function parseInitialNavigationData (data) {
         : row.templateOptions.dropdownType === 'content' ? types.CONTENT
         : types.DEFAULT,
     dropdown: row.templateOptions.dropdownContent || '',
-    subItems: (row.templateOptions.dropdownItems || []).filter(row => !row.parentId).map(row => row.id)
+    subItems: (row.templateOptions.dropdownItems || []).filter(row => !row.parentId).map(row => row.link)
   }))
   
   const subItems = Object.keys(subItemsDict)

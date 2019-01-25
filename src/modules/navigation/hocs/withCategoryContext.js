@@ -13,14 +13,14 @@ type Props = {
 
 export type InjectedProps = {
   categoryId: CategoryId,
-  context: Context,
+  context: Context | null,
   isFetching: boolean,
   shouldFetch: boolean,
   fetch: () => void
 }
 
 const mapStateToProps = (state:RootState, props) => ({
-  category: getCategoryContext(state.navigation, props.categoryId),
+  context: getCategoryContext(state.navigation, props.categoryId),
   isFetching: isFetchingCategoryContext(state.navigation, props.categoryId),
   shouldFetch: shouldFetchCategoryContext(state.navigation, props.categoryId)
 })
@@ -43,7 +43,7 @@ const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,P
 
 export default hoc
 
-export const Category = hoc(class Category extends React.Component<InjectedProps  & {render:Function}> {
+export const CategoryContext = hoc(class CategoryContext extends React.Component<InjectedProps  & {render:Function}> {
   componentDidMount(){
     if(this.props.shouldFetch) this.props.fetch()
   }

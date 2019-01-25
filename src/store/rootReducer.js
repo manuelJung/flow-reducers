@@ -21,6 +21,8 @@ import {triggerSearchRule, searchRule} from 'modules/search/rules'
 import type {State as NavigationState} from 'modules/navigation/reducer'
 import navigationReducer from 'modules/navigation/reducer'
 
+import 'modules/navigation/rules'
+
 export type AsyncReducers = {}
 export type RootState = AsyncReducers & {
   todos: TodoState,
@@ -38,7 +40,7 @@ const makeRootReducer = (asyncReducers?:AsyncReducers):RootState => {
     pages: pageReducer,
     staticBlocks: staticBlockReducer,
     search: searchReducer,
-    navigation: NavigationState,
+    navigation: navigationReducer,
     ...asyncReducers
   }))
 }
