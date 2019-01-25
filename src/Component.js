@@ -16,6 +16,7 @@ export default function Component(){
   return (
     <div id='Component'>
       <CategoryContext position='top' categoryId='/shop/bekleidung/kleider/abendkleider' />
+      <CategoryContext position='bottom' categoryId='/shop/bekleidung/kleider/abendkleider' />
     </div>
   )
 }

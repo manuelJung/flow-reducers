@@ -13,7 +13,8 @@ addRule({
     const state = getState()
     return !hasFetchedCategories(state.navigation)
   },
-  consequence: () => fetchCategories().then(setCategories)
+  consequence: () => fetchCategories().then(setCategories),
+  addOnce: true
 })
 
 addRule({
@@ -23,6 +24,7 @@ addRule({
     const {categoryId} = action.meta
     const state = getState()
     const category = getCategory(state.navigation, categoryId)
+    if(!category) return fetchContextFailure(categoryId, 'categories not found')
     return fetchCategoryContext(category).then(
       result => fetchContextSuccess(categoryId, result),
       error => fetchContextFailure(categoryId, error.toString())
@@ -31,7 +33,7 @@ addRule({
 })
 
 addRule({
-  id:'core/LAZY_FETCH',
+  id:'core/FETCH_CATEGORY_CONTEXT_LAZY',
   target: at.FETCH_CONTEXT_REQUEST,
   position: 'INSERT_INSTEAD',
   consequence: ({action, addRule}) => addRule({
