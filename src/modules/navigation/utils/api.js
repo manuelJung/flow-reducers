@@ -19,6 +19,7 @@ export const fetchCategories = ():Promise<FetchCategoriesResponse> => {
     .then(parseCategories)
 }
 
+
 export const fetchCategoryContext = (category:Category):Promise<Context> => {
   return algoliasearchHelper(client, 'navigation', {
     disjunctiveFacets: ['objectID'],

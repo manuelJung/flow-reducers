@@ -1,4 +1,6 @@
 // @flow
+import createReSelector from 're-reselect'
+
 import type {State} from './reducer'
 import type {CategoryId, Category, Context} from './entities'
 
@@ -17,3 +19,13 @@ export const isFetchingCategoryContext = (state:State, id:CategoryId):boolean =>
   : false
 
 export const shouldFetchCategoryContext = (state:State, id:CategoryId):boolean => !state.categoryContexts[id]
+
+export const getCategoryIdByCategoryName:(state:State, name:string) => CategoryId = createReSelector(
+  (state:State) => state.categories,
+  (_,name:string) => name,
+  (categories, name) => {
+    const categoryIdList = Object.keys(categories)
+    const categoryId = categoryIdList.find(id => categories[id].category === name)
+    return categoryId || ''
+  }
+)((_,name) => name)

@@ -1,7 +1,7 @@
 // @flow
 import * as at from './const'
 import {addRule} from 'redux-interrupt'
-import {hasFetchedCategories} from './selectors'
+import {hasFetchedCategories, getCategory} from './selectors'
 import {fetchCategories, fetchCategoryContext} from './utils/api'
 import {setCategories, fetchContextSuccess, fetchContextFailure} from './actions'
 
@@ -19,8 +19,13 @@ addRule({
 addRule({
   id: 'core/FETCH_CATEGORY_CONTEXT',
   target: at.FETCH_CONTEXT_REQUEST,
-  consequence: ({action}) => fetchCategoryContext(action.meta.categoryId).then(
-    result => fetchContextSuccess(action.meta.categoryId, result),
-    error => fetchContextFailure(action.meta.categoryId, error.toString())
-  )
+  consequence: ({action, getState}) => {
+    const {categoryId} = action.meta
+    const state = getState()
+    const category = getCategory(state.navigation, categoryId)
+    return fetchCategoryContext(category).then(
+      result => fetchContextSuccess(categoryId, result),
+      error => fetchContextFailure(categoryId, error.toString())
+    )
+  }
 })
