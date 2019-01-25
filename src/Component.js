@@ -8,6 +8,7 @@ import * as at from 'modules/staticBlocks/const'
 import {Search} from 'modules/search/hocs/withSearch'
 import CategoryContext from 'theme/organisms/CategoryContext'
 import ProductSearch from 'theme/organisms/ProductSearch'
+import PageArticle from 'theme/organisms/PageArticle'
 
 const wait = ms => new Promise(resolve => setTimeout(() => resolve(),ms))
 
@@ -18,6 +19,7 @@ export default function Component(){
     <div id='Component'>
       <CategoryContext position='top' categoryId='/shop/bekleidung/kleider/abendkleider' />
       <ProductSearch searchKey='default' />
+      <PageArticle urlKey='looks' />
       <CategoryContext position='bottom' categoryId='/shop/bekleidung/kleider/abendkleider' />
     </div>
   )
