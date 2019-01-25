@@ -12,6 +12,7 @@ type Props = {
 }
 
 export type InjectedProps = {
+  categoryId: CategoryId,
   context: Context,
   isFetching: boolean,
   shouldFetch: boolean,
@@ -19,14 +20,15 @@ export type InjectedProps = {
 }
 
 const mapStateToProps = (state:RootState, props) => ({
-  category: getCategory(state.navigation, props.categoryId),
-  hasFetched: hasFetchedCategories(state.navigation)
+  category: getCategoryContext(state.navigation, props.categoryId),
+  isFetching: isFetchingCategoryContext(state.navigation, props.categoryId),
+  shouldFetch: shouldFetchCategoryContext(state.navigation, props.categoryId)
 })
 
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ fetch }, dispatch)
 
 const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
-  fetch: () => dp.fetch(props.categoryId)
+  fetch: () => {dp.fetch(props.categoryId)}
 })
 
 

@@ -1,5 +1,6 @@
 // @flow
 import createReSelector from 're-reselect'
+import {createSelector} from 'reselect'
 
 import type {State} from './reducer'
 import type {CategoryId, Category, Context} from './entities'
@@ -29,3 +30,9 @@ export const getCategoryIdByCategoryName:(state:State, name:string) => CategoryI
     return categoryId || ''
   }
 )((_,name) => name)
+
+export const getRootCategories:(state:State) => Category[] = createSelector(
+  (state:State) => state.rootCategoryIds,
+  (state:State) => state.categories,
+  (categoryIds, categories) => categoryIds.map(id => categories[id])
+)
