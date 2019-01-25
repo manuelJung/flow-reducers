@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react'
-import {StaticBlock} from 'modules/staticBlocks/hocs/withStaticBlock'
 import {Page} from 'modules/pages/hocs/withPage'
 import {addRule} from 'redux-interrupt'
 import {fetchRequest} from 'modules/staticBlocks/actions'
@@ -9,6 +8,7 @@ import {Search} from 'modules/search/hocs/withSearch'
 import CategoryContext from 'theme/organisms/CategoryContext'
 import ProductSearch from 'theme/organisms/ProductSearch'
 import PageArticle from 'theme/organisms/PageArticle'
+import StaticBlock from 'theme/organisms/StaticBlock'
 
 const wait = ms => new Promise(resolve => setTimeout(() => resolve(),ms))
 
@@ -20,6 +20,7 @@ export default function Component(){
       <CategoryContext position='top' categoryId='/shop/bekleidung/kleider/abendkleider' />
       <ProductSearch searchKey='default' />
       <PageArticle urlKey='looks' />
+      <StaticBlock identifier='Sale_Category_SEO_Text' />
       <CategoryContext position='bottom' categoryId='/shop/bekleidung/kleider/abendkleider' />
     </div>
   )
