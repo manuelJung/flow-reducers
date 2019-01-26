@@ -1,0 +1,13 @@
+// @flow
+
+export const FETCH_ARTICLE_REQUEST:'magazin/FETCH_ARTICLE_REQUEST' = 'magazin/FETCH_ARTICLE_REQUEST'
+export const FETCH_ARTICLE_SUCCESS:'magazin/FETCH_ARTICLE_SUCCESS' = 'magazin/FETCH_ARTICLE_SUCCESS'
+export const FETCH_ARTICLE_FAILURE:'magazin/FETCH_ARTICLE_FAILURE' = 'magazin/FETCH_ARTICLE_FAILURE'
+
+export const FETCH_LIST_REQUEST:'magazin/FETCH_LIST_REQUEST' = 'magazin/FETCH_LIST_REQUEST'
+export const FETCH_LIST_SUCCESS:'magazin/FETCH_LIST_SUCCESS' = 'magazin/FETCH_LIST_SUCCESS'
+export const FETCH_LIST_FAILURE:'magazin/FETCH_LIST_FAILURE' = 'magazin/FETCH_LIST_FAILURE'
+
+export const CREATE_LIST:'magazin/CREATE_LIST' = 'magazin/CREATE_LIST'
+export const TOGGLE_CATEGORY:'magazin/TOGGLE_CATEGORY' = 'magazin/TOGGLE_CATEGORY'
+export const SET_PAGE:'magazin/SET_PAGE' = 'magazin/SET_PAGE'

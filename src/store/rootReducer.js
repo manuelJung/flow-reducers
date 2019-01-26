@@ -2,9 +2,6 @@
 import {combineReducers} from 'redux'
 import {addRule} from 'redux-interrupt'
 
-import todoReducer from 'modules/todos/reducer'
-import type {State as TodoState} from 'modules/todos/reducer'
-
 import pageReducer from 'modules/pages/reducer'
 import type {State as PageState} from 'modules/pages/reducer'
 
@@ -25,7 +22,6 @@ import 'modules/navigation/rules'
 
 export type AsyncReducers = {}
 export type RootState = AsyncReducers & {
-  todos: TodoState,
   pages: PageState,
   staticBlocks: StaticBlockState,
   routing: any,
@@ -36,7 +32,6 @@ export type RootState = AsyncReducers & {
 const makeRootReducer = (asyncReducers?:AsyncReducers):RootState => {
   return combineReducers(({
     routing: routerReducer,
-    todos: todoReducer,
     pages: pageReducer,
     staticBlocks: staticBlockReducer,
     search: searchReducer,
