@@ -9,7 +9,7 @@ import * as actions from './actions'
 addRule({
   id: 'core/FETCH_STATIC_BLOCK',
   target: at.FETCH_REQUEST,
-  consequence: ({action}:Consequence) => api.fetchBlock(action.meta.identifier).then(
+  consequence: ({action}) => api.fetchBlock(action.meta.identifier).then(
     result => actions.fetchSuccess(result),
     error => actions.fetchFailure(action.meta.identifier, error)
   )
