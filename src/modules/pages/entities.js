@@ -1,10 +1,10 @@
 // @flow
 
-export type UrlKey = string
+export type Identifier = string
 
 export type Page = {
   title: string,
-  urlKey: UrlKey,
+  urlKey: Identifier,
   metaDescription: string,
   story: Object,
   useStory: boolean,

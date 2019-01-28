@@ -1,15 +1,15 @@
 // @flow
 import algoliasearchHelper from 'algoliasearch-helper'
 import algoliasearch from 'algoliasearch'
-import type {UrlKey, Page} from '../entities'
+import type {Identifier, Page} from '../entities'
 
 const client = algoliasearch('0BYMLMXGLI', '7058207f486c5d9c0a0e2d31fd10e7e5')
 
-export function fetchPage(urlKey:UrlKey):Promise<Page> {
+export function fetchPage(identifier:Identifier):Promise<Page> {
   return algoliasearchHelper(client, 'pages', {
     disjunctiveFacets: ['urlKey'],
     attributesToHighlight: []
-  }).addDisjunctiveFacetRefinement('urlKey', urlKey)
+  }).addDisjunctiveFacetRefinement('urlKey', identifier)
     .searchOnce()
     .then(result => result.content.hits[0])
     .then(result => result ? result : Promise.reject('404'))

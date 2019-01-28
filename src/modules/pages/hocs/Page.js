@@ -4,18 +4,18 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import type {RootState} from 'store/rootReducer'
-import type {UrlKey, Page} from '../entities'
+import type {Identifier, Page} from '../entities'
 import {getPageRequest} from '../selectors'
 import {fetchRequest} from '../actions'
 
 type Props = {
-  urlKey: UrlKey,
+  identifier: Identifier,
   pure?: boolean,
   render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 export type InjectedProps = {
-  urlKey: UrlKey,
+  identifier: Identifier,
   data: Page | null,
   isFetching: boolean,
   fetchError: null | string,
@@ -23,12 +23,12 @@ export type InjectedProps = {
   fetch: () => void
 }
 
-const mapStateToProps = (state:RootState, props) => getPageRequest(state.pages, props.urlKey)
+const mapStateToProps = (state:RootState, props) => getPageRequest(state.pages, props.identifier)
 
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ fetchRequest }, dispatch)
 
 const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
-  fetch: () => {dp.fetchRequest(props.urlKey)}
+  fetch: () => {dp.fetchRequest(props.identifier)}
 })
 
 export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
@@ -40,7 +40,7 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
     areOwnPropsEqual: (a,b) => {
       if(!b.pure){ if(a.render !== b.render) return false }
       return (
-        a.urlKey === b.urlKey
+        a.identifier === b.identifier
       )
     }
   }

@@ -1,14 +1,14 @@
 // @flow
 import createReSelector from 're-reselect'
 import type {State} from './reducer'
-import type {UrlKey, Page} from './entities'
+import type {Identifier, Page} from './entities'
 
-export const shouldFetch = (state:State, urlKey:UrlKey):boolean => !state[urlKey]
-export const isFetching = (state:State, urlKey:UrlKey):boolean => state[urlKey] && state[urlKey].isFetching
-export const getFetchError = (state:State, urlKey:UrlKey):string|null => state[urlKey] ? state[urlKey].fetchError : null
-export const getPage = (state:State, urlKey:UrlKey):Page|null => state[urlKey] ? state[urlKey].data : null
+export const shouldFetch = (state:State, identifier:Identifier):boolean => !state[identifier]
+export const isFetching = (state:State, identifier:Identifier):boolean => state[identifier] && state[identifier].isFetching
+export const getFetchError = (state:State, identifier:Identifier):string|null => state[identifier] ? state[identifier].fetchError : null
+export const getPage = (state:State, identifier:Identifier):Page|null => state[identifier] ? state[identifier].data : null
 
-export const getPageRequest: (state:State, urlKey:UrlKey)=>* = createReSelector(
+export const getPageRequest: (state:State, identifier:Identifier)=>* = createReSelector(
   getPage,
   isFetching,
   getFetchError,

@@ -1,11 +1,11 @@
 // @flow
 import * as at from './const'
 
-import type {UrlKey, Page} from './entities'
+import type {Identifier, Page} from './entities'
 import type {Action} from './actions'
 
 export type State = {
-  +[id:UrlKey]: PageState
+  +[id:Identifier]: PageState
 }
 
 type PageState = {
@@ -20,7 +20,7 @@ export default function reducer(state:State={}, action:Action):State{
     case at.FETCH_SUCCESS:
     case at.FETCH_FAILURE: 
       return Object.assign({}, state, {
-        [action.meta.urlKey]: pageReducer(state[action.meta.urlKey], action)
+        [action.meta.identifier]: pageReducer(state[action.meta.identifier], action)
       })
     default: return state
   }

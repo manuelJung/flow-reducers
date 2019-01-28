@@ -11,7 +11,7 @@ type Props = {
 export default function PageArticle ({urlKey}:Props) {
   return (
     <div className='PageArticle'>
-      <Page urlKey={urlKey} render={props => {
+      <Page identifier={urlKey} render={props => {
         if(props.isFetching){
           return <div>laoding...</div>
         }
