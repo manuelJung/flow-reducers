@@ -7,8 +7,6 @@ import * as actions from './actions'
 
 import type {Context, Category, CategoryId} from './entities'
 
-const fetchedCategoryContexts = {}
-
 addRule({
   id: 'navigation/FETCH_CATEGORIES',
   condition: (_, getState) => {
@@ -26,7 +24,6 @@ addRule({
     const {categoryId} = action.meta
     const state = getState()
     const category = selectors.getCategory(state.navigation, categoryId)
-    fetchedCategoryContexts[categoryId] = true
     if(!category) return actions.fetchContextFailure(categoryId, 'categories not found')
     return api.fetchCategoryContext(category).then(
       result => actions.fetchContextSuccess(categoryId, result),
@@ -61,6 +58,10 @@ addRule({
   target: at.FETCH_CONTEXT_REQUEST,
   position: 'INSERT_INSTEAD',
   zIndex: 1,
-  condition: action => Boolean(fetchedCategoryContexts[action.meta.categoryId]),
+  condition: (action, getState) => {
+    const state = getState()
+    const {categoryId} = action.meta
+    return selectors.isFetchingCategoryContext(state.navigation, categoryId)
+  },
   consequence: ({action, effect}) => undefined
 })
