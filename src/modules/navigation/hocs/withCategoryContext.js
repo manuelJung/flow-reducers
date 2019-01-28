@@ -51,10 +51,8 @@ export const CategoryContext = hoc(class CategoryContext extends React.Component
   static fetchedCategoryIds = {}
 
   fetch = () => {
-    const {categoryId} = this.props
-    if(this.props.shouldFetch && !CategoryContext.fetchedCategoryIds[categoryId]){
+    if(this.props.shouldFetch){
       this.props.fetch()
-      CategoryContext.fetchedCategoryIds[categoryId] = true
     }
   }
 
