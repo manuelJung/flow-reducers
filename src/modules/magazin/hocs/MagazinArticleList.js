@@ -4,31 +4,31 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import type {RootState} from 'store/rootReducer'
-import type {UrlKey, MagazinArticle} from '../entities'
-import {getMagazinArticleRequest} from '../selectors'
-import {fetchArticleRequest} from '../actions'
+import type {ListingKey, ListingMagazinArticle} from '../entities'
+import {getListRequest} from '../selectors'
+import {fetchListRequest} from '../actions'
 
 type Props = {
-  urlKey: UrlKey,
+  listingKey: ListingKey,
   pure?: boolean,
   render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 export type InjectedProps = {
-  urlKey: UrlKey,
-  data: MagazinArticle | null,
+  listingKey: ListingKey,
+  data: ListingMagazinArticle[] | null,
   isFetching: boolean,
   fetchError: null | string,
   shouldFetch: boolean,
   fetch: () => void
 }
 
-const mapStateToProps = (state:RootState, props) => getMagazinArticleRequest(state.magazin, props.urlKey)
+const mapStateToProps = (state:RootState, props) => getListRequest(state.magazin, props.listingKey)
 
-const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ fetchArticleRequest }, dispatch)
+const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ fetchListRequest }, dispatch)
 
 const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
-  fetch: () => {dp.fetchArticleRequest(props.urlKey)}
+  fetch: () => {dp.fetchListRequest(props.listtingKey)}
 })
 
 export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
@@ -40,13 +40,13 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
     areOwnPropsEqual: (a,b) => {
       if(!b.pure){ if(a.render !== b.render) return false }
       return (
-        a.urlKey === b.urlKey
+        a.listingKey === b.listingKey
       )
     }
   }
 )(Comp)
 
-export default hoc(class MagazinArticleRenderer extends React.Component<InjectedProps & {render:Function} > {
+export default hoc(class MagazinArticleListRenderer extends React.Component<InjectedProps & {render:Function} > {
   
   fetch = () => {
     if(this.props.shouldFetch){
