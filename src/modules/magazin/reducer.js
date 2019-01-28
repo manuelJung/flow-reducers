@@ -4,8 +4,8 @@ import type {MagazinArticle, ListingMagazinArticle, ArticleIdentifier, ListIdent
 import type {Action} from './actions'
 
 export type State = {
-  +articles: {+[identifier:ArticleIdentifier]:ArticleState},
-  +articleLists: {+[identifier:ListIdentifier]:ListingState}
+  +articles: {+[identifier:ArticleIdentifier]:ArticleState}, // eslint-disable-line no-use-before-define
+  +articleLists: {+[identifier:ListIdentifier]:ListingState} // eslint-disable-line no-use-before-define
 }
 
 type ArticleState = {

@@ -8,12 +8,6 @@ import type {ListIdentifier as Identifier, ListingMagazinArticle} from '../entit
 import {getListRequest} from '../selectors'
 import {fetchListRequest} from '../actions'
 
-type Props = {
-  identifier: Identifier,
-  pure?: boolean,
-  render?: (props:$Diff<InjectedProps,{}>) => any
-}
-
 export type InjectedProps = {
   identifier: Identifier,
   data: ListingMagazinArticle[] | null,
@@ -21,6 +15,12 @@ export type InjectedProps = {
   fetchError: null | string,
   shouldFetch: boolean,
   fetch: () => void
+}
+
+type Props = {
+  identifier: Identifier,
+  pure?: boolean,
+  render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 const mapStateToProps = (state:RootState, props) => getListRequest(state.magazin, props.identifier)

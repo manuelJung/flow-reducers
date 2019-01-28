@@ -1,15 +1,9 @@
 // @flow
 import * as React from 'react'
-import Page from 'modules/pages/hocs/Page'
-import {addRule} from 'redux-interrupt'
-import {fetchRequest} from 'modules/staticBlocks/actions'
-import * as at from 'modules/staticBlocks/const'
 import CategoryContext from 'theme/organisms/CategoryContext'
 import ProductSearch from 'theme/organisms/ProductSearch'
 import PageArticle from 'theme/organisms/PageArticle'
 import StaticBlock from 'theme/organisms/StaticBlock'
-
-const wait = ms => new Promise(resolve => setTimeout(() => resolve(),ms))
 
 
 export default function Component(){

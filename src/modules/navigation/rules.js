@@ -5,7 +5,7 @@ import * as selectors from './selectors'
 import * as api from './utils/api'
 import * as actions from './actions'
 
-import type {Context, Category, CategoryPath} from './entities'
+// import type {Context, Category, CategoryPath} from './entities'
 
 addRule({
   id: 'navigation/FETCH_CATEGORIES',
@@ -42,7 +42,7 @@ addRule({
     target: at.SET_CATEGORIES,
     consequence: () => action
   }),
-  addWhen: function* (_,getState) {
+  addWhen: function* (_,getState) { // eslint-disable-line require-yield
     const state = getState()
     const hasFetched = selectors.hasFetchedCategories(state.navigation)
     return hasFetched ? 'ABORT' : 'ADD_RULE'

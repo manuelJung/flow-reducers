@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import type {RootState} from 'store/rootReducer'
 
 import type {SearchKey, FilterValues} from '../entities'
-import {isFetching, getHits} from '../selectors'
 import {init} from '../actions'
 
 type InjectedProps = {

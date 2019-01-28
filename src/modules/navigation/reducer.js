@@ -7,7 +7,7 @@ export type State = {
   +categories: {+[id:CategoryPath]:Category},
   +rootCategoryPaths: CategoryPath[],
   +hasFetched: boolean,
-  +categoryContexts: {+[id:CategoryPath]:ContextState}
+  +categoryContexts: {+[id:CategoryPath]:ContextState} // eslint-disable-line no-use-before-define
 }
 
 type ContextState = {

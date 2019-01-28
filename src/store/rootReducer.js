@@ -1,6 +1,5 @@
 // @flow
 import {combineReducers} from 'redux'
-import {addRule} from 'redux-interrupt'
 import { routerReducer } from 'react-router-redux'
 
 import pageReducer from 'modules/pages/reducer'

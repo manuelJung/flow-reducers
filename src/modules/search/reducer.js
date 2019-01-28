@@ -5,7 +5,7 @@ import type {SearchKey, Product, FilterOption, CategoryOption, FilterValues} fro
 import type {Action} from './actions'
 
 export type State = {
-  +[id:SearchKey]: SearchState
+  +[id:SearchKey]: SearchState // eslint-disable-line no-use-before-define
 }
 
 type SearchState = {|

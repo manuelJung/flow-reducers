@@ -8,12 +8,6 @@ import type {Identifier, StaticBlock} from '../entities'
 import {getStaticBlockRequest} from '../selectors'
 import {fetchRequest} from '../actions'
 
-type Props = {
-  identifier: Identifier,
-  pure?: boolean,
-  render?: (props:$Diff<InjectedProps,{}>) => any
-}
-
 export type InjectedProps = {
   identifier: Identifier,
   data: StaticBlock | null,
@@ -21,6 +15,12 @@ export type InjectedProps = {
   fetchError: null | string,
   shouldFetch: boolean,
   fetch: () => void
+}
+
+type Props = {
+  identifier: Identifier,
+  pure?: boolean,
+  render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 const mapStateToProps = (state:RootState, props) => getStaticBlockRequest(state.staticBlocks, props.identifier)

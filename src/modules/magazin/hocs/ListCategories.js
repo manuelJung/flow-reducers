@@ -7,17 +7,17 @@ import type {RootState} from 'store/rootReducer'
 import type {ListIdentifier as Identifier} from '../entities'
 import {getCategory, getCategoryOptions} from '../selectors'
 
-type Props = {
-  identifier: Identifier,
-  pure?: boolean,
-  render?: (props:$Diff<InjectedProps,{}>) => any
-}
-
 export type InjectedProps = {
   identifier: Identifier,
   category: string,
   options: string[],
   fetch: () => void
+}
+
+type Props = {
+  identifier: Identifier,
+  pure?: boolean,
+  render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 const mapStateToProps = (state:RootState, props) => ({

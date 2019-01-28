@@ -12,7 +12,6 @@ export default class PageRoute extends React.Component<Props> {
       <Page urlKey='berlin-fashion-week' render={props => (
         <div id='PageRoute'>
           <Helmet title='page'/>
-          {console.log(props)}
           {/* <div>{props.page && props.page.content}</div> */}
         </div>
       )}/>

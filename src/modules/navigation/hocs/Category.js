@@ -6,15 +6,15 @@ import type { RootState } from 'store/rootReducer'
 import type {Category, CategoryPath} from '../entities'
 import {getCategory, hasFetchedCategories} from '../selectors'
 
-type Props = {
-  categoryPath: CategoryPath,
-  render?: (props:$Diff<InjectedProps,{}>) => any
-}
-
 export type InjectedProps = {
   category: Category | null,
   hasFetched: boolean,
   categoryPath: CategoryPath
+}
+
+type Props = {
+  categoryPath: CategoryPath,
+  render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 const mapStateToProps = (state:RootState, props) => ({

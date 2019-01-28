@@ -7,12 +7,6 @@ import type {Context, CategoryPath} from '../entities'
 import {getCategoryContextRequest} from '../selectors'
 import {fetchContextRequest as fetch} from '../actions'
 
-type Props = {
-  categoryPath: CategoryPath,
-  pure?: boolean,
-  render?: (props:$Diff<InjectedProps,{}>) => any
-}
-
 export type InjectedProps = {
   categoryPath: CategoryPath,
   data: Context | null,
@@ -20,6 +14,12 @@ export type InjectedProps = {
   shouldFetch: boolean,
   fetchError: null | string,
   fetch: () => void
+}
+
+type Props = {
+  categoryPath: CategoryPath,
+  pure?: boolean,
+  render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 const mapStateToProps = (state:RootState, props) => getCategoryContextRequest(state.navigation, props.categoryPath)

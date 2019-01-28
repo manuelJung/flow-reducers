@@ -5,7 +5,7 @@ import type {Identifier, StaticBlock} from './entities'
 import type {Action} from './actions'
 
 export type State = {
-  +[id:Identifier]: StaticBlockState
+  +[id:Identifier]: StaticBlockState // eslint-disable-line no-use-before-define
 }
 
 type StaticBlockState = {

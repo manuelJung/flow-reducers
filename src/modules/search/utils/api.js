@@ -76,7 +76,6 @@ export const search = (filterValues:FilterValues):Promise<SearchResult> => {
 
   return helper.searchOnce()
     .then(result => result.content)
-    .then(content => console.log(content) || content)
     .then(content => ({
       hits: content.hits,
       page: content.page,

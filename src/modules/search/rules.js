@@ -5,8 +5,6 @@ import * as api from './utils/api'
 import * as actions from './actions'
 import * as selectors from './selectors'
 
-import type {FetchRequestAction} from './actions'
-
 addRule({
   id: 'core/TRIGGER_SEARCH',
   target: [

@@ -5,7 +5,7 @@ import type {Identifier, Page} from './entities'
 import type {Action} from './actions'
 
 export type State = {
-  +[id:Identifier]: PageState
+  +[id:Identifier]: PageState // eslint-disable-line no-use-before-define
 }
 
 type PageState = {

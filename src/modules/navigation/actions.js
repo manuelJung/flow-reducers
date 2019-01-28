@@ -1,6 +1,6 @@
 // @flow
 import * as at from './const'
-import type {Context, Category, CategoryPath} from './entities'
+import type {Context, CategoryPath} from './entities'
 import type {FetchCategoriesResponse} from './utils/api'
 
 export type SetCategoriesAction = {
