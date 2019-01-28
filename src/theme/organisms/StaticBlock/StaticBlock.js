@@ -18,11 +18,11 @@ export default function StaticBlock ({identifier}:Props) {
         if(props.fetchError){
           return <div>error</div>
         }
-        if(props.block && props.block.useStory){
-          return <Story story={props.block.story} />
+        if(props.data && props.data.useStory){
+          return <Story story={props.data.story} />
         }
-        if(props.block && !props.block.useStory){
-          return <BootstrapContent content={props.block.content} />
+        if(props.data && !props.data.useStory){
+          return <BootstrapContent content={props.data.content} />
         }
         return null
       }} />

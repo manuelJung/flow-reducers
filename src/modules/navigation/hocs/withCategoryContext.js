@@ -49,8 +49,7 @@ const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,P
 export default hoc
 
 export const CategoryContext = hoc(class CategoryContext extends React.Component<InjectedProps & {render:Function} > {
-  static fetchedCategoryPaths = {}
-
+  
   fetch = () => {
     if(this.props.shouldFetch){
       this.props.fetch()

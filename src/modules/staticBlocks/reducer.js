@@ -11,7 +11,7 @@ export type State = {
 type StaticBlockState = {
   +isFetching: boolean,
   +fetchError: string | null,
-  +block: StaticBlock | null
+  +data: StaticBlock | null
 }
 
 export default function reducer(state:State={}, action:Action):State{
@@ -30,25 +30,25 @@ function staticBlockReducer(state, action:Action):StaticBlockState{
   switch(action.type){
     case at.FETCH_REQUEST: {
       return {
+        ...state,
         isFetching: true,
-        fetchError: null,
-        block: null
+        fetchError: null
       }
     }
 
     case at.FETCH_SUCCESS: {
       return {
+        ...state,
         isFetching: false,
-        fetchError: null,
-        block: action.payload
+        data: action.payload
       }
     }
 
     case at.FETCH_FAILURE: {
       return {
+        ...state,
         isFetching: false,
-        fetchError: action.payload,
-        block: null
+        fetchError: action.payload
       }
     }
     default: return state
