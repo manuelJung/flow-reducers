@@ -6,7 +6,9 @@ import type { RootState } from 'store/rootReducer'
 import type {Category, CategoryId} from '../entities'
 import {getRootCategories, hasFetchedCategories} from '../selectors'
 
-type Props = {}
+type Props = {
+  render?: (props:$Diff<InjectedProps,{}>) => any
+}
 
 export type InjectedProps = {
   categories: Category[],

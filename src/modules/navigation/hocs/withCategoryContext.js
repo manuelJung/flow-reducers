@@ -4,26 +4,23 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import type { RootState } from 'store/rootReducer'
 import type {Context, CategoryId} from '../entities'
-import {getCategoryContext, isFetchingCategoryContext, shouldFetchCategoryContext} from '../selectors'
+import {getCategoryContextRequest} from '../selectors'
 import {fetchContextRequest as fetch} from '../actions'
 
 type Props = {
-  categoryId: CategoryId
+  categoryId: CategoryId,
+  render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 export type InjectedProps = {
   categoryId: CategoryId,
-  context: Context | null,
+  data: Context | null,
   isFetching: boolean,
   shouldFetch: boolean,
   fetch: () => void
 }
 
-const mapStateToProps = (state:RootState, props) => ({
-  context: getCategoryContext(state.navigation, props.categoryId),
-  isFetching: isFetchingCategoryContext(state.navigation, props.categoryId),
-  shouldFetch: shouldFetchCategoryContext(state.navigation, props.categoryId)
-})
+const mapStateToProps = (state:RootState, props) => getCategoryContextRequest(state.navigation, props.categoryId)
 
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ fetch }, dispatch)
 
@@ -43,7 +40,7 @@ const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,P
 
 export default hoc
 
-export const CategoryContext = hoc(class CategoryContext extends React.Component<InjectedProps  & {render:Function}> {
+export const CategoryContext = hoc(class CategoryContext extends React.Component<InjectedProps & {render:Function} > {
   static fetchedCategoryIds = {}
 
   fetch = () => {
@@ -60,5 +57,5 @@ export const CategoryContext = hoc(class CategoryContext extends React.Component
   render() {
     const {render, ...props} = this.props
     return render ? render(props) : null
-  } 
+  }
 })

@@ -18,29 +18,29 @@ export default function CategoryContext ({categoryId, position}:Props) {
         if(props.isFetching){
           return <div>loading...</div>
         }
-        if(!props.context){
+        if(!props.data){
           return <div>not found</div>
         }
-        if(position === 'top' && props.context.useStory){
-          return <Story story={props.context.story}/>
+        if(position === 'top' && props.data.useStory){
+          return <Story story={props.data.story}/>
         }
-        if(position === 'top' && !props.context.useStory){
+        if(position === 'top' && !props.data.useStory){
           return (
-            <React.Fragment>
-              <BootstrapContent content={props.context.categoryText1}/>
-              <BootstrapContent content={props.context.seoText1}/>
+            <React.Fragment> {/* $FlowFixMe */}
+              <BootstrapContent content={props.data.categoryText1}/>
+              <BootstrapContent content={props.data.seoText1}/>
             </React.Fragment>
           )
         }
         if(position === 'bottom'){
           return (
             <React.Fragment>
-              <BootstrapContent content={props.context.seoText2}/>
-              <BootstrapContent content={props.context.seoText3}/>
+              <BootstrapContent content={props.data.seoText2}/>
+              <BootstrapContent content={props.data.seoText3}/>
             </React.Fragment>
           )
         }
-        return null
+        return <span/>
       }}/>
     </div>
   )
