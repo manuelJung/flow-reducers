@@ -1,12 +1,13 @@
 // @flow
+import {addRule} from 'redux-interrupt'
 import * as at from './const'
-import {search} from './utils/api'
-import {fetchSuccess, fetchFailure, fetchRequest} from './actions'
-import {getFilterValues} from './selectors'
+import * as api from './utils/api'
+import * as actions from './actions'
+import * as selectors from './selectors'
 
 import type {FetchRequestAction} from './actions'
 
-export const triggerSearchRule = {
+addRule({
   id: 'core/TRIGGER_SEARCH',
   target: [
     at.INIT, 
@@ -17,20 +18,20 @@ export const triggerSearchRule = {
     at.TOGGLE_FILTER, 
     at.TOGGLE_TAG
   ],
-  consequence: ({action}) => fetchRequest(action.meta.searchKey)
-}
+  consequence: ({action}) => actions.fetchRequest(action.meta.searchKey)
+})
 
-export const searchRule = {
+addRule({
   id: 'core/SEARCH',
   target: at.FETCH_REQUEST,
   concurrency: 'SWITCH',
   consequence: ({action, getState}) => {
     const state = getState()
     const {searchKey} = action.meta
-    const filterValues = getFilterValues(state.search, searchKey)
-    return search(filterValues).then(
-      result => fetchSuccess(searchKey, result),
-      error => fetchFailure(searchKey, error.toString())
+    const filterValues = selectors.getFilterValues(state.search, searchKey)
+    return api.search(filterValues).then(
+      result => actions.fetchSuccess(searchKey, result),
+      error => actions.fetchFailure(searchKey, error.toString())
     )
   }
-}
+})

@@ -1,19 +1,15 @@
 // @flow
-import {FETCH_REQUEST} from './const'
-import {fetchPage} from './utils/api'
-import {fetchSuccess, fetchFailure} from './actions'
+import {addRule} from 'redux-interrupt'
+import * as at from './const'
+import * as api from './utils/api'
+import * as actions from './actions'
+// import * as selectors from './selectors'
 
-import type {FetchRequestAction} from './actions'
-
-type Consequence = {
-  action: FetchRequestAction
-}
-
-export const fetchPageRule = {
+addRule({
   id: 'core/FETCH_PAGE',
-  target: FETCH_REQUEST,
-  consequence: ({action}:Consequence) => fetchPage(action.meta.urlKey).then(
-    result => fetchSuccess(result),
-    error => fetchFailure(action.meta.urlKey, error)
+  target: at.FETCH_REQUEST,
+  consequence: ({action}) => api.fetchPage(action.meta.urlKey).then(
+    result => actions.fetchSuccess(result),
+    error => actions.fetchFailure(action.meta.urlKey, error)
   )
-}
+})
