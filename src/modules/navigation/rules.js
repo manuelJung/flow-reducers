@@ -1,9 +1,9 @@
 // @flow
 import * as at from './const'
 import {addRule} from 'redux-interrupt'
-import {hasFetchedCategories, getCategory} from './selectors'
-import {fetchCategories, fetchCategoryContext} from './utils/api'
-import {setCategories, fetchContextSuccess, fetchContextFailure} from './actions'
+import * as selectors from './selectors'
+import * as api from './utils/api'
+import * as actions from './actions'
 
 import type {Context, Category, CategoryId} from './entities'
 
@@ -11,9 +11,9 @@ addRule({
   id: 'navigation/FETCH_CATEGORIES',
   condition: (_, getState) => {
     const state = getState()
-    return !hasFetchedCategories(state.navigation)
+    return !selectors.hasFetchedCategories(state.navigation)
   },
-  consequence: () => fetchCategories().then(setCategories),
+  consequence: () => api.fetchCategories().then(actions.setCategories),
   addOnce: true
 })
 
@@ -23,11 +23,11 @@ addRule({
   consequence: ({action, getState}) => {
     const {categoryId} = action.meta
     const state = getState()
-    const category = getCategory(state.navigation, categoryId)
-    if(!category) return fetchContextFailure(categoryId, 'categories not found')
-    return fetchCategoryContext(category).then(
-      result => fetchContextSuccess(categoryId, result),
-      error => fetchContextFailure(categoryId, error.toString())
+    const category = selectors.getCategory(state.navigation, categoryId)
+    if(!category) return actions.fetchContextFailure(categoryId, 'categories not found')
+    return api.fetchCategoryContext(category).then(
+      result => actions.fetchContextSuccess(categoryId, result),
+      error => actions.fetchContextFailure(categoryId, error.toString())
     )
   }
 })
@@ -43,7 +43,7 @@ addRule({
   }),
   addWhen: function* (_,getState) {
     const state = getState()
-    const hasFetched = hasFetchedCategories(state.navigation)
+    const hasFetched = selectors.hasFetchedCategories(state.navigation)
     return hasFetched ? 'ABORT' : 'ADD_RULE'
   },
   addUntil: function* (action) {
