@@ -17,9 +17,9 @@ type ArticleState = {
 type ListingState = {
   +isFetching: boolean,
   +fetchError: string | null,
-  +data: ListingMagazinArticle[],
+  +data: ListingMagazinArticle[] | null,
   +filters: {
-    +filterIds: string[] | null,
+    +filterIds: string[],
     +category: string,
     +page: number
   },
@@ -108,9 +108,9 @@ function articleReducer (state:ArticleState=defaultArticleState, action:Action):
 const defaultListingState = {
   isFetching: false,
   fetchError: null,
-  data: [],
+  data: null,
   filters: {
-    filterIds: null,
+    filterIds: [],
     category: '',
     page: 0
   },

@@ -34,7 +34,7 @@ export const getMagazinArticleRequest:(state:State, urlKey:UrlKey)=> * = createR
 
 // MAGAZIN LIST
 
-export const getListHits = (state:State, key:ListingKey):ListingMagazinArticle|null => state.articleLists[key]
+export const getListHits = (state:State, key:ListingKey):ListingMagazinArticle[]|null => state.articleLists[key]
   ? state.articleLists[key].data
   : null
 
@@ -44,7 +44,7 @@ export const isFetchingList = (state:State, key:ListingKey):boolean => state.art
 
 export const shouldFetchList = (state:State, key:ListingKey):boolean => !state.articleLists[key]
 
-export const getListFetchError = (state:State, key:LisitngKey):string|null => state.articleLists[key]
+export const getListFetchError = (state:State, key:ListingKey):string|null => state.articleLists[key]
   ? state.articleLists[key].fetchError
   : null
 
@@ -90,4 +90,4 @@ export const getPagination: (state:State, key:ListingKey)=>* = createReSelector(
       hasPrevPage: page >= numPages
     }
   }
-)
+)((_,key) => key)
