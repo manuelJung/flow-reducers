@@ -4,25 +4,25 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import type {RootState} from 'store/rootReducer'
-import type {ListingKey} from '../entities'
+import type {ListIdentifier as Identifier} from '../entities'
 import {getCategory, getCategoryOptions} from '../selectors'
 
 type Props = {
-  listingKey: ListingKey,
+  identifier: Identifier,
   pure?: boolean,
   render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 export type InjectedProps = {
-  listingKey: ListingKey,
+  identifier: Identifier,
   category: string,
   options: string[],
   fetch: () => void
 }
 
 const mapStateToProps = (state:RootState, props) => ({
-  category: getCategory(state.magazin, props.listingKey),
-  options: getCategoryOptions(state.magazin, props.listingKey)
+  category: getCategory(state.magazin, props.identifier),
+  options: getCategoryOptions(state.magazin, props.identifier)
 })
 
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({}, dispatch)
@@ -38,7 +38,7 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
     areOwnPropsEqual: (a,b) => {
       if(!b.pure){ if(a.render !== b.render) return false }
       return (
-        a.listingKey === b.listingKey
+        a.identifier === b.identifier
       )
     }
   }

@@ -1,5 +1,5 @@
 // @flow
-import type {MagazinArticle, ListingMagazinArticle, UrlKey, ListingKey} from './entities'
+import type {MagazinArticle, ListingMagazinArticle, ArticleIdentifier, ListIdentifier} from './entities'
 import type {State} from './reducer'
 import createReSelector from 're-reselect'
 
@@ -8,84 +8,84 @@ import createReSelector from 're-reselect'
 
 
 
-export const getMagazinArticle = (state:State, urlKey:UrlKey):MagazinArticle|null => state.articles[urlKey]
-  ? state.articles[urlKey].data
+export const getMagazinArticle = (state:State, identifier:ArticleIdentifier):MagazinArticle|null => state.articles[identifier]
+  ? state.articles[identifier].data
   : null
 
-export const isFetchingMagazinArticle = (state:State, urlKey:UrlKey):boolean => state.articles[urlKey]
-  ? state.articles[urlKey].isFetching
+export const isFetchingMagazinArticle = (state:State, identifier:ArticleIdentifier):boolean => state.articles[identifier]
+  ? state.articles[identifier].isFetching
   : false
 
-export const shouldFetchMagazinArticle = (state:State, urlKey:UrlKey):boolean => !state.articles[urlKey]
+export const shouldFetchMagazinArticle = (state:State, identifier:ArticleIdentifier):boolean => !state.articles[identifier]
 
-export const getMagazinArticleFetchError = (state:State, urlKey:UrlKey):string|null => state.articles[urlKey]
-  ? state.articles[urlKey].fetchError
+export const getMagazinArticleFetchError = (state:State, identifier:ArticleIdentifier):string|null => state.articles[identifier]
+  ? state.articles[identifier].fetchError
   : null
 
 
-export const getMagazinArticleRequest:(state:State, urlKey:UrlKey)=> * = createReSelector(
+export const getMagazinArticleRequest:(state:State, identifier:ArticleIdentifier)=> * = createReSelector(
   getMagazinArticle,
   isFetchingMagazinArticle,
   getMagazinArticleFetchError,
   shouldFetchMagazinArticle,
   (data, isFetching, fetchError, shouldFetch) => ({data, isFetching, fetchError, shouldFetch})
-)((_,urlKey) => urlKey)
+)((_,identifier) => identifier)
 
 
 // MAGAZIN LIST
 
-export const getListHits = (state:State, key:ListingKey):ListingMagazinArticle[]|null => state.articleLists[key]
-  ? state.articleLists[key].data
+export const getListHits = (state:State, identifier:ListIdentifier):ListingMagazinArticle[]|null => state.articleLists[identifier]
+  ? state.articleLists[identifier].data
   : null
 
-export const isFetchingList = (state:State, key:ListingKey):boolean => state.articleLists[key]
-  ? state.articleLists[key].isFetching
+export const isFetchingList = (state:State, identifier:ListIdentifier):boolean => state.articleLists[identifier]
+  ? state.articleLists[identifier].isFetching
   : false
 
-export const shouldFetchList = (state:State, key:ListingKey):boolean => !state.articleLists[key]
+export const shouldFetchList = (state:State, identifier:ListIdentifier):boolean => !state.articleLists[identifier]
 
-export const getListFetchError = (state:State, key:ListingKey):string|null => state.articleLists[key]
-  ? state.articleLists[key].fetchError
+export const getListFetchError = (state:State, identifier:ListIdentifier):string|null => state.articleLists[identifier]
+  ? state.articleLists[identifier].fetchError
   : null
 
-export const getListRequest:(state:State, key:ListingKey)=> * = createReSelector(
+export const getListRequest:(state:State, identifier:ListIdentifier)=> * = createReSelector(
   getListHits,
   isFetchingList,
   getListFetchError,
   shouldFetchList,
   (data, isFetching, fetchError, shouldFetch) => ({data, isFetching, fetchError, shouldFetch})
-)((_,key) => key)
+)((_,identifier) => identifier)
 
 // filters
 
-export const getPage = (state:State, key:ListingKey):number => state.articleLists[key]
-  ? state.articleLists[key].filters.page
+export const getPage = (state:State, identifier:ListIdentifier):number => state.articleLists[identifier]
+  ? state.articleLists[identifier].filters.page
   : 0
 
-export const getCategory = (state:State, key:ListingKey):string => state.articleLists[key]
-  ? state.articleLists[key].filters.category
+export const getCategory = (state:State, identifier:ListIdentifier):string => state.articleLists[identifier]
+  ? state.articleLists[identifier].filters.category
   : ''
 
-export const getCategoryOptions = (state:State, key:ListingKey):string[] => state.articleLists[key]
-  ? state.articleLists[key].filterOptions.category
+export const getCategoryOptions = (state:State, identifier:ListIdentifier):string[] => state.articleLists[identifier]
+  ? state.articleLists[identifier].filterOptions.category
   : []
 
-export const getFilterIds = (state:State, key:ListingKey):string[] => state.articleLists[key]
-  ? state.articleLists[key].filters.filterIds
+export const getFilterIds = (state:State, identifier:ListIdentifier):string[] => state.articleLists[identifier]
+  ? state.articleLists[identifier].filters.filterIds
   : []
 
-export const getFilters: (state:State, key:ListingKey)=>* = createReSelector(
+export const getFilters: (state:State, identifier:ListIdentifier)=>* = createReSelector(
   getPage,
   getCategory,
   getFilterIds,
   (page, category, filterIds) => ({page, category, filterIds})
-)((_,key) => key)
+)((_,identifier) => identifier)
 
 // custom
 
-export const getPagination: (state:State, key:ListingKey)=>* = createReSelector(
+export const getPagination: (state:State, identifier:ListIdentifier)=>* = createReSelector(
   getPage,
-  (state:State, key:ListingKey) => state.articleLists[key] ? state.articleLists[key].numPages : 5,
+  (state:State, identifier:ListIdentifier) => state.articleLists[identifier] ? state.articleLists[identifier].numPages : 5,
   (page, numPages) => {
     return {
       page,
@@ -94,4 +94,4 @@ export const getPagination: (state:State, key:ListingKey)=>* = createReSelector(
       hasPrevPage: page >= numPages
     }
   }
-)((_,key) => key)
+)((_,identifier) => identifier)

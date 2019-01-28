@@ -1,15 +1,15 @@
 // @flow
 
-export type UrlKey = string
+export type ArticleIdentifier = string
 
-export type ListingKey = string
+export type ListIdentifier = string
 
 export type MagazinArticle = {
-  urlKey: UrlKey
+  urlKey: ArticleIdentifier
 }
 
 export type ListingMagazinArticle = {
-  urlKey: UrlKey
+  urlKey: string
 }
 
 export type ListingFilters = {

@@ -1,39 +1,39 @@
 // @flow
 import * as at from './const'
-import type {MagazinArticle, ListingMagazinArticle, UrlKey, ListingKey} from './entities'
+import type {MagazinArticle, ListingMagazinArticle, ArticleIdentifier, ListIdentifier} from './entities'
 import type {ListingResponse} from './utils/api'
 
 export type FetchArticleRequestAction = {
   type: typeof at.FETCH_ARTICLE_REQUEST,
-  meta: { urlKey:UrlKey }
+  meta: { identifier:ArticleIdentifier }
 }
 
 export type FetchArticleSuccessAction = {
   type: typeof at.FETCH_ARTICLE_SUCCESS,
-  meta: { urlKey:UrlKey },
+  meta: { identifier:ArticleIdentifier },
   payload: MagazinArticle
 }
 
 export type FetchArticleFailureAction = {
   type: typeof at.FETCH_ARTICLE_FAILURE,
-  meta: { urlKey:UrlKey },
+  meta: { identifier:ArticleIdentifier },
   payload: string
 }
 
 export type FetchListRequestAction = {
   type: typeof at.FETCH_LIST_REQUEST,
-  meta: { key:ListingKey }
+  meta: { identifier:ListIdentifier }
 }
 
 export type FetchListSuccessAction = {
   type: typeof at.FETCH_LIST_SUCCESS,
-  meta: { key:ListingKey },
+  meta: { identifier:ListIdentifier },
   payload: ListingResponse
 }
 
 export type FetchListFailureAction = {
   type: typeof at.FETCH_LIST_FAILURE,
-  meta: { key:ListingKey },
+  meta: { identifier:ListIdentifier },
   payload: string
 }
 
@@ -43,18 +43,18 @@ export type CreateListAction = {
     category?: string,
     filterIds?: string[]
   },
-  payload: ListingKey
+  payload: ListIdentifier
 }
 
 export type ToggleCategoryAction = {
   type: typeof at.TOGGLE_CATEGORY,
-  meta: { key:ListingKey },
+  meta: { identifier:ListIdentifier },
   payload: string
 }
 
 export type SetPageAction = {
   type: typeof at.SET_PAGE,
-  meta: { key:ListingKey },
+  meta: { identifier:ListIdentifier },
   payload: number
 }
 
@@ -68,54 +68,54 @@ export type Action = FetchArticleRequestAction
 | ToggleCategoryAction
 | SetPageAction
 
-export const fetchArticleRequest = (urlKey:UrlKey):FetchArticleRequestAction => ({
+export const fetchArticleRequest = (identifier:ArticleIdentifier):FetchArticleRequestAction => ({
   type: at.FETCH_ARTICLE_REQUEST,
-  meta: { urlKey }
+  meta: { identifier }
 })
 
-export const fetchArticleSuccess = (urlKey:UrlKey, article:MagazinArticle):FetchArticleSuccessAction => ({
+export const fetchArticleSuccess = (identifier:ArticleIdentifier, article:MagazinArticle):FetchArticleSuccessAction => ({
   type: at.FETCH_ARTICLE_SUCCESS,
-  meta: { urlKey },
+  meta: { identifier },
   payload: article
 })
 
-export const fetchArticleFailure = (urlKey:UrlKey, error:string):FetchArticleFailureAction => ({
+export const fetchArticleFailure = (identifier:ArticleIdentifier, error:string):FetchArticleFailureAction => ({
   type: at.FETCH_ARTICLE_FAILURE,
-  meta: { urlKey },
+  meta: { identifier },
   payload: error
 })
 
-export const fetchListRequest = (key:ListingKey):FetchListRequestAction => ({
+export const fetchListRequest = (identifier:ListIdentifier):FetchListRequestAction => ({
   type: at.FETCH_LIST_REQUEST,
-  meta: { key }
+  meta: { identifier }
 })
 
-export const fetchListSuccess = (key:ListingKey, response:ListingResponse):FetchListSuccessAction => ({
+export const fetchListSuccess = (identifier:ListIdentifier, response:ListingResponse):FetchListSuccessAction => ({
   type: at.FETCH_LIST_SUCCESS,
-  meta: { key },
+  meta: { identifier },
   payload: response
 })
 
-export const fetchListFailure = (key:ListingKey, error:string):FetchListFailureAction => ({
+export const fetchListFailure = (identifier:ListIdentifier, error:string):FetchListFailureAction => ({
   type: at.FETCH_LIST_FAILURE,
-  meta: { key },
+  meta: { identifier },
   payload: error
 })
 
-export const createList = (key:ListingKey, filters:{ category?: string, filterIds?: string[] }):CreateListAction => ({
+export const createList = (identifier:ListIdentifier, filters:{ category?: string, filterIds?: string[] }):CreateListAction => ({
   type: at.CREATE_LIST,
   meta: filters,
-  payload: key
+  payload: identifier
 })
 
-export const toggleCategory = (key:ListingKey, category:string):ToggleCategoryAction => ({
+export const toggleCategory = (identifier:ListIdentifier, category:string):ToggleCategoryAction => ({
   type: at.TOGGLE_CATEGORY,
-  meta: { key },
+  meta: { identifier },
   payload: category
 })
 
-export const setPageCategory = (key:ListingKey, page:number):SetPageAction => ({
+export const setPageCategory = (identifier:ListIdentifier, page:number):SetPageAction => ({
   type: at.SET_PAGE,
-  meta: { key },
+  meta: { identifier },
   payload: page
 })

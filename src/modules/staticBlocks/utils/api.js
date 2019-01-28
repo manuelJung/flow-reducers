@@ -1,11 +1,11 @@
 // @flow
 import algoliasearchHelper from 'algoliasearch-helper'
 import algoliasearch from 'algoliasearch'
-import type {Identifier, StaticBlock} from '../entities'
+import type {StaticBlock} from '../entities'
 
 const client = algoliasearch('0BYMLMXGLI', '7058207f486c5d9c0a0e2d31fd10e7e5')
 
-export function fetchBlock(identifier:Identifier):Promise<StaticBlock> {
+export function fetchBlock(identifier:string):Promise<StaticBlock> {
   return algoliasearchHelper(client, 'staticblocks', {
     disjunctiveFacets: ['identifier'],
     attributesToHighlight: []

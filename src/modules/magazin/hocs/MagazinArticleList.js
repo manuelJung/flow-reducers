@@ -4,18 +4,18 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import type {RootState} from 'store/rootReducer'
-import type {ListingKey, ListingMagazinArticle} from '../entities'
+import type {ListIdentifier as Identifier, ListingMagazinArticle} from '../entities'
 import {getListRequest} from '../selectors'
 import {fetchListRequest} from '../actions'
 
 type Props = {
-  listingKey: ListingKey,
+  identifier: Identifier,
   pure?: boolean,
   render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 export type InjectedProps = {
-  listingKey: ListingKey,
+  identifier: Identifier,
   data: ListingMagazinArticle[] | null,
   isFetching: boolean,
   fetchError: null | string,
@@ -23,12 +23,12 @@ export type InjectedProps = {
   fetch: () => void
 }
 
-const mapStateToProps = (state:RootState, props) => getListRequest(state.magazin, props.listingKey)
+const mapStateToProps = (state:RootState, props) => getListRequest(state.magazin, props.identifier)
 
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ fetchListRequest }, dispatch)
 
 const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
-  fetch: () => {dp.fetchListRequest(props.listingKey)}
+  fetch: () => {dp.fetchListRequest(props.identifier)}
 })
 
 export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
@@ -40,7 +40,7 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
     areOwnPropsEqual: (a,b) => {
       if(!b.pure){ if(a.render !== b.render) return false }
       return (
-        a.listingKey === b.listingKey
+        a.identifier === b.identifier
       )
     }
   }

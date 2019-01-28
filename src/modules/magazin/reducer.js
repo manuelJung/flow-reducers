@@ -1,11 +1,11 @@
 // @flow
 import * as at from './const'
-import type {MagazinArticle, ListingMagazinArticle, UrlKey, ListingKey} from './entities'
+import type {MagazinArticle, ListingMagazinArticle, ArticleIdentifier, ListIdentifier} from './entities'
 import type {Action} from './actions'
 
 export type State = {
-  +articles: {+[key:UrlKey]:ArticleState},
-  +articleLists: {+[key:ListingKey]:ListingState}
+  +articles: {+[identifier:ArticleIdentifier]:ArticleState},
+  +articleLists: {+[identifier:ListIdentifier]:ListingState}
 }
 
 type ArticleState = {
@@ -39,12 +39,12 @@ export default function reducer (state:State=defaultState, action:Action):State 
     case at.FETCH_ARTICLE_REQUEST:
     case at.FETCH_ARTICLE_SUCCESS:
     case at.FETCH_ARTICLE_FAILURE: {
-      const {urlKey} = action.meta
+      const {identifier} = action.meta
       return {
         ...state,
         articles: {
           ...state.articles,
-          [urlKey]: articleReducer(state.articles[urlKey], action)
+          [identifier]: articleReducer(state.articles[identifier], action)
         }
       }
     }
@@ -62,12 +62,12 @@ export default function reducer (state:State=defaultState, action:Action):State 
     case at.FETCH_LIST_REQUEST:
     case at.FETCH_LIST_SUCCESS:
     case at.FETCH_LIST_FAILURE: {
-      const {key} = action.meta
+      const {identifier} = action.meta
       return {
         ...state,
         articleLists: {
           ...state.articleLists,
-          [key]: listingReducer(state.articleLists[key], action)
+          [identifier]: listingReducer(state.articleLists[identifier], action)
         }
       }
     }
