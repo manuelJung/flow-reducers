@@ -3,15 +3,16 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import type { RootState } from 'store/rootReducer'
-import type {Category, CategoryId} from '../entities'
+import type {Category as CategoryType, CategoryId} from '../entities'
 import {getCategory, hasFetchedCategories} from '../selectors'
 
 type Props = {
-  categoryId: CategoryId
+  categoryId: CategoryId,
+  render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 export type InjectedProps = {
-  category: Category,
+  category: CategoryType | null,
   hasFetched: boolean,
   categoryId: CategoryId
 }
