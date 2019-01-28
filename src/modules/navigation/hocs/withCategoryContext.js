@@ -9,6 +9,7 @@ import {fetchContextRequest as fetch} from '../actions'
 
 type Props = {
   categoryId: CategoryId,
+  pure?: boolean,
   render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
@@ -34,7 +35,13 @@ const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,P
   mapDispatchToProps,
   mergeProps,
   {
-    areStatesEqual: (a:RootState,b:RootState) => a.navigation === b.navigation
+    areStatesEqual: (a:RootState,b:RootState) => a.navigation === b.navigation,
+    areOwnPropsEqual: (a,b) => {
+      if(!b.pure){ if(a.render !== b.render) return false }
+      return (
+        a.categoryId === b.categoryId
+      )
+    }
   }
 )(Comp)
 
