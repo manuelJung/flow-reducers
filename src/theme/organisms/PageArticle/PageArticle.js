@@ -18,20 +18,20 @@ export default function PageArticle ({urlKey}:Props) {
         if(props.fetchError){
           return <div>error</div>
         }
-        if(props.page && props.page.useStory){
+        if(props.data && props.data.useStory){
           return (
             <React.Fragment>
-              <div className='title'>{props.page.title}</div>
-              <Story story={props.page.story} />
+              <div className='title'>{props.data.title}</div>
+              <Story story={props.data.story} />
             </React.Fragment>
           )
         }
-        if(props.page && !props.page.useStory){
+        if(props.data && !props.data.useStory){
           return (
             <React.Fragment>
-              <div className='title'>{props.page.title}</div>
-              <BootstrapContent content={props.page.body} />
-              <BootstrapContent content={props.page.bodyOverflow} />
+              <div className='title'>{props.data.title}</div>
+              <BootstrapContent content={props.data.body} />
+              <BootstrapContent content={props.data.bodyOverflow} />
             </React.Fragment>
           )
         }

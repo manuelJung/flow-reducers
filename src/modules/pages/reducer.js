@@ -11,7 +11,7 @@ export type State = {
 type PageState = {
   +isFetching: boolean,
   +fetchError: string | null,
-  +page: Page | null
+  +data: Page | null
 }
 
 export default function reducer(state:State={}, action:Action):State{
@@ -30,25 +30,25 @@ function pageReducer(state, action:Action):PageState{
   switch(action.type){
     case at.FETCH_REQUEST: {
       return {
+        ...state,
         isFetching: true,
-        fetchError: null,
-        page: null
+        fetchError: null
       }
     }
 
     case at.FETCH_SUCCESS: {
       return {
+        ...state,
         isFetching: false,
-        fetchError: null,
-        page: action.payload
+        data: action.payload
       }
     }
 
     case at.FETCH_FAILURE: {
       return {
+        ...state,
         isFetching: false,
-        fetchError: action.payload,
-        page: null
+        fetchError: action.payload
       }
     }
     default: return state

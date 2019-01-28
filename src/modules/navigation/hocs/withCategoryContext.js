@@ -18,6 +18,7 @@ export type InjectedProps = {
   data: Context | null,
   isFetching: boolean,
   shouldFetch: boolean,
+  fetchError: null | string,
   fetch: () => void
 }
 

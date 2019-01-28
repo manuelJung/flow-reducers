@@ -1,67 +1,67 @@
 // @flow
 import * as React from 'react'
 import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import type {RootState} from 'store/rootReducer'
 import type {UrlKey, Page as PageType} from '../entities'
-import {isFetching, getFetchError, getPage, shouldFetch} from '../selectors'
+import {getPageRequest} from '../selectors'
 import {fetchRequest} from '../actions'
 
-type InjectedProps = {
+type Props = {
+  urlKey: UrlKey,
+  pure?: boolean,
+  render?: (props:$Diff<InjectedProps,{}>) => any
+}
+
+export type InjectedProps = {
+  urlKey: UrlKey,
+  data: PageType | null,
   isFetching: boolean,
-  fetchError: string | null,
-  page: PageType | null,
+  fetchError: null | string,
   shouldFetch: boolean,
   fetch: () => void
 }
 
-type RequiredProps = {
-  urlKey: UrlKey,
-  render?: (props:$Diff<AllProps,{render:any}>) => any
-}
+const mapStateToProps = (state:RootState, props) => getPageRequest(state.pages, props.urlKey)
 
-type AllProps = {
-  isFetching: boolean,
-  fetchError: string | null,
-  page: PageType | null,
-  shouldFetch: boolean,
-  fetch: () => void,
-  urlKey: UrlKey,
-  render?: (props:$Diff<AllProps,{render:any}>) => any
-}
+const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ fetchRequest }, dispatch)
 
-type Hoc = (
-  Component:React.ComponentType<AllProps>
-) => React.ComponentType<RequiredProps>
+const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
+  fetch: () => {dp.fetchRequest(props.urlKey)}
+})
 
-function mapProps (state:RootState,{urlKey}) {
-  return {
-    isFetching: isFetching(state.pages, urlKey),
-    fetchError: getFetchError(state.pages, urlKey),
-    page: getPage(state.pages, urlKey),
-    shouldFetch: shouldFetch(state.pages, urlKey)
+const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps,
+  {
+    areStatesEqual: (a:RootState,b:RootState) => a.pages === b.pages,
+    areOwnPropsEqual: (a,b) => {
+      if(!b.pure){ if(a.render !== b.render) return false }
+      return (
+        a.urlKey === b.urlKey
+      )
+    }
   }
-}
-
-const mapDispatch = {fetchRequest}
-
-function mergeProps (stateProps, {fetchRequest}, ownProps) {
-  return Object.assign({}, stateProps, ownProps, {
-    fetch: () => fetchRequest(ownProps.urlKey)
-  })
-}
-
-const hoc:Hoc = connect(mapProps, mapDispatch, mergeProps)
+)(Comp)
 
 export default hoc
 
-export const Page = hoc(class Page extends React.Component<AllProps> {
-  componentDidMount(){
-    if(this.props.shouldFetch) this.props.fetch()
+export const Page = hoc(class Page extends React.Component<InjectedProps & {render:Function} > {
+  static fetchedCategoryPaths = {}
+
+  fetch = () => {
+    if(this.props.shouldFetch){
+      this.props.fetch()
+    }
   }
+
+  componentDidMount = this.fetch
+  componentDidUpdate = this.fetch
+
   render() {
     const {render, ...props} = this.props
     return render ? render(props) : null
-  } 
+  }
 })
-
