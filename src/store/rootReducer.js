@@ -29,7 +29,8 @@ export type RootState = AsyncReducers & {
   staticBlocks: StaticBlockState,
   routing: any,
   search: SearchState,
-  navigation: NavigationState
+  navigation: NavigationState,
+  magazin: MagazinState
 }
 
 const makeRootReducer = (asyncReducers?:AsyncReducers):RootState => {

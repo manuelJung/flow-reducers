@@ -19,11 +19,11 @@ addRule({
   target: at.FETCH_ARTICLE_REQUEST,
   consequence: ({action, getState}) => {
     const state = getState()
-    const filters = selectors.getFilters(state.magazin)
     const {key} = action.meta
+    const filters = selectors.getFilters(state.magazin, key)
     return api.fetchArticleList(key, filters).then(
       result => actions.fetchListSuccess(key, result),
-      error => actions.fetchListFailure(key, result)
+      error => actions.fetchListFailure(key, error)
     )
   }
 })

@@ -23,6 +23,9 @@ type ListingState = {
     +category: string,
     +page: number
   },
+  +filterOptions: {
+    +category: string[]
+  },
   +numPages: number
 }
 
@@ -114,6 +117,9 @@ const defaultListingState = {
     category: '',
     page: 0
   },
+  filterOptions: {
+    category: []
+  },
   numPages: 5
 }
 
@@ -164,7 +170,11 @@ function listingReducer (state:ListingState=defaultListingState, action:Action):
         ...state,
         isFetching: false,
         data: action.payload.hits,
-        numPages: action.payload.numPages
+        numPages: action.payload.numPages,
+        filterOptions: {
+          ...state.filterOptions,
+          category: action.payload.categories
+        }
       }
     }
     default: return state

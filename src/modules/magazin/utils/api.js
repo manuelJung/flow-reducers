@@ -17,7 +17,8 @@ export const fetchArticle = (urlKey:UrlKey):Promise<MagazinArticle> => {
 
 export type ListingResponse = {
   hits: ListingMagazinArticle[],
-  numPages: number
+  numPages: number,
+  categories: string[]
 }
 
 export const fetchArticleList = (key:ListingKey, filters: ListingFilters):Promise<ListingResponse> => {
@@ -48,6 +49,7 @@ export const fetchArticleList = (key:ListingKey, filters: ListingFilters):Promis
     .searchOnce()
     .then(result => ({
       hits: result.content.hits,
-      numPages: result.content.content.nbPages
+      numPages: result.content.content.nbPages,
+      categories: Object.keys(result.hierarchicalFacets[0].data)
     }))
 }

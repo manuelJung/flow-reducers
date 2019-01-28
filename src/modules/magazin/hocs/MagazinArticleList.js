@@ -28,7 +28,7 @@ const mapStateToProps = (state:RootState, props) => getListRequest(state.magazin
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ fetchListRequest }, dispatch)
 
 const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
-  fetch: () => {dp.fetchListRequest(props.listtingKey)}
+  fetch: () => {dp.fetchListRequest(props.listingKey)}
 })
 
 export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
@@ -36,7 +36,7 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
   mapDispatchToProps,
   mergeProps,
   {
-    areStatesEqual: (a:RootState,b:RootState) => a.pages === b.pages,
+    areStatesEqual: (a:RootState,b:RootState) => a.magazin === b.magazin,
     areOwnPropsEqual: (a,b) => {
       if(!b.pure){ if(a.render !== b.render) return false }
       return (

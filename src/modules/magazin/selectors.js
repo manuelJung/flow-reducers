@@ -66,6 +66,10 @@ export const getCategory = (state:State, key:ListingKey):string => state.article
   ? state.articleLists[key].filters.category
   : ''
 
+export const getCategoryOptions = (state:State, key:ListingKey):string[] => state.articleLists[key]
+  ? state.articleLists[key].filterOptions.category
+  : []
+
 export const getFilterIds = (state:State, key:ListingKey):string[] => state.articleLists[key]
   ? state.articleLists[key].filters.filterIds
   : []
