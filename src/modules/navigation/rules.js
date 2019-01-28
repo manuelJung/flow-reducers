@@ -8,7 +8,7 @@ import {setCategories, fetchContextSuccess, fetchContextFailure} from './actions
 import type {Context, Category, CategoryId} from './entities'
 
 addRule({
-  id: 'core/FETCH_CATEGORIES',
+  id: 'navigation/FETCH_CATEGORIES',
   condition: (_, getState) => {
     const state = getState()
     return !hasFetchedCategories(state.navigation)
@@ -18,7 +18,7 @@ addRule({
 })
 
 addRule({
-  id: 'core/FETCH_CATEGORY_CONTEXT',
+  id: 'navigation/FETCH_CATEGORY_CONTEXT',
   target: at.FETCH_CONTEXT_REQUEST,
   consequence: ({action, getState}) => {
     const {categoryId} = action.meta
@@ -33,11 +33,11 @@ addRule({
 })
 
 addRule({
-  id:'core/FETCH_CATEGORY_CONTEXT_LAZY',
+  id:'navigation/FETCH_CATEGORY_CONTEXT_LAZY',
   target: at.FETCH_CONTEXT_REQUEST,
   position: 'INSERT_INSTEAD',
   consequence: ({action, addRule}) => addRule({
-    id: 'core/LAZY_FETCH/dispatch',
+    id: 'navigation/LAZY_FETCH/dispatch',
     target: at.SET_CATEGORIES,
     consequence: () => action
   }),

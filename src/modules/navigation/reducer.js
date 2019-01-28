@@ -13,7 +13,7 @@ export type State = {
 type ContextState = {
   +isFetching: boolean,
   +fetchError: string | null,
-  +context: Context | null
+  +data: Context | null
 }
 
 export const defaultState = {
@@ -52,7 +52,7 @@ export default function reducer (state:State=defaultState, action:Action):State 
 const defaultContextState = {
   isFetching: false,
   fetchError: null,
-  context: null
+  data: null
 }
 
 function contextReducer (state:ContextState=defaultContextState, action:Action):ContextState {
@@ -68,7 +68,7 @@ function contextReducer (state:ContextState=defaultContextState, action:Action):
       return {
         ...state,
         isFetching: false,
-        context: action.payload
+        data: action.payload
       }
     }
     case at.FETCH_CONTEXT_FAILURE: {
