@@ -11,17 +11,19 @@ export type State = {
 type ArticleState = {
   +isFetching: boolean,
   +fetchError: string | null,
-  +article: MagazinArticle | null
+  +data: MagazinArticle | null
 }
 
 type ListingState = {
   +isFetching: boolean,
   +fetchError: string | null,
-  +filterIds: string[] | null,
-  +category: string,
-  +hits: ListingMagazinArticle[],
-  numPages: number,
-  page: number
+  +data: ListingMagazinArticle[],
+  +filters: {
+    +filterIds: string[] | null,
+    +category: string,
+    +page: number
+  },
+  +numPages: number
 }
 
 const defaultState = {
@@ -73,7 +75,7 @@ export default function reducer (state:State=defaultState, action:Action):State 
 const defaultArticleState = {
   isFetching: false,
   fetchError: null,
-  article: null
+  data: null
 }
 
 function articleReducer (state:ArticleState=defaultArticleState, action:Action):ArticleState {
@@ -96,7 +98,7 @@ function articleReducer (state:ArticleState=defaultArticleState, action:Action):
       return {
         ...state,
         isFetching: false,
-        article: action.payload
+        data: action.payload
       }
     }
     default: return state
@@ -106,11 +108,13 @@ function articleReducer (state:ArticleState=defaultArticleState, action:Action):
 const defaultListingState = {
   isFetching: false,
   fetchError: null,
-  filterIds: null,
-  category: '',
-  hits: [],
-  numPages: 5,
-  page: 0
+  data: [],
+  filters: {
+    filterIds: null,
+    category: '',
+    page: 0
+  },
+  numPages: 5
 }
 
 function listingReducer (state:ListingState=defaultListingState, action:Action):ListingState {
@@ -118,24 +122,26 @@ function listingReducer (state:ListingState=defaultListingState, action:Action):
     case at.CREATE_LIST: {
       return {
         ...state,
-        ...action.meta,
-        isFetching: true,
-        fetchError: null
+        filters: {
+          ...defaultListingState.filters,
+          ...action.meta
+        }
       }
     }
     case at.TOGGLE_CATEGORY: {
       return {
         ...state,
-        isFetching: true,
-        fetchError: null,
-        category: action.payload === state.category ? defaultListingState.category : action.payload
+        filters: {
+          ...state.filters,
+          category: action.payload === state.filters.category 
+            ? defaultListingState.filters.category 
+            : action.payload
+        }
       }
     }
     case at.SET_PAGE: {
       return {
         ...state,
-        isFetching: true,
-        fetchError: null,
         page: action.payload
       }
     }
@@ -157,7 +163,7 @@ function listingReducer (state:ListingState=defaultListingState, action:Action):
       return {
         ...state,
         isFetching: false,
-        hits: action.payload.hits,
+        data: action.payload.hits,
         numPages: action.payload.numPages
       }
     }
