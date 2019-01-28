@@ -3,22 +3,22 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import type { RootState } from 'store/rootReducer'
-import type {Category as CategoryType, CategoryId} from '../entities'
+import type {Category as CategoryType, CategoryPath} from '../entities'
 import {getCategory, hasFetchedCategories} from '../selectors'
 
 type Props = {
-  categoryId: CategoryId,
+  categoryPath: CategoryPath,
   render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 export type InjectedProps = {
   category: CategoryType | null,
   hasFetched: boolean,
-  categoryId: CategoryId
+  categoryPath: CategoryPath
 }
 
 const mapStateToProps = (state:RootState, props) => ({
-  category: getCategory(state.navigation, props.categoryId),
+  category: getCategory(state.navigation, props.categoryPath),
   hasFetched: hasFetchedCategories(state.navigation)
 })
 

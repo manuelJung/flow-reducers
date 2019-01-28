@@ -3,30 +3,30 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import type { RootState } from 'store/rootReducer'
-import type {Context, CategoryId} from '../entities'
+import type {Context, CategoryPath} from '../entities'
 import {getCategoryContextRequest} from '../selectors'
 import {fetchContextRequest as fetch} from '../actions'
 
 type Props = {
-  categoryId: CategoryId,
+  categoryPath: CategoryPath,
   pure?: boolean,
   render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 export type InjectedProps = {
-  categoryId: CategoryId,
+  categoryPath: CategoryPath,
   data: Context | null,
   isFetching: boolean,
   shouldFetch: boolean,
   fetch: () => void
 }
 
-const mapStateToProps = (state:RootState, props) => getCategoryContextRequest(state.navigation, props.categoryId)
+const mapStateToProps = (state:RootState, props) => getCategoryContextRequest(state.navigation, props.categoryPath)
 
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ fetch }, dispatch)
 
 const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
-  fetch: () => {dp.fetch(props.categoryId)}
+  fetch: () => {dp.fetch(props.categoryPath)}
 })
 
 
@@ -39,7 +39,7 @@ const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,P
     areOwnPropsEqual: (a,b) => {
       if(!b.pure){ if(a.render !== b.render) return false }
       return (
-        a.categoryId === b.categoryId
+        a.categoryPath === b.categoryPath
       )
     }
   }
@@ -48,7 +48,7 @@ const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,P
 export default hoc
 
 export const CategoryContext = hoc(class CategoryContext extends React.Component<InjectedProps & {render:Function} > {
-  static fetchedCategoryIds = {}
+  static fetchedCategoryPaths = {}
 
   fetch = () => {
     if(this.props.shouldFetch){

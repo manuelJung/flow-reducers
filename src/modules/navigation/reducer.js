@@ -1,13 +1,13 @@
 // @flow
 import * as at from './const'
-import type {CategoryId, Category, Context} from './entities'
+import type {CategoryPath, Category, Context} from './entities'
 import type {Action} from './actions'
 
 export type State = {
-  +categories: {+[id:CategoryId]:Category},
-  +rootCategoryIds: CategoryId[],
+  +categories: {+[id:CategoryPath]:Category},
+  +rootCategoryPaths: CategoryPath[],
   +hasFetched: boolean,
-  +categoryContexts: {+[id:CategoryId]:ContextState}
+  +categoryContexts: {+[id:CategoryPath]:ContextState}
 }
 
 type ContextState = {
@@ -18,7 +18,7 @@ type ContextState = {
 
 export const defaultState = {
   categories: {},
-  rootCategoryIds: [],
+  rootCategoryPaths: [],
   hasFetched: false,
   categoryContexts: {}
 }
@@ -30,18 +30,18 @@ export default function reducer (state:State=defaultState, action:Action):State 
         ...state,
         hasFetched: true,
         categories: action.payload.categories,
-        rootCategoryIds: action.payload.rootCategoryIds
+        rootCategoryPaths: action.payload.rootCategoryPaths
       }
     }
     case at.FETCH_CONTEXT_REQUEST:
     case at.FETCH_CONTEXT_SUCCESS:
     case at.FETCH_CONTEXT_FAILURE: {
-      const {categoryId} = action.meta
+      const {categoryPath} = action.meta
       return {
         ...state,
         categoryContexts: {
           ...state.categoryContexts,
-          [categoryId]: contextReducer(state.categoryContexts[categoryId], action)
+          [categoryPath]: contextReducer(state.categoryContexts[categoryPath], action)
         }
       }
     }

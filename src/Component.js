@@ -17,11 +17,11 @@ export default function Component(){
   
   return (
     <div id='Component'>
-      <CategoryContext position='top' categoryId='/shop/bekleidung/kleider/abendkleider' />
+      <CategoryContext position='top' categoryPath='/shop/bekleidung/kleider/abendkleider' />
       <ProductSearch searchKey='default' />
       <PageArticle urlKey='looks' />
       <StaticBlock identifier='Sale_Category_Text1' />
-      <CategoryContext position='bottom' categoryId='/shop/bekleidung/kleider/abendkleider' />
+      <CategoryContext position='bottom' categoryPath='/shop/bekleidung/kleider/abendkleider' />
     </div>
   )
 }

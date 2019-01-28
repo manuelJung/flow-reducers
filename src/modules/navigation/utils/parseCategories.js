@@ -38,6 +38,6 @@ export default function parseInitialNavigationData (data) {
     
   return {
     categories: subItems.reduce((p,n) => Object.assign(p, {[n.link]: n}), {}),
-    rootCategoryIds: rootItems.map(item => item.link)
+    rootCategoryPaths: rootItems.map(item => item.link)
   }
 }

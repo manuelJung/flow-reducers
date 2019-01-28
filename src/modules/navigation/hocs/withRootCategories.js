@@ -3,7 +3,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import type { RootState } from 'store/rootReducer'
-import type {Category, CategoryId} from '../entities'
+import type {Category} from '../entities'
 import {getRootCategories, hasFetchedCategories} from '../selectors'
 
 type Props = {

@@ -3,16 +3,16 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import type { RootState } from 'store/rootReducer'
-import type {Context, CategoryId} from '../entities'
+import type {Context, CategoryPath} from '../entities'
 import {getCategoryContext, isFetchingCategoryContext, shouldFetchCategoryContext} from '../selectors'
 import {fetchContextRequest as fetch} from '../actions'
 
 type Props = {
-  categoryId: CategoryId
+  categoryPath: CategoryPath
 }
 
 export type InjectedProps = {
-  categoryId: CategoryId,
+  categoryPath: CategoryPath,
   context: Context,
   isFetching: boolean,
   shouldFetch: boolean,
@@ -20,15 +20,15 @@ export type InjectedProps = {
 }
 
 const mapStateToProps = (state:RootState, props) => ({
-  category: getCategoryContext(state.navigation, props.categoryId),
-  isFetching: isFetchingCategoryContext(state.navigation, props.categoryId),
-  shouldFetch: shouldFetchCategoryContext(state.navigation, props.categoryId)
+  category: getCategoryContext(state.navigation, props.categoryPath),
+  isFetching: isFetchingCategoryContext(state.navigation, props.categoryPath),
+  shouldFetch: shouldFetchCategoryContext(state.navigation, props.categoryPath)
 })
 
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ fetch }, dispatch)
 
 const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
-  fetch: () => {dp.fetch(props.categoryId)}
+  fetch: () => {dp.fetch(props.categoryPath)}
 })
 
 

@@ -4,17 +4,17 @@ import {CategoryContext as CategoryContextFetcher} from 'modules/navigation/hocs
 import Story from 'theme/molecules/Story'
 import BootstrapContent from 'theme/molecules/BootstrapContent'
 
-import type {CategoryId} from 'modules/navigation/entities'
+import type {CategoryPath} from 'modules/navigation/entities'
 
 type Props = {
-  categoryId: CategoryId,
+  categoryPath: CategoryPath,
   position: 'top' | 'bottom'
 }
 
-export default function CategoryContext ({categoryId, position}:Props) {
+export default function CategoryContext ({categoryPath, position}:Props) {
   return (
     <div className='CategoryContext'>
-      <CategoryContextFetcher categoryId={categoryId} render={props => {
+      <CategoryContextFetcher categoryPath={categoryPath} render={props => {
         if(props.isFetching){
           return <div>loading...</div>
         }

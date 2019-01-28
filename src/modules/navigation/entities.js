@@ -1,15 +1,15 @@
 // @flow
 
-export type CategoryId = string
+export type CategoryPath = string
 
 export type Category = {
   id: string,
   label: string,
-  link: CategoryId,
+  link: CategoryPath,
   category: string,
   searchQueryString: string,
   type: 'submenu' | 'default',
-  subItems: CategoryId[]
+  subItems: CategoryPath[]
 }
 
 export type Context = {
