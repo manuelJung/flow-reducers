@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import {Search} from 'modules/search/hocs/withSearch'
+import SearchInitializer from 'modules/search/hocs/Search'
 
 type Props = {
   searchKey: string
@@ -9,7 +9,7 @@ type Props = {
 export default function ProductSearch ({searchKey}:Props) {
   return (
     <div className='ProductSearch'>
-      <Search searchKey={searchKey} render={props => (
+      <SearchInitializer searchKey={searchKey} render={props => (
         <React.Fragment>
           <div className='ResetButton'/>
           <div className='CategoryTree'/>

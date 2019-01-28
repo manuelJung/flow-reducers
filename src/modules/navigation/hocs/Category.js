@@ -3,7 +3,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import type { RootState } from 'store/rootReducer'
-import type {Category as CategoryType, CategoryPath} from '../entities'
+import type {Category, CategoryPath} from '../entities'
 import {getCategory, hasFetchedCategories} from '../selectors'
 
 type Props = {
@@ -12,7 +12,7 @@ type Props = {
 }
 
 export type InjectedProps = {
-  category: CategoryType | null,
+  category: Category | null,
   hasFetched: boolean,
   categoryPath: CategoryPath
 }
@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({}, dispat
 const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props)
 
 
-const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
+export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps,
@@ -36,9 +36,7 @@ const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,P
   }
 )(Comp)
 
-export default hoc
-
-export const Category = hoc(class Category extends React.Component<InjectedProps  & {render:Function}> {
+export default hoc(class CategoryRenderer extends React.Component<InjectedProps  & {render:Function}> {
   render() {
     const {render, ...props} = this.props
     return render ? render(props) : null

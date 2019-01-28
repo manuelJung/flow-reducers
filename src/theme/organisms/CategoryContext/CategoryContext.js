@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import {CategoryContext as CategoryContextFetcher} from 'modules/navigation/hocs/withCategoryContext'
+import CategoryContextRenderer from 'modules/navigation/hocs/CategoryContext'
 import Story from 'theme/molecules/Story'
 import BootstrapContent from 'theme/molecules/BootstrapContent'
 
@@ -14,7 +14,7 @@ type Props = {
 export default function CategoryContext ({categoryPath, position}:Props) {
   return (
     <div className='CategoryContext'>
-      <CategoryContextFetcher categoryPath={categoryPath} render={props => {
+      <CategoryContextRenderer categoryPath={categoryPath} render={props => {
         if(props.isFetching){
           return <div>loading...</div>
         }

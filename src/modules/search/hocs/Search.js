@@ -37,13 +37,11 @@ function mergeProps (stateProps, {init}, ownProps) {
   })
 }
 
-const hoc:Hoc = connect(mapProps, mapDispatch, mergeProps, {
+export const hoc:Hoc = connect(mapProps, mapDispatch, mergeProps, {
   areOwnPropsEqual: (a,b) => b.static && true
 })
 
-export default hoc
-
-export const Search = hoc(class Search extends React.Component<InjectedProps> {
+export default hoc(class SearchInitializer extends React.Component<InjectedProps> {
   componentWillMount(){
     this.props.init()
   }

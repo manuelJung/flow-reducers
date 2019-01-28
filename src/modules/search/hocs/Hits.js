@@ -36,15 +36,13 @@ function mergeProps (stateProps, _, ownProps) {
   return Object.assign({}, stateProps, ownProps)
 }
 
-const hoc:Hoc = connect(mapProps, mapDispatch, mergeProps, {
+export const hoc:Hoc = connect(mapProps, mapDispatch, mergeProps, {
   areOwnPropsEqual: (a,b) => b.static && (
     a.searchKey === b.searchKey
   )
 })
 
-export default hoc
-
-export const Hits = hoc(class Hits extends React.Component<InjectedProps> {
+export default hoc(class HitsRenderer extends React.Component<InjectedProps> {
   render() {
     const {render, ...props} = this.props
     return render ? render(props) : null

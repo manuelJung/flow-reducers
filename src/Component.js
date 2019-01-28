@@ -1,10 +1,9 @@
 // @flow
 import * as React from 'react'
-import {Page} from 'modules/pages/hocs/withPage'
+import Page from 'modules/pages/hocs/Page'
 import {addRule} from 'redux-interrupt'
 import {fetchRequest} from 'modules/staticBlocks/actions'
 import * as at from 'modules/staticBlocks/const'
-import {Search} from 'modules/search/hocs/withSearch'
 import CategoryContext from 'theme/organisms/CategoryContext'
 import ProductSearch from 'theme/organisms/ProductSearch'
 import PageArticle from 'theme/organisms/PageArticle'

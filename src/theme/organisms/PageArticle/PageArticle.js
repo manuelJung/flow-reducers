@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import {Page} from 'modules/pages/hocs/withPage'
+import Page from 'modules/pages/hocs/Page'
 import Story from 'theme/molecules/Story'
 import BootstrapContent from 'theme/molecules/BootstrapContent'
 

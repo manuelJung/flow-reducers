@@ -4,34 +4,34 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import type {RootState} from 'store/rootReducer'
-import type {UrlKey, Page as PageType} from '../entities'
-import {getPageRequest} from '../selectors'
+import type {Identifier, StaticBlock} from '../entities'
+import {getStaticBlockRequest} from '../selectors'
 import {fetchRequest} from '../actions'
 
 type Props = {
-  urlKey: UrlKey,
+  identifier: Identifier,
   pure?: boolean,
   render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 export type InjectedProps = {
-  urlKey: UrlKey,
-  data: PageType | null,
+  identifier: Identifier,
+  data: StaticBlock | null,
   isFetching: boolean,
   fetchError: null | string,
   shouldFetch: boolean,
   fetch: () => void
 }
 
-const mapStateToProps = (state:RootState, props) => getPageRequest(state.pages, props.urlKey)
+const mapStateToProps = (state:RootState, props) => getStaticBlockRequest(state.staticBlocks, props.identifier)
 
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ fetchRequest }, dispatch)
 
 const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
-  fetch: () => {dp.fetchRequest(props.urlKey)}
+  fetch: () => {dp.fetchRequest(props.identifier)}
 })
 
-const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
+export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps,
@@ -40,15 +40,13 @@ const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,P
     areOwnPropsEqual: (a,b) => {
       if(!b.pure){ if(a.render !== b.render) return false }
       return (
-        a.urlKey === b.urlKey
+        a.identifier === b.identifier
       )
     }
   }
 )(Comp)
 
-export default hoc
-
-export const Page = hoc(class Page extends React.Component<InjectedProps & {render:Function} > {
+export default hoc(class StaticBlockRenderer extends React.Component<InjectedProps & {render:Function} > {
   
   fetch = () => {
     if(this.props.shouldFetch){
@@ -64,3 +62,4 @@ export const Page = hoc(class Page extends React.Component<InjectedProps & {rend
     return render ? render(props) : null
   }
 })
+

@@ -31,7 +31,7 @@ const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props,
 })
 
 
-const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
+export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps,
@@ -46,9 +46,7 @@ const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,P
   }
 )(Comp)
 
-export default hoc
-
-export const CategoryContext = hoc(class CategoryContext extends React.Component<InjectedProps & {render:Function} > {
+export default hoc(class CategoryContextRenderer extends React.Component<InjectedProps & {render:Function} > {
   
   fetch = () => {
     if(this.props.shouldFetch){

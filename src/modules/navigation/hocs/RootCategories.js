@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch: *) => bindActionCreators({}, dispatch)
 const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props)
 
 
-const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
+export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps,
@@ -39,9 +39,7 @@ const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,P
   }
 )(Comp)
 
-export default hoc
-
-export const RootCategories = hoc(class RootCategories extends React.Component<InjectedProps  & {render:Function}> {
+export default hoc(class RootCategoriesRenderer extends React.Component<InjectedProps  & {render:Function}> {
   render() {
     const {render, ...props} = this.props
     return render ? render(props) : null
