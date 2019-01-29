@@ -50,7 +50,7 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
   }
 )(Comp)
 
-export default hoc(class ProductListRenderer extends React.Component<InjectedProps & {render:Function} > {
+export default hoc(class ProductListFilterRenderer extends React.Component<InjectedProps & {render:Function} > {
   render() {
     const {render, ...props} = this.props
     return render ? render(props) : null
