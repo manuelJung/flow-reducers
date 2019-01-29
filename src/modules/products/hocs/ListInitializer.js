@@ -24,7 +24,7 @@ const mapStateToProps = null
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ initList }, dispatch)
 
 const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
-  create: () => {dp.initList(props.identifier, props.filters)}
+  create: () => { dp.initList(props.identifier, props.filters) }
 })
 
 export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(

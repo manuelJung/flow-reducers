@@ -35,7 +35,12 @@ type ListState = {
   +queryString: string
 }
 
-export default function reducer(state:State={}, action:Action):State{
+const defaultState:State = {
+  products: {},
+  lists: {}
+}
+
+export default function reducer(state:State=defaultState, action:Action):State{
   switch(action.type){
     // PRODUCT
     case at.FETCH_REQUEST:

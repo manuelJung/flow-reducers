@@ -11,7 +11,7 @@ export default function Component(){
   return (
     <div id='Component'>
       <CategoryContext position='top' categoryPath='/shop/bekleidung/kleider/abendkleider' />
-      <ProductSearch searchKey='default' />
+      <ProductSearch identifier='default' />
       <PageArticle urlKey='looks' />
       <StaticBlock identifier='Sale_Category_Text1' />
       <CategoryContext position='bottom' categoryPath='/shop/bekleidung/kleider/abendkleider' />

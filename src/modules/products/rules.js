@@ -26,7 +26,7 @@ addRule({
   consequence: ({action, getState}) => {
     const state = getState()
     const {identifier} = action.meta
-    const filterValues = selectors.getFilterValues(state.search, identifier)
+    const filterValues = selectors.getFilterValues(state.products, identifier)
     if(!filterValues) return
     return api.fetchProductList(filterValues).then(
       result => actions.fetchListSuccess(identifier, result),
