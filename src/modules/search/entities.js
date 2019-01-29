@@ -10,6 +10,13 @@ export type FilterValue = string
 
 export type FilterOption = string
 
+export type Filter = {
+  key: FilterKey,
+  value: FilterValue[],
+  options: FilterOption[],
+  identifier: ListIdentifier
+}
+
 export type CategoryOption = {
   name: string,
   selected: boolean,
