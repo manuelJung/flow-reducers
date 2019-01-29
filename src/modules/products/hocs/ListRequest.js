@@ -4,28 +4,27 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import type {RootState} from 'store/rootReducer'
-import type {ListIdentifier as Identifier, FilterValues} from '../entities'
-import {initList} from '../actions'
+import type {ListIdentifier as Identifier, Product} from '../entities'
+import {getListRequest} from '../selectors'
 
 export type InjectedProps = {
   identifier: Identifier,
-  create: () => void
+  data: Product[] | null,
+  isFetching: boolean,
+  fetchError: null | string
 }
 
 type Props = {
   identifier: Identifier,
   pure?: boolean,
-  filters?: $Diff<FilterValues,{}>,
   render?: (props:$Diff<InjectedProps,{}>) => any
 }
 
-const mapStateToProps = null
+const mapStateToProps = (state:RootState, props) => getListRequest(state.products, props.identifier)
 
-const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ initList }, dispatch)
+const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({}, dispatch)
 
-const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
-  create: () => {dp.initList(props.identifier, props.filters)}
-})
+const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props)
 
 export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
   mapStateToProps,
@@ -42,17 +41,8 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
   }
 )(Comp)
 
-export default hoc(class ProductListInitializer extends React.Component<InjectedProps & {render:Function} > {
-
-  componentDidMount(){
-    this.props.create()
-  }
-  componentDidUpdate(prevProps){
-    if(prevProps.identifier !== this.props.identifier){
-      this.props.create()
-    }
-  }
-
+export default hoc(class ProductListRenderer extends React.Component<InjectedProps & {render:Function} > {
+  
   render() {
     const {render, ...props} = this.props
     return render ? render(props) : null

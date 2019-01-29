@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux'
 import type {RootState} from 'store/rootReducer'
 import type {ListIdentifier as Identifier, ListingMagazinArticle} from '../entities'
 import {getListRequest} from '../selectors'
-import {} from '../actions'
 
 export type InjectedProps = {
   identifier: Identifier,
