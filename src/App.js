@@ -7,6 +7,7 @@ import { createBrowserHistory } from 'history'
 import {Switch, Route} from 'react-router'
 
 import PageRoute from 'theme/pages/PageRoute'
+import MagazinListRoute from 'theme/pages/MagazinListRoute'
 
 const history = createBrowserHistory()
 
@@ -19,6 +20,7 @@ export default class App extends React.Component {
             <Switch>
               <Route exact path='/' component={Component} />
               <Route path='/page' component={PageRoute} />
+              <Route path='/magazin' component={MagazinListRoute} />
             </Switch>
           </div>
         </ConnectedRouter>

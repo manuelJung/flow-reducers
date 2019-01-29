@@ -20,6 +20,7 @@ import magazinReducer from 'modules/magazin/reducer'
 import 'modules/navigation/rules'
 import 'modules/search/rules'
 import 'modules/pages/rules'
+import 'modules/magazin/rules'
 import 'modules/staticBlocks/rules'
 
 export type AsyncReducers = {}

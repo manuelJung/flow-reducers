@@ -38,7 +38,7 @@ export const fetchArticleList = (filters: ListingFilters):Promise<ListingRespons
   }
 
   if(filters.category){
-    helper.addHierarchicalFacetRefinement('catgories', filters.category)
+    helper.addHierarchicalFacetRefinement('categories', filters.category)
   }
 
   if(filters.page){
@@ -47,9 +47,10 @@ export const fetchArticleList = (filters: ListingFilters):Promise<ListingRespons
 
   return helper
     .searchOnce()
+    .then(r => console.log(r) || r)
     .then(result => ({
       hits: result.content.hits,
-      numPages: result.content.content.nbPages,
-      categories: Object.keys(result.hierarchicalFacets[0].data)
+      numPages: result.content.nbPages,
+      categories: result.content.hierarchicalFacets[0].data.map(row => row.name)
     }))
 }

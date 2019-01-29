@@ -48,15 +48,7 @@ export default function reducer (state:State=defaultState, action:Action):State 
         }
       }
     }
-    case at.CREATE_LIST: {
-      return {
-        ...state,
-        articleLists: {
-          ...state.articleLists,
-          [action.payload]: listingReducer(state.articleLists[action.payload], action)
-        }
-      }
-    }
+    case at.CREATE_LIST:
     case at.TOGGLE_CATEGORY:
     case at.SET_PAGE:
     case at.FETCH_LIST_REQUEST:
@@ -130,7 +122,7 @@ function listingReducer (state:ListingState=defaultListingState, action:Action):
         ...state,
         filters: {
           ...defaultListingState.filters,
-          ...action.meta
+          ...action.meta.filters
         }
       }
     }

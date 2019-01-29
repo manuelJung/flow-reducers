@@ -6,15 +6,13 @@ import { bindActionCreators } from 'redux'
 import type {RootState} from 'store/rootReducer'
 import type {ListIdentifier as Identifier, ListingMagazinArticle} from '../entities'
 import {getListRequest} from '../selectors'
-import {fetchListRequest} from '../actions'
+import {} from '../actions'
 
 export type InjectedProps = {
   identifier: Identifier,
   data: ListingMagazinArticle[] | null,
   isFetching: boolean,
-  fetchError: null | string,
-  shouldFetch: boolean,
-  fetch: () => void
+  fetchError: null | string
 }
 
 type Props = {
@@ -25,11 +23,9 @@ type Props = {
 
 const mapStateToProps = (state:RootState, props) => getListRequest(state.magazin, props.identifier)
 
-const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ fetchListRequest }, dispatch)
+const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({}, dispatch)
 
-const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
-  fetch: () => {dp.fetchListRequest(props.identifier)}
-})
+const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props)
 
 export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
   mapStateToProps,
@@ -48,15 +44,6 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
 
 export default hoc(class MagazinArticleListRenderer extends React.Component<InjectedProps & {render:Function} > {
   
-  fetch = () => {
-    if(this.props.shouldFetch){
-      this.props.fetch()
-    }
-  }
-
-  componentDidMount = this.fetch
-  componentDidUpdate = this.fetch
-
   render() {
     const {render, ...props} = this.props
     return render ? render(props) : null

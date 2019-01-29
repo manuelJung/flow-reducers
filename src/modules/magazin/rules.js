@@ -16,7 +16,7 @@ addRule({
 
 addRule({
   id: 'magazin/FETCH_ARTICLE_LIST',
-  target: at.FETCH_ARTICLE_REQUEST,
+  target: at.FETCH_LIST_REQUEST,
   consequence: ({action, getState}) => {
     const state = getState()
     const {identifier} = action.meta
