@@ -3,7 +3,7 @@ import algoliasearchHelper from 'algoliasearch-helper'
 import algoliasearch from 'algoliasearch'
 import type {Product, FilterOption, CategoryOption, FilterValues} from '../entities'
 
-export type SearchResult = {
+export type ListSearchResult = {
   hits: Product[],
   page: number,
   exhaustiveNBHits:boolean,
@@ -21,6 +21,20 @@ export type SearchResult = {
   queryString:string
 }
 
+export type ProductSearchResult = Product
+
+const client = algoliasearch('0BYMLMXGLI', '7058207f486c5d9c0a0e2d31fd10e7e5')
+
+export const fetchProduct = (objectID:string):Promise<ProductSearchResult> => {
+  return algoliasearchHelper(client, 'products', {
+    disjunctiveFacets: ['objectID'],
+    attributesToHighlight: []
+  }).addDisjunctiveFacetRefinement('objectID', objectID)
+    .searchOnce()
+    .then(result => result.content.hits[0])
+    .then(result => result ? result : Promise.reject('404'))
+}
+
 const getFilterOptions = (filter:Object):FilterOption[] => Object.keys(filter.data)
 const getCategoryOptions = (filter:Object):CategoryOption[] => !filter ? [] : Object.keys(filter.data).map(name => ({
   name: name,
@@ -28,8 +42,7 @@ const getCategoryOptions = (filter:Object):CategoryOption[] => !filter ? [] : Ob
   options: getCategoryOptions(filter.data[name].data)
 }))
 
-export const search = (filterValues:FilterValues):Promise<SearchResult> => {
-  const client = algoliasearch('0BYMLMXGLI', '7058207f486c5d9c0a0e2d31fd10e7e5')
+export const fetchProductList = (filterValues:FilterValues):Promise<ListSearchResult> => {
   const helper = algoliasearchHelper(client, 'products', {
     disjunctiveFacets: ['wunderSizes', 'productManufacturerBrand', 'merchantName', 'filterColor', 'productPrice'],
     hierarchicalFacets: [{

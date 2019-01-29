@@ -1,92 +1,115 @@
 // @flow
 import * as at from './const'
 
-import type {SearchKey, FilterKey, FilterValue, FilterOption, CategoryOption, FilterValues} from './entities'
-import type {SearchResult} from './utils/api'
+import type {ProductIdentifier, ListIdentifier, FilterKey, FilterValue, FilterOption, CategoryOption, FilterValues} from './entities'
+import type {ProductSearchResult, ListSearchResult} from './utils/api'
 
 export type FetchRequestAction = {
   type: typeof at.FETCH_REQUEST,
-  meta: {searchKey:SearchKey}
+  meta: {identifier:ProductIdentifier}
 }
 
 export type FetchSuccessAction = {
   type: typeof at.FETCH_SUCCESS,
-  meta: {searchKey:SearchKey},
-  payload: SearchResult
+  meta: {identifier:ProductIdentifier},
+  payload: ProductSearchResult
 }
 
 export type FetchFailureAction = {
   type: typeof at.FETCH_FAILURE,
-  meta: {searchKey:SearchKey},
+  meta: {identifier:ProductIdentifier},
+  payload: string
+}
+
+export type FetchListRequestAction = {
+  type: typeof at.FETCH_LIST_REQUEST,
+  meta: {identifier:ListIdentifier}
+}
+
+export type FetchListSuccessAction = {
+  type: typeof at.FETCH_LIST_SUCCESS,
+  meta: {identifier:ListIdentifier},
+  payload: ListSearchResult
+}
+
+export type FetchListFailureAction = {
+  type: typeof at.FETCH_LIST_FAILURE,
+  meta: {identifier:ListIdentifier},
   payload: string
 }
 
 export type InitAction = {
-  type: typeof at.INIT,
-  meta: { searchKey: SearchKey, initialValues: FilterValues },
-  payload: SearchKey
+  type: typeof at.INIT_LIST,
+  meta: { 
+    identifier: ListIdentifier, 
+    initialValues: FilterValues 
+  },
+  payload: ListIdentifier
 }
 
 export type ToggleFilterAction = {
   type: typeof at.TOGGLE_FILTER,
   meta: {
-    searchKey:SearchKey,
+    identifier:ListIdentifier,
     filterKey:FilterKey
   },
   payload: FilterValue
 }
 
 export type SetPriceAction = {
-  type: typeof at.SET_PRICE,
-  meta: { searchKey:SearchKey },
+  type: typeof at.SET_PRICE_RANGE,
+  meta: { identifier:ListIdentifier },
   payload: [number,number]
 }
 
 export type ToggleCategoryAction = {
   type: typeof at.TOGGLE_CATEGORY,
-  meta: { searchKey:SearchKey },
+  meta: { identifier:ListIdentifier },
   payload: string
 }
 
 export type SetContextAction = {
   type: typeof at.SET_CONTEXT,
-  meta: { searchKey:SearchKey },
+  meta: { identifier:ListIdentifier },
   payload: string
 }
 
 export type SetPageAction = {
   type: typeof at.SET_PAGE,
-  meta: {searchKey:SearchKey },
+  meta: {identifier:ListIdentifier },
   payload: number
 }
 
 export type SetQueryAction = {
   type: typeof at.SET_QUERY,
-  meta: { searchKey:SearchKey },
+  meta: { identifier:ListIdentifier },
   payload: string
 }
 
 export type ToggleTagAction = {
   type: typeof at.TOGGLE_TAG,
-  meta: { searchKey:SearchKey },
+  meta: { identifier:ListIdentifier },
   payload: string
 }
 
 export type SetFilterOptionsAction = {
   type: typeof at.SET_FILTER_OPTIONS,
-  meta: {searchKey:SearchKey, filterKey:FilterKey},
+  meta: {identifier:ListIdentifier, filterKey:FilterKey},
   payload: FilterOption[]
 }
 
 export type SetCategoryOptionsAction = {
   type: typeof at.SET_CATEGORY_OPTIONS,
-  meta: {searchKey:SearchKey},
+  meta: {identifier:ListIdentifier},
   payload: CategoryOption[]
 }
 
 export type Action = FetchRequestAction 
 | FetchSuccessAction 
 | FetchFailureAction 
+| FetchListRequestAction
+| FetchListSuccessAction
+| FetchListFailureAction
 | InitAction
 | ToggleFilterAction
 | SetPriceAction
@@ -116,10 +139,10 @@ export type Action = FetchRequestAction
 //   context: ''
 // })
 
-export const init = (searchKey:SearchKey, initialValues?:$Shape<FilterValues>):InitAction => ({
-  type: at.INIT,
+export const initList = (identifier:ListIdentifier, initialValues?:$Shape<FilterValues>={}):InitAction => ({
+  type: at.INIT_LIST,
   meta: {
-    searchKey: searchKey,
+    identifier,
     initialValues: Object.assign({
       page: 0,
       query: '',
@@ -133,76 +156,93 @@ export const init = (searchKey:SearchKey, initialValues?:$Shape<FilterValues>):I
       context: ''
     }, initialValues)
   },
-  payload: searchKey
+  payload: identifier
 })
 
-export const fetchRequest = (searchKey:SearchKey):FetchRequestAction => ({
+export const fetchRequest = (identifier:ProductIdentifier):FetchRequestAction => ({
   type: at.FETCH_REQUEST,
-  meta: {searchKey}
+  meta: {identifier}
 })
 
-export const fetchSuccess = (searchKey: SearchKey, result: SearchResult):FetchSuccessAction => ({
+export const fetchSuccess = (identifier: ProductIdentifier, result: ProductSearchResult):FetchSuccessAction => ({
   type: at.FETCH_SUCCESS,
-  meta: {searchKey},
+  meta: {identifier},
   payload: result
 })
 
-export const fetchFailure = (searchKey:SearchKey, error:string):FetchFailureAction => ({
+export const fetchFailure = (identifier:ProductIdentifier, error:string):FetchFailureAction => ({
   type: at.FETCH_FAILURE,
-  meta: {searchKey},
+  meta: {identifier},
   payload: error
 })
 
-export const toggleFilter = (searchKey:SearchKey, filterKey:FilterKey, filterValue:FilterValue):ToggleFilterAction => ({
+export const fetchListRequest = (identifier:ListIdentifier):FetchListRequestAction => ({
+  type: at.FETCH_LIST_REQUEST,
+  meta: {identifier}
+})
+
+export const fetchListSuccess = (identifier: ListIdentifier, result: ListSearchResult):FetchListSuccessAction => ({
+  type: at.FETCH_LIST_SUCCESS,
+  meta: {identifier},
+  payload: result
+})
+
+export const fetchListFailure = (identifier:ListIdentifier, error:string):FetchListFailureAction => ({
+  type: at.FETCH_LIST_FAILURE,
+  meta: {identifier},
+  payload: error
+})
+
+export const toggleFilter = (identifier:ListIdentifier, filterKey:FilterKey, filterValue:FilterValue):ToggleFilterAction => ({
   type: at.TOGGLE_FILTER,
-  meta: {searchKey, filterKey},
+  meta: {identifier, filterKey},
   payload: filterValue
 })
 
-export const setPrice = (searchKey:SearchKey, price:[number,number]):SetPriceAction => ({
-  type: at.SET_PRICE,
-  meta: {searchKey},
+export const setPrice = (identifier:ListIdentifier, price:[number,number]):SetPriceAction => ({
+  type: at.SET_PRICE_RANGE,
+  meta: {identifier},
   payload: price
 })
 
-export const toggleCategory = (searchKey:SearchKey, category:string):ToggleCategoryAction => ({
+export const toggleCategory = (identifier:ListIdentifier, category:string):ToggleCategoryAction => ({
   type: at.TOGGLE_CATEGORY,
-  meta: {searchKey},
+  meta: {identifier},
   payload: category
 })
 
-export const setContext = (searchKey:SearchKey, context:string):SetContextAction => ({
+export const setContext = (identifier:ListIdentifier, context:string):SetContextAction => ({
   type: at.SET_CONTEXT,
-  meta: {searchKey},
+  meta: {identifier},
   payload: context
 })
 
-export const setPage = (searchKey:SearchKey, page:number):SetPageAction => ({
+export const setPage = (identifier:ListIdentifier, page:number):SetPageAction => ({
   type: at.SET_PAGE,
-  meta: {searchKey},
+  meta: {identifier},
   payload: page
 })
 
-export const setQuery = (searchKey:SearchKey, query:string):SetQueryAction => ({
+export const setQuery = (identifier:ListIdentifier, query:string):SetQueryAction => ({
   type: at.SET_QUERY,
-  meta: {searchKey},
+  meta: {identifier},
   payload: query
 })
 
-export const toggleTag = (searchKey:SearchKey, tag:string):ToggleTagAction => ({
+export const toggleTag = (identifier:ListIdentifier, tag:string):ToggleTagAction => ({
   type: at.TOGGLE_TAG,
-  meta: {searchKey},
+  meta: {identifier},
   payload: tag
 })
 
-export const setFilterOptions = (searchKey:SearchKey, filterKey:FilterKey, options:FilterOption[]):SetFilterOptionsAction => ({
+export const setFilterOptions = (identifier:ListIdentifier, filterKey:FilterKey, options:FilterOption[]):SetFilterOptionsAction => ({
   type: at.SET_FILTER_OPTIONS,
-  meta: {searchKey, filterKey},
+  meta: {identifier, filterKey},
   payload: options
 })
 
-export const setCategoryOptions = (searchKey:SearchKey, options:CategoryOption[]):SetCategoryOptionsAction => ({
+export const setCategoryOptions = (identifier:ListIdentifier, options:CategoryOption[]):SetCategoryOptionsAction => ({
   type: at.SET_CATEGORY_OPTIONS,
-  meta: {searchKey},
+  meta: {identifier},
   payload: options
 })

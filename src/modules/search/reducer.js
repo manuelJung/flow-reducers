@@ -1,17 +1,24 @@
 // @flow
 import * as at from './const'
 
-import type {SearchKey, Product, FilterOption, CategoryOption, FilterValues} from './entities'
+import type {ProductIdentifier, ListIdentifier, Product, FilterOption, CategoryOption, FilterValues} from './entities'
 import type {Action} from './actions'
 
 export type State = {
-  +[id:SearchKey]: SearchState // eslint-disable-line no-use-before-define
+  products: {[id:ProductIdentifier]: ProductState}, // eslint-disable-line no-use-before-define
+  lists: {[id:ListIdentifier]: ListState} // eslint-disable-line no-use-before-define
 }
 
-type SearchState = {|
+type ProductState = {
   +isFetching: boolean,
   +fetchError: string | null,
-  +hits: Product[],
+  +data: Product | null
+}
+
+type ListState = {
+  +isFetching: boolean,
+  +fetchError: string | null,
+  +data: Product[] | null,
   +filterValues: FilterValues,
   +filterOptions: {|
     +brand: FilterOption[],
@@ -19,41 +26,119 @@ type SearchState = {|
     +color: FilterOption[],
     +shop: FilterOption[],
     +price: [number,number],
-    +category: CategoryOption[],
-    +exhaustive: boolean
+    +category: CategoryOption[]
   |},
-  +exhaustive: boolean,
+  +exhaustiveHits: boolean,
+  +exhaustiveFilters: boolean,
   +numPages: number,
   +numHits: number,
-  queryString: string
-|}
+  +queryString: string
+}
 
 export default function reducer(state:State={}, action:Action):State{
   switch(action.type){
-    case at.INIT:
+    // PRODUCT
     case at.FETCH_REQUEST:
     case at.FETCH_SUCCESS:
-    case at.FETCH_FAILURE: 
+    case at.FETCH_FAILURE: {
+      const {identifier} = action.meta
+      return {
+        ...state,
+        products: {
+          ...state.products,
+          [identifier]: productReducer(state.products[identifier], action)
+        }
+      }
+    }
+
+    // LIST
+    case at.FETCH_LIST_SUCCESS: {
+      const {identifier} = action.meta
+      const hitsDict = action.payload.hits.reduce((hits, product) => {
+        if(!state.products[product.objectID]){
+          if(!hits) hits = {}
+          hits[product.objectID] = {
+            isFetching: false,
+            fetchError: null,
+            data: product
+          }
+        }
+        return hits
+      }, null)
+
+      const nextProducts = hitsDict ? Object.assign({}, state.products, hitsDict) : state.products
+
+      return {
+        ...state,
+        products: nextProducts,
+        lists: {
+          ...state.lists,
+          [identifier]: listReducer(state.lists[identifier], action)
+        }
+      }
+    }
+    case at.INIT_LIST:
+    case at.FETCH_LIST_REQUEST:
+    case at.FETCH_LIST_FAILURE: 
     case at.TOGGLE_FILTER:
-    case at.SET_PRICE:
+    case at.SET_PRICE_RANGE:
     case at.TOGGLE_CATEGORY:
     case at.SET_CONTEXT:
     case at.SET_PAGE:
     case at.SET_QUERY:
     case at.TOGGLE_TAG:
     case at.SET_FILTER_OPTIONS:
-    case at.SET_CATEGORY_OPTIONS:
-      return Object.assign({}, state, {
-        [action.meta.searchKey]: searchReducer(state[action.meta.searchKey], action)
-      })
+    case at.SET_CATEGORY_OPTIONS: {
+      const {identifier} = action.meta
+      return {
+        ...state,
+        lists: {
+          ...state.lists,
+          [identifier]: listReducer(state.lists[identifier], action)
+        }
+      }
+    }
     default: return state
   }
 }
 
-const initialSearchState:SearchState = {
+const initialProductState:ProductState = {
   isFetching: false,
   fetchError: null,
-  hits: [],
+  data: null
+}
+
+function productReducer (state:ProductState=initialProductState, action:Action) {
+  switch(action.type){
+    case at.FETCH_REQUEST: {
+      return {
+        ...state,
+        isFetching: true,
+        fetchError: null
+      }
+    }
+    case at.FETCH_SUCCESS: {
+      return {
+        ...state,
+        isFetching: false,
+        data: action.payload
+      }
+    }
+    case at.FETCH_FAILURE: {
+      return {
+        ...state,
+        isFetching: false,
+        fetchError: action.payload
+      }
+    }
+    default: return state
+  }
+}
+
+const initialListState:ListState = {
+  isFetching: false,
+  fetchError: null,
+  data: null,
   filterValues: {
     color: [],
     size: [],
@@ -73,49 +158,49 @@ const initialSearchState:SearchState = {
     shop: [],
     price: [0,100],
     category: [],
-    exhaustive: true
   },
+  exhaustiveHits: true,
+  exhaustiveFilters: true,
   numPages: 1,
   numHits: 1,
-  exhaustive: true,
   queryString: ''
 }
 
-function searchReducer(state=initialSearchState, action:Action):SearchState{
+function listReducer(state:ListState=initialListState, action:Action):ListState{
   switch(action.type){
-    case at.INIT: {
+    case at.INIT_LIST: {
       return {
         ...state,
         filterValues: {
           ...state.filterValues,
-          color: action.meta.initialValues.color || initialSearchState.filterValues.color,
-          size: action.meta.initialValues.size || initialSearchState.filterValues.size,
-          shop: action.meta.initialValues.shop || initialSearchState.filterValues.shop,
-          brand: action.meta.initialValues.brand || initialSearchState.filterValues.brand,
-          category: action.meta.initialValues.category || initialSearchState.filterValues.category,
-          price: action.meta.initialValues.price || initialSearchState.filterValues.price,
-          page: action.meta.initialValues.page || initialSearchState.filterValues.page,
-          query: action.meta.initialValues.query || initialSearchState.filterValues.query,
-          tags: action.meta.initialValues.tags || initialSearchState.filterValues.tags,
-          context: action.meta.initialValues.context || initialSearchState.filterValues.context
+          color: action.meta.initialValues.color || initialListState.filterValues.color,
+          size: action.meta.initialValues.size || initialListState.filterValues.size,
+          shop: action.meta.initialValues.shop || initialListState.filterValues.shop,
+          brand: action.meta.initialValues.brand || initialListState.filterValues.brand,
+          category: action.meta.initialValues.category || initialListState.filterValues.category,
+          price: action.meta.initialValues.price || initialListState.filterValues.price,
+          page: action.meta.initialValues.page || initialListState.filterValues.page,
+          query: action.meta.initialValues.query || initialListState.filterValues.query,
+          tags: action.meta.initialValues.tags || initialListState.filterValues.tags,
+          context: action.meta.initialValues.context || initialListState.filterValues.context
         }
       }
     }
-    case at.FETCH_REQUEST: {
+    case at.FETCH_LIST_REQUEST: {
       return {
         ...state,
         isFetching: true,
         fetchError: null
       }
     }
-    case at.FETCH_FAILURE: {
+    case at.FETCH_LIST_FAILURE: {
       return {
         ...state,
         isFetching: false,
         fetchError: action.payload
       }
     }
-    case at.FETCH_SUCCESS: {
+    case at.FETCH_LIST_SUCCESS: {
       const priceSet = Boolean(state.filterValues.price)
       const priceMin = (action => {
         if(!state.filterValues.price) return 0
@@ -132,10 +217,11 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
       return {
         ...state,
         isFetching: false,
-        hits: action.payload.hits,
+        data: action.payload.hits,
         numHits: action.payload.numHits,
         numPages: action.payload.numPages,
-        exhaustive: action.payload.exhaustiveFacetsCount,
+        exhaustiveFilters: action.payload.exhaustiveFacetsCount,
+        exhaustiveHits: true,
         queryString: action.payload.queryString,
         filterOptions: {
           ...state.filterOptions,
@@ -167,7 +253,7 @@ function searchReducer(state=initialSearchState, action:Action):SearchState{
         }
       }
     }
-    case at.SET_PRICE: {
+    case at.SET_PRICE_RANGE: {
       return {
         ...state,
         filterValues: {

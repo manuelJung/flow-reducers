@@ -1,6 +1,8 @@
 // @flow
 
-export type SearchKey = string
+export type ListIdentifier = string
+
+export type ProductIdentifier = string
 
 export type FilterKey = 'brand' | 'color' | 'shop' | 'size'
 
@@ -23,7 +25,8 @@ export type Product = {
   isOnSale: boolean,
   salePercentage: number,
   deliveryTime: string,
-  groupedId?: string
+  groupedId?: string,
+  objectID: ProductIdentifier
 }
 
 export type FilterValues = {|
