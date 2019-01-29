@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import StaticBlockRenderer from 'modules/staticBlocks/hocs/StaticBlock'
+import StaticBlockRenderer from 'modules/staticBlocks/hocs/StaticBlockRequest'
 import Story from 'theme/molecules/Story'
 import BootstrapContent from 'theme/molecules/BootstrapContent'
 

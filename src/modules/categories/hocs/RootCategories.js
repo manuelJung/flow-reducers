@@ -17,8 +17,8 @@ type Props = {
 }
 
 const mapStateToProps = (state:RootState) => ({
-  category: getRootCategories(state.navigation),
-  hasFetched: hasFetchedCategories(state.navigation)
+  category: getRootCategories(state.categories),
+  hasFetched: hasFetchedCategories(state.categories)
 })
 
 const mapDispatchToProps = (dispatch: *) => bindActionCreators({}, dispatch)
@@ -31,7 +31,7 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
   mapDispatchToProps,
   mergeProps,
   {
-    areStatesEqual: (a:RootState,b:RootState) => a.navigation === b.navigation,
+    areStatesEqual: (a:RootState,b:RootState) => a.categories === b.categories,
     areOwnPropsEqual: (a,b) => {
       if(!b.pure){ if(a.render !== b.render) return false }
       return true
