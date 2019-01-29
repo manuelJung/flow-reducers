@@ -24,14 +24,19 @@ export type CategoryOption = {
 }
 
 export type Product = {
+  _tags: string[],
+  deliveryTime: string,
   imageMediumURL: string,
+  isOnSale: boolean,
+  merchantName: string,
+  productColor: string,
+  productManufacturerBrand: string,
+  productName: string,
   productPrice: number,
   productPriceOld?: number,
-  productName: string,
-  merchantName: string,
-  isOnSale: boolean,
   salePercentage: number,
-  deliveryTime: string,
+  shippingAndHandling: string,
+  wunderSizes: string[],
   groupedId?: string,
   objectID: ProductIdentifier
 }
