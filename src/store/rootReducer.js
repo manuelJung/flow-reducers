@@ -23,26 +23,17 @@ import 'modules/pages/rules'
 import 'modules/magazin/rules'
 import 'modules/staticBlocks/rules'
 
-export type AsyncReducers = {}
-export type RootState = AsyncReducers & {
-  pages: PageState,
-  staticBlocks: StaticBlockState,
-  routing: any,
-  search: SearchState,
-  navigation: NavigationState,
-  magazin: MagazinState
+const reducers = {
+  routing: routerReducer,
+  pages: pageReducer,
+  staticBlocks: staticBlockReducer,
+  search: searchReducer,
+  navigation: navigationReducer,
+  magazin: magazinReducer,
 }
 
-const makeRootReducer = (asyncReducers?:AsyncReducers):RootState => {
-  return combineReducers(({
-    routing: routerReducer,
-    pages: pageReducer,
-    staticBlocks: staticBlockReducer,
-    search: searchReducer,
-    navigation: navigationReducer,
-    magazin: magazinReducer,
-    ...asyncReducers
-  }))
-}
+export type Reducers = typeof reducers
+type $ExtractFunctionReturn = <V>(v: (...args: any) => V) => V
+export type RootState = $ObjMap<Reducers, $ExtractFunctionReturn>
 
-export default makeRootReducer
+export default () => combineReducers<Reducers,{type:string}>(reducers)

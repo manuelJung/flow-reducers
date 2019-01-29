@@ -3,6 +3,8 @@ import {applyMiddleware, compose, createStore} from 'redux'
 import makeRootReducer from './rootReducer'
 import ruleMiddleware from 'redux-interrupt'
 
+import type {RootState} from './rootReducer'
+
 export default (initialState:any = {}) => {
   // ======================================================
   // Middleware Configuration
@@ -26,10 +28,11 @@ export default (initialState:any = {}) => {
     }
   }
 
+
   // ======================================================
   // Store Instantiation and HMR Setup
   // ======================================================
-  const store = createStore(
+  const store = createStore<RootState, {type:string}, Function>(
     makeRootReducer(),
     initialState,
     composeEnhancers(
@@ -37,13 +40,12 @@ export default (initialState:any = {}) => {
       ...enhancers
     )
   )
-  store.asyncReducers = {}
 
   const _module:any = module
   if (_module.hot) {
     _module.hot.accept('./rootReducer', () => {
       const rootReducer = require('./rootReducer').default
-      store.replaceReducer(rootReducer(store.asyncReducers))
+      store.replaceReducer(rootReducer())
     })
   }
 
