@@ -8,7 +8,7 @@ export type FilterKey = 'brand' | 'color' | 'shop' | 'size'
 
 export type FilterValue = string
 
-export type FilterOption = string
+export type FilterOption = FilterValue
 
 export type Filter = {
   key: FilterKey,

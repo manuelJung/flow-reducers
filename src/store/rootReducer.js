@@ -18,7 +18,7 @@ const reducers = {
   routing: routerReducer,
   pages: pageReducer,
   staticBlocks: staticBlockReducer,
-  search: productReducer,
+  products: productReducer,
   navigation: navigationReducer,
   magazin: magazinReducer,
 }
