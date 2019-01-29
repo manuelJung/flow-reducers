@@ -5,10 +5,10 @@ import { routerReducer } from 'react-router-redux'
 import pageReducer from 'modules/pages/reducer'
 import staticBlockReducer from 'modules/staticBlocks/reducer'
 import productReducer from 'modules/products/reducer'
-import navigationReducer from 'modules/navigation/reducer'
+import categoriesReducer from 'modules/categories/reducer'
 import magazinReducer from 'modules/magazin/reducer'
 
-import 'modules/navigation/rules'
+import 'modules/categories/rules'
 import 'modules/products/rules'
 import 'modules/pages/rules'
 import 'modules/magazin/rules'
@@ -19,7 +19,7 @@ const reducers = {
   pages: pageReducer,
   staticBlocks: staticBlockReducer,
   products: productReducer,
-  navigation: navigationReducer,
+  categories: categoriesReducer,
   magazin: magazinReducer,
 }
 

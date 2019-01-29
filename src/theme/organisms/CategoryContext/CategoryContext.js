@@ -1,10 +1,10 @@
 // @flow
 import React from 'react'
-import CategoryContextRenderer from 'modules/navigation/hocs/CategoryContext'
+import CategoryContextRenderer from 'modules/categories/hocs/CategoryContextRequest'
 import Story from 'theme/molecules/Story'
 import BootstrapContent from 'theme/molecules/BootstrapContent'
 
-import type {CategoryPath} from 'modules/navigation/entities'
+import type {CategoryPath} from 'modules/categories/entities'
 
 type Props = {
   categoryPath: CategoryPath,

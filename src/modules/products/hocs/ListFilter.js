@@ -30,7 +30,7 @@ const mapStateToProps = (state:RootState, props) => ({
 
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ toggleFilter }, dispatch)
 
-const mergeProps = (sp, dp, props):InjectedProps => Object.assign({ toggleFilter }, sp, props, {
+const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
   toggle: (option:FilterOption) => {dp.toggleFilter(props.identifier, props.filterKey, option)}
 })
 
