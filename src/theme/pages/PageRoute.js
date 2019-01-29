@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Helmet from 'react-helmet'
-import Page from 'modules/pages/hocs/Page'
+import Page from 'modules/pages/hocs/PageRequest'
 
 type Props = {}
 

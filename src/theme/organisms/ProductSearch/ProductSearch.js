@@ -1,23 +1,20 @@
 // @flow
 import React from 'react'
-import SearchInitializer from 'modules/search/hocs/Search'
+import SearchInitializer from 'modules/products/hocs/ListInitializer'
 
 type Props = {
-  searchKey: string
+  identifier: string
 }
 
-export default function ProductSearch ({searchKey}:Props) {
+export default function ProductSearch ({identifier}:Props) {
   return (
     <div className='ProductSearch'>
-      <SearchInitializer searchKey={searchKey} render={props => (
-        <React.Fragment>
-          <div className='ResetButton'/>
-          <div className='CategoryTree'/>
-          <div className='SearchFilters'/>
-          <div className='SearchHits'/>
-          <div className='Pagination'/>
-        </React.Fragment>
-      )} />
+      <SearchInitializer identifier={identifier} />
+      <div className='ResetButton'/>
+      <div className='CategoryTree'/>
+      <div className='SearchFilters'/>
+      <div className='SearchHits'/>
+      <div className='Pagination'/>
     </div>
   )
 }
