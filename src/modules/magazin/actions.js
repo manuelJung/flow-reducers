@@ -102,7 +102,7 @@ export const fetchListFailure = (identifier:ListIdentifier, error:string):FetchL
   payload: error
 })
 
-export const createList = (identifier:ListIdentifier, filters:ListingFilters):CreateListAction => ({
+export const createList = (identifier:ListIdentifier, filters?:ListingFilters={}):CreateListAction => ({
   type: at.CREATE_LIST,
   meta: {filters, identifier},
   payload: identifier
