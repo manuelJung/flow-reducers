@@ -15,7 +15,7 @@ export type InjectedProps = {
 type Props = {
   identifier: Identifier,
   pure?: boolean,
-  filters?: $Diff<FilterValues,{}>,
+  filters?: $Shape<FilterValues>,
   render?: (props:$Diff<InjectedProps,{}>) => any
 }
 

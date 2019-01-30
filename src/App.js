@@ -8,6 +8,8 @@ import {Switch, Route} from 'react-router'
 
 import PageRoute from 'theme/pages/PageRoute'
 import MagazinListRoute from 'theme/pages/MagazinListRoute'
+import SearchRoute from 'theme/pages/SearchRoute'
+
 import history from 'store/history'
 
 
@@ -21,6 +23,7 @@ export default class App extends React.Component {
               <Route exact path='/' component={Component} />
               <Route path='/page' component={PageRoute} />
               <Route path='/magazin' component={MagazinListRoute} />
+              <Route path='/search' component={SearchRoute} />
             </Switch>
           </div>
         </ConnectedRouter>

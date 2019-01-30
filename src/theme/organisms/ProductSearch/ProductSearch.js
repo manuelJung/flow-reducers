@@ -2,19 +2,22 @@
 import React from 'react'
 import SearchInitializer from 'modules/products/hocs/ListInitializer'
 
+import SearchFilters from './SearchFilters'
+
 type Props = {
-  identifier: string
+  identifier: string,
+  filters?: *
 }
 
-export default function ProductSearch ({identifier}:Props) {
+export default React.memo<Props>(function ProductSearch ({identifier, filters}:Props) {
   return (
     <div className='ProductSearch'>
-      <SearchInitializer identifier={identifier} />
+      <SearchInitializer pure identifier={identifier} filters={filters} />
       <div className='ResetButton'/>
       <div className='CategoryTree'/>
-      <div className='SearchFilters'/>
+      <SearchFilters identifier={identifier}/>
       <div className='SearchHits'/>
       <div className='Pagination'/>
     </div>
   )
-}
+})
