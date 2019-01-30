@@ -1,7 +1,7 @@
 // @flow
 import * as at from './const'
 
-import type {ProductIdentifier, ListIdentifier, FilterKey, FilterValue, FilterOption, CategoryOption, FilterValues} from './entities'
+import type {ProductIdentifier, ListIdentifier, FilterKey, FilterValue, FilterValues} from './entities'
 import type {ProductSearchResult, ListSearchResult, FilterOptionsSearchResult, CategoryOptionsSearchResult} from './utils/api'
 
 export type FetchRequestAction = {

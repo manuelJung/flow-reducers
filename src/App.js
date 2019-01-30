@@ -3,7 +3,6 @@ import * as React from 'react'
 import {Provider} from 'react-redux'
 import Component from './Component'
 import { ConnectedRouter } from 'react-router-redux'
-import { createBrowserHistory } from 'history'
 import {Switch, Route} from 'react-router'
 
 import PageRoute from 'theme/pages/PageRoute'

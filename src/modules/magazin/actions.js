@@ -1,6 +1,6 @@
 // @flow
 import * as at from './const'
-import type {MagazinArticle, ListingMagazinArticle, ArticleIdentifier, ListIdentifier, ListingFilters} from './entities'
+import type {MagazinArticle, ArticleIdentifier, ListIdentifier, ListingFilters} from './entities'
 import type {ListingResponse} from './utils/api'
 
 export type FetchArticleRequestAction = {
