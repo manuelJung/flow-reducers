@@ -29,6 +29,14 @@ export type CategoryOptionsSearchResult = CategoryOption[]
 
 const client = algoliasearch('0BYMLMXGLI', '7058207f486c5d9c0a0e2d31fd10e7e5')
 
+const searchKeys = {
+  size: 'wunderSizes',
+  brand: 'productManufacturerBrand',
+  color: 'filterColor',
+  shop: 'merchantName',
+  price: 'productPrice'
+}
+
 export const fetchProduct = (objectID:string):Promise<ProductSearchResult> => {
   return algoliasearchHelper(client, 'products', {
     disjunctiveFacets: ['objectID'],
@@ -50,7 +58,7 @@ const getCategoryOptions = (filter:Object):CategoryOption[] => !filter ? [] : fi
 
 const createListHelper = (filterValues:FilterValues):any => {
   const helper = algoliasearchHelper(client, 'products', {
-    disjunctiveFacets: ['wunderSizes', 'productManufacturerBrand', 'merchantName', 'filterColor', 'productPrice'],
+    disjunctiveFacets: Object.values(searchKeys),
     hierarchicalFacets: [{
       name: 'categories',
       attributes: ['wunderCategoriesHierarchical.lvl0', 'wunderCategoriesHierarchical.lvl1', 'wunderCategoriesHierarchical.lvl2'],
@@ -103,7 +111,6 @@ export const fetchProductList = (filterValues:FilterValues):Promise<ListSearchRe
 
   return helper.searchOnce()
     .then(result => result.content)
-    .then(c => console.log(c) || c)
     .then(content => ({
       hits: content.hits,
       page: content.page,
@@ -127,7 +134,7 @@ export const fetchListFilterOptions = (filterKey:FilterKey, filterValues:FilterV
   const compare = (a,b) => a.value.toLowerCase() > b.value.toLowerCase() ? 1 : -1
   const helper = createListHelper({...filterValues, context: ''})
   return helper
-    .searchForFacetValues(filterKey, query, 100)
+    .searchForFacetValues(searchKeys[filterKey], query, 100)
     .then(result => !query ? result.facetHits.sort(compare) : result.facetHits)
     .then(result => result.map(row => row.value))
 }

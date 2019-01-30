@@ -43,3 +43,18 @@ addRule({
     error => actions.fetchFailure(action.meta.identifier, error.toString())
   )
 })
+
+addRule({
+  id: 'products/FETCH_FILTER_OPTIONS',
+  target: at.FETCH_FILTER_OPTIONS_REQUEST,
+  consequence: ({action, getState}) => {
+    const state = getState()
+    const {identifier, query, filterKey} = action.meta
+    const filterValues = selectors.getFilterValues(state.products, identifier)
+    if(!filterValues) return
+    return api.fetchListFilterOptions(filterKey, filterValues, query).then(
+      result => actions.fetchFilterOptionsSuccess(identifier, filterKey, query, result),
+      error => actions.fetchFilterOptionsFailure(identifier, filterKey, query, error.toString())
+    )
+  }
+})
