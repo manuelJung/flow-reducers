@@ -47,7 +47,7 @@ export const fetchProduct = (objectID:string):Promise<ProductSearchResult> => {
     .then(result => result ? result : Promise.reject('404'))
 }
 
-const getFilterOptions = (filter:Object):FilterOption[] => Object.keys(filter.data)
+const getFilterOptions = (filter:Object):FilterOption[] => sort(Object.keys(filter.data))
 const getCategoryOptions = (filter:Object):CategoryOption[] => !filter ? [] : filter.data.map(f => ({
   name: f.name,
   path: f.path,
@@ -106,6 +106,8 @@ const createListHelper = (filterValues:FilterValues):any => {
   return helper
 }
 
+const sort = (list:string[]) => list.sort((a,b) => a.toLowerCase() > b.toLowerCase() ? 1 : -1)
+
 export const fetchProductList = (filterValues:FilterValues):Promise<ListSearchResult> => {
   const helper = createListHelper(filterValues)
 
@@ -135,6 +137,6 @@ export const fetchListFilterOptions = (filterKey:FilterKey, filterValues:FilterV
   const helper = createListHelper({...filterValues, context: ''})
   return helper
     .searchForFacetValues(searchKeys[filterKey], query, 100)
-    .then(result => !query ? result.facetHits.sort(compare) : result.facetHits)
     .then(result => result.map(row => row.value))
+    .then(result => query ? result : sort(result))
 }

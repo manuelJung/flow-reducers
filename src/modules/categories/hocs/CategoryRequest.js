@@ -14,6 +14,7 @@ export type InjectedProps = {
 
 type Props = {
   categoryPath: CategoryPath,
+  pure?: boolean,
   children?: (props:$Diff<InjectedProps,{}>) => any
 }
 
