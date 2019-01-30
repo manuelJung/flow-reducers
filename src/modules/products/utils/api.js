@@ -6,7 +6,7 @@ import type {Product, FilterKey, FilterOption, CategoryOption, FilterValues} fro
 export type ListSearchResult = {
   hits: Product[],
   page: number,
-  exhaustiveNBHits:boolean,
+  exhaustiveNbHits:boolean,
   exhaustiveFacetsCount:boolean,
   numPages:number,
   numHits:number,
@@ -114,7 +114,7 @@ export const fetchProductList = (filterValues:FilterValues):Promise<ListSearchRe
     .then(content => ({
       hits: content.hits,
       page: content.page,
-      exhaustiveNBHits: content.exhaustiveNBHits,
+      exhaustiveNbHits: content.exhaustiveNbHits,
       exhaustiveFacetsCount: content.exhaustiveFacetsCount,
       numPages: content.nbPages,
       numHits: content.nbHits,

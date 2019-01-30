@@ -244,7 +244,7 @@ function listReducer(state:ListState=initialListState, action:Action):ListState{
         numHits: action.payload.numHits,
         numPages: action.payload.numPages,
         exhaustiveFilters: action.payload.exhaustiveFacetsCount,
-        exhaustiveHits: true,
+        exhaustiveHits: action.payload.exhaustiveNbHits,
         queryString: action.payload.queryString,
         filterOptions: {
           ...state.filterOptions,
