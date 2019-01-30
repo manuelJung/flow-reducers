@@ -13,6 +13,7 @@ import 'modules/products/rules'
 import 'modules/pages/rules'
 import 'modules/magazin/rules'
 import 'modules/staticBlocks/rules'
+import './rules'
 
 const reducers = {
   routing: routerReducer,

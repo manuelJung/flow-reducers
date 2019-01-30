@@ -8,8 +8,8 @@ import {Switch, Route} from 'react-router'
 
 import PageRoute from 'theme/pages/PageRoute'
 import MagazinListRoute from 'theme/pages/MagazinListRoute'
+import history from 'store/history'
 
-const history = createBrowserHistory()
 
 export default class App extends React.Component {
   render() {

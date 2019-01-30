@@ -2,6 +2,8 @@
 import {applyMiddleware, compose, createStore} from 'redux'
 import makeRootReducer from './rootReducer'
 import ruleMiddleware from 'redux-interrupt'
+import history from './history'
+import { routerMiddleware } from 'react-router-redux'
 
 import type {RootState} from './rootReducer'
 
@@ -9,7 +11,7 @@ export default (initialState:any = {}) => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  let middleware = [ruleMiddleware]
+  let middleware = [ruleMiddleware, routerMiddleware(history)]
 
   // ======================================================
   // Store Enhancers
