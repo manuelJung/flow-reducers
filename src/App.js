@@ -1,4 +1,4 @@
-// @fow
+// @flow
 import * as React from 'react'
 import {Provider} from 'react-redux'
 import Component from './Component'
@@ -12,7 +12,7 @@ import SearchRoute from 'theme/pages/SearchRoute'
 import history from 'store/history'
 
 
-export default class App extends React.Component {
+export default class App extends React.Component<{store:any}> {
   render() {
     return (
       <Provider store={this.props.store}>
