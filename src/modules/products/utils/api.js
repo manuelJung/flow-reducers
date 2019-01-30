@@ -40,10 +40,12 @@ export const fetchProduct = (objectID:string):Promise<ProductSearchResult> => {
 }
 
 const getFilterOptions = (filter:Object):FilterOption[] => Object.keys(filter.data)
-const getCategoryOptions = (filter:Object):CategoryOption[] => !filter ? [] : Object.keys(filter.data).map(name => ({
-  name: name,
-  selected: filter.data[name].isRefined,
-  options: getCategoryOptions(filter.data[name].data)
+const getCategoryOptions = (filter:Object):CategoryOption[] => !filter ? [] : filter.data.map(f => ({
+  name: f.name,
+  path: f.path,
+  count: f.count,
+  selected: f.isRefined,
+  options: getCategoryOptions(f.data)
 }))
 
 export const fetchProductList = (filterValues:FilterValues):Promise<ListSearchResult> => {
@@ -93,6 +95,7 @@ export const fetchProductList = (filterValues:FilterValues):Promise<ListSearchRe
 
   return helper.searchOnce()
     .then(result => result.content)
+    .then(c => console.log(c) || c)
     .then(content => ({
       hits: content.hits,
       page: content.page,

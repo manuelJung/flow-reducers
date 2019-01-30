@@ -13,7 +13,7 @@ export type InjectedProps = {
   filterKey: FilterKey,
   data: Filter,
   isFetching: boolean,
-  toggle: (option:FilterOption) => void
+  toggleOption: (option:FilterOption) => void
 }
 
 type Props = {
@@ -31,7 +31,7 @@ const mapStateToProps = (state:RootState, props) => ({
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ toggleFilter }, dispatch)
 
 const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
-  toggle: (option:FilterOption) => {dp.toggleFilter(props.identifier, props.filterKey, option)}
+  toggleOption: (option:FilterOption) => {dp.toggleFilter(props.identifier, props.filterKey, option)}
 })
 
 export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
