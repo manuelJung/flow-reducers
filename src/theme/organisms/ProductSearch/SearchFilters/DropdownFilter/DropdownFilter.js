@@ -15,8 +15,8 @@ type Props = {
 }
 
 export default React.memo<Props>(function ({label, filterKey, identifier}:Props){
-  const handleOpen = () => dispatchEvent({type: 'DropdownFilter/OPEN_DROPDOWN', meta: {filterKey} })
-  const handleClose = () => dispatchEvent({type: 'DropdownFilter/CLOSE_DROPDOWN', meta: {filterKey} })
+  const handleOpen = () => dispatchEvent({type: 'DropdownFilter/OPEN_DROPDOWN', meta: {filterKey, identifier} })
+  const handleClose = () => dispatchEvent({type: 'DropdownFilter/CLOSE_DROPDOWN', meta: {filterKey, identifier} })
   return (
     <Wrapper className='DropdownFilter'>
     <Dropdown 

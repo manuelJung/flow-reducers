@@ -12,7 +12,7 @@ export default React.memo<Props>(function SearchRoute () {
     <div className='SearchRoute'>
       <Helmet title='Search-Route'/>
       <StaticBlock identifier='Sale_Category_Text1' />
-      <ProductSearch identifier='sale-route' filters={{ tags: ['sale'] }}/>
+      <ProductSearch identifier='sale-route' /*filters={{ tags: ['sale'] }}*//>
       <StaticBlock identifier='Sale_Category_SEO_Text' />
     </div>
   )
