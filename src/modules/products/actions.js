@@ -94,18 +94,18 @@ export type ToggleTagAction = {
 
 export type FetchFilterOptionsRequestAction = {
   type: typeof at.FETCH_FILTER_OPTIONS_REQUEST,
-  meta: {identifier:ListIdentifier, filterKey:FilterKey}
+  meta: {identifier:ListIdentifier, filterKey:FilterKey, query:string}
 }
 
 export type FetchFilterOptionsSuccessAction = {
   type: typeof at.FETCH_FILTER_OPTIONS_SUCCESS,
-  meta: {identifier:ListIdentifier, filterKey:FilterKey},
+  meta: {identifier:ListIdentifier, filterKey:FilterKey, query:string},
   payload: FilterOptionsSearchResult
 }
 
 export type FetchFilterOptionsFailureAction = {
   type: typeof at.FETCH_FILTER_OPTIONS_FAILURE,
-  meta: {identifier:ListIdentifier, filterKey:FilterKey},
+  meta: {identifier:ListIdentifier, filterKey:FilterKey, query:string},
   payload: string
 }
 
@@ -261,20 +261,20 @@ export const toggleTag = (identifier:ListIdentifier, tag:string):ToggleTagAction
   payload: tag
 })
 
-export const fetchFilterOptionsRequest = (identifier:ListIdentifier, filterKey:FilterKey):FetchFilterOptionsRequestAction => ({
+export const fetchFilterOptionsRequest = (identifier:ListIdentifier, filterKey:FilterKey, query?:string=''):FetchFilterOptionsRequestAction => ({
   type: at.FETCH_FILTER_OPTIONS_REQUEST,
-  meta: {identifier, filterKey}
+  meta: {identifier, filterKey, query}
 })
 
-export const fetchFilterOptionsSuccess = (identifier:ListIdentifier, filterKey:FilterKey, result:FilterOptionsSearchResult):FetchFilterOptionsSuccessAction => ({
+export const fetchFilterOptionsSuccess = (identifier:ListIdentifier, filterKey:FilterKey, query?:string='', result:FilterOptionsSearchResult):FetchFilterOptionsSuccessAction => ({
   type: at.FETCH_FILTER_OPTIONS_SUCCESS,
-  meta: {identifier, filterKey},
+  meta: {identifier, filterKey, query},
   payload: result
 })
 
-export const fetchFilterOptionsFailure = (identifier:ListIdentifier, filterKey:FilterKey, error:string):FetchFilterOptionsFailureAction => ({
+export const fetchFilterOptionsFailure = (identifier:ListIdentifier, filterKey:FilterKey, query?:string='', error:string):FetchFilterOptionsFailureAction => ({
   type: at.FETCH_FILTER_OPTIONS_FAILURE,
-  meta: {identifier, filterKey},
+  meta: {identifier, filterKey, query},
   payload: error
 })
 

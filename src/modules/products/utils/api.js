@@ -1,7 +1,7 @@
 // @flow
 import algoliasearchHelper from 'algoliasearch-helper'
 import algoliasearch from 'algoliasearch'
-import type {Product, FilterOption, CategoryOption, FilterValues} from '../entities'
+import type {Product, FilterKey, FilterOption, CategoryOption, FilterValues} from '../entities'
 
 export type ListSearchResult = {
   hits: Product[],
@@ -48,7 +48,7 @@ const getCategoryOptions = (filter:Object):CategoryOption[] => !filter ? [] : fi
   options: getCategoryOptions(f.data)
 }))
 
-export const fetchProductList = (filterValues:FilterValues):Promise<ListSearchResult> => {
+const createListHelper = (filterValues:FilterValues):any => {
   const helper = algoliasearchHelper(client, 'products', {
     disjunctiveFacets: ['wunderSizes', 'productManufacturerBrand', 'merchantName', 'filterColor', 'productPrice'],
     hierarchicalFacets: [{
@@ -90,8 +90,16 @@ export const fetchProductList = (filterValues:FilterValues):Promise<ListSearchRe
   filterValues.price && helper.addNumericRefinement('productPrice', '>=', filterValues.price[0])
   filterValues.price && helper.addNumericRefinement('productPrice', '<=', filterValues.price[1])
 
+  filterValues.context && helper.setQueryParameter('ruleContexts', [filterValues.context])
+
   // must be set last
   filterValues.page && helper.setPage(filterValues.page)
+  
+  return helper
+}
+
+export const fetchProductList = (filterValues:FilterValues):Promise<ListSearchResult> => {
+  const helper = createListHelper(filterValues)
 
   return helper.searchOnce()
     .then(result => result.content)
@@ -113,4 +121,13 @@ export const fetchProductList = (filterValues:FilterValues):Promise<ListSearchRe
       minPrice: content.disjunctiveFacets[4].stats.min,
       queryString: content._rawResults[0].params
     }))
+}
+
+export const fetchListFilterOptions = (filterKey:FilterKey, filterValues:FilterValues, query:string):Promise<FilterOptionsSearchResult> => {
+  const compare = (a,b) => a.value.toLowerCase() > b.value.toLowerCase() ? 1 : -1
+  const helper = createListHelper({...filterValues, context: ''})
+  return helper
+    .searchForFacetValues(filterKey, query, 100)
+    .then(result => !query ? result.facetHits.sort(compare) : result.facetHits)
+    .then(result => result.map(row => row.value))
 }
