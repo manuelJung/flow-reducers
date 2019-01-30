@@ -14,7 +14,7 @@ type Props = {
 export default function CategoryContext ({categoryPath, position}:Props) {
   return (
     <div className='CategoryContext'>
-      <CategoryContextRenderer categoryPath={categoryPath} render={props => {
+      <CategoryContextRenderer categoryPath={categoryPath} children={props => {
         if(props.isFetching){
           return <div>loading...</div>
         }

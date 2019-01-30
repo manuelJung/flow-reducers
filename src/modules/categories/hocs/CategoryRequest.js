@@ -14,7 +14,7 @@ export type InjectedProps = {
 
 type Props = {
   categoryPath: CategoryPath,
-  render?: (props:$Diff<InjectedProps,{}>) => any
+  children?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 const mapStateToProps = (state:RootState, props) => ({
@@ -32,13 +32,17 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
   mapDispatchToProps,
   mergeProps,
   {
-    areStatesEqual: (a:RootState,b:RootState) => a.categories === b.categories
+    areStatesEqual: (a:RootState,b:RootState) => a.categories === b.categories,
+    areOwnPropsEqual: (a,b) => {
+      if(!b.pure){ if(a.children !== b.children) return false }
+      return true
+    }
   }
 )(Comp)
 
-export default hoc(class CategoryRenderer extends React.Component<InjectedProps  & {render:Function}> {
+export default hoc(class CategoryRenderer extends React.Component<InjectedProps  & {children:Function}> {
   render() {
-    const {render, ...props} = this.props
-    return render ? render(props) : null
+    const {children, ...props} = this.props
+    return children ? children(props) : null
   } 
 })

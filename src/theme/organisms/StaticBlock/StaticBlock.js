@@ -11,7 +11,7 @@ type Props = {
 export default function StaticBlock ({identifier}:Props) {
   return (
     <div className='StaticBlock'>
-      <StaticBlockRenderer identifier={identifier} render={props => {
+      <StaticBlockRenderer identifier={identifier} children={props => {
         if(props.isFetching){
           return <div>loading...</div>
         }

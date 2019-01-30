@@ -19,7 +19,7 @@ export type InjectedProps = {
 type Props = {
   categoryPath: CategoryPath,
   pure?: boolean,
-  render?: (props:$Diff<InjectedProps,{}>) => any
+  children?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 const mapStateToProps = (state:RootState, props) => getCategoryContextRequest(state.categories, props.categoryPath)
@@ -38,7 +38,7 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
   {
     areStatesEqual: (a:RootState,b:RootState) => a.categories === b.categories,
     areOwnPropsEqual: (a,b) => {
-      if(!b.pure){ if(a.render !== b.render) return false }
+      if(!b.pure){ if(a.children !== b.children) return false }
       return (
         a.categoryPath === b.categoryPath
       )
@@ -46,7 +46,7 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
   }
 )(Comp)
 
-export default hoc(class CategoryContextRenderer extends React.Component<InjectedProps & {render:Function} > {
+export default hoc(class CategoryContextRenderer extends React.Component<InjectedProps & {children:Function} > {
   
   fetch = () => {
     if(this.props.shouldFetch){
@@ -58,7 +58,7 @@ export default hoc(class CategoryContextRenderer extends React.Component<Injecte
   componentDidUpdate = this.fetch
 
   render() {
-    const {render, ...props} = this.props
-    return render ? render(props) : null
+    const {children, ...props} = this.props
+    return children ? children(props) : null
   }
 })

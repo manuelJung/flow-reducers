@@ -16,7 +16,7 @@ type Props = {
   identifier: Identifier,
   pure?: boolean,
   filters?: $Diff<ListingFilters,{}>,
-  render?: (props:$Diff<InjectedProps,{}>) => any
+  children?: (props:$Diff<InjectedProps,{}>) => any
 }
 
 const mapStateToProps = null
@@ -34,7 +34,7 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
   {
     areStatesEqual: (a:RootState,b:RootState) => a.magazin === b.magazin,
     areOwnPropsEqual: (a,b) => {
-      if(!b.pure){ if(a.render !== b.render) return false }
+      if(!b.pure){ if(a.children !== b.children) return false }
       return (
         a.identifier === b.identifier
       )
@@ -42,7 +42,7 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
   }
 )(Comp)
 
-export default hoc(class ListInitializer extends React.Component<InjectedProps & {render:Function} > {
+export default hoc(class ListInitializer extends React.Component<InjectedProps & {children:Function} > {
 
   componentDidMount(){
     this.props.create()
@@ -54,7 +54,7 @@ export default hoc(class ListInitializer extends React.Component<InjectedProps &
   }
 
   render() {
-    const {render, ...props} = this.props
-    return render ? render(props) : null
+    const {children, ...props} = this.props
+    return children ? children(props) : null
   }
 })

@@ -11,7 +11,7 @@ export type RenderProps = {
 
 export type Props = {
   label: ((props:RenderProps) => Node) | string,
-  render: (props:RenderProps) => Node,
+  children: (props:RenderProps) => Node,
   onOpen?: () => void,
   onClose?: () => void,
 }
@@ -61,7 +61,7 @@ export default class Dropdown extends React.Component<Props,State> {
   })
 
   render(){
-    let {label, render} = this.props
+    let {label, children} = this.props
     let {open} = this.state
 
     const renderProps = this.getRenderProps()
@@ -70,7 +70,7 @@ export default class Dropdown extends React.Component<Props,State> {
       <Wrapper className='Dropdown' id={this.uniqueId} onClick={this.openDropdown}>
         {typeof label === 'function' ? label(renderProps) : <div className='label'>{label}</div>}
         {open && <Content open={open}>
-        {render(renderProps)}
+        {children(renderProps)}
         </Content>}
       </Wrapper>
     )

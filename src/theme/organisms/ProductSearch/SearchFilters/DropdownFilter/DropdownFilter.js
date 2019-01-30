@@ -20,8 +20,8 @@ export default React.memo<Props>(function ({label, filterKey, identifier}:Props)
       onOpen={() => dispatchEvent({type: 'DropdownFilter/OPEN_DROPDOWN', meta: {filterKey} })}
       onClose={() => dispatchEvent({type: 'DropdownFilter/CLOSE_DROPDOWN', meta: {filterKey} })}
       label={label}
-      render={() => (
-        <ListFilter pure identifier={identifier} filterKey={filterKey} render={props => (
+      children={() => (
+        <ListFilter pure identifier={identifier} filterKey={filterKey} children={props => (
           <div className='content'>
             {props.data.options.map(opt => (
               <div key={opt} className='option' onClick={() => props.toggleOption(opt)}>
