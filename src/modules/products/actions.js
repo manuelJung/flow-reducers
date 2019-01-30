@@ -2,7 +2,7 @@
 import * as at from './const'
 
 import type {ProductIdentifier, ListIdentifier, FilterKey, FilterValue, FilterOption, CategoryOption, FilterValues} from './entities'
-import type {ProductSearchResult, ListSearchResult} from './utils/api'
+import type {ProductSearchResult, ListSearchResult, FilterOptionsSearchResult, CategoryOptionsSearchResult} from './utils/api'
 
 export type FetchRequestAction = {
   type: typeof at.FETCH_REQUEST,
@@ -92,16 +92,38 @@ export type ToggleTagAction = {
   payload: string
 }
 
-export type SetFilterOptionsAction = {
-  type: typeof at.SET_FILTER_OPTIONS,
-  meta: {identifier:ListIdentifier, filterKey:FilterKey},
-  payload: FilterOption[]
+export type FetchFilterOptionsRequestAction = {
+  type: typeof at.FETCH_FILTER_OPTIONS_REQUEST,
+  meta: {identifier:ListIdentifier, filterKey:FilterKey}
 }
 
-export type SetCategoryOptionsAction = {
-  type: typeof at.SET_CATEGORY_OPTIONS,
+export type FetchFilterOptionsSuccessAction = {
+  type: typeof at.FETCH_FILTER_OPTIONS_SUCCESS,
+  meta: {identifier:ListIdentifier, filterKey:FilterKey},
+  payload: FilterOptionsSearchResult
+}
+
+export type FetchFilterOptionsFailureAction = {
+  type: typeof at.FETCH_FILTER_OPTIONS_FAILURE,
+  meta: {identifier:ListIdentifier, filterKey:FilterKey},
+  payload: string
+}
+
+export type FetchCategoryOptionsRequestAction = {
+  type: typeof at.FETCH_CATEGORY_OPTIONS_REQUEST,
+  meta: {identifier:ListIdentifier}
+}
+
+export type FetchCategoryOptionsSuccessAction = {
+  type: typeof at.FETCH_CATEGORY_OPTIONS_SUCCESS,
   meta: {identifier:ListIdentifier},
-  payload: CategoryOption[]
+  payload: CategoryOptionsSearchResult
+}
+
+export type FetchCategoryOptionsFailureAction = {
+  type: typeof at.FETCH_CATEGORY_OPTIONS_FAILURE,
+  meta: {identifier:ListIdentifier},
+  payload: string
 }
 
 export type Action = FetchRequestAction 
@@ -118,8 +140,12 @@ export type Action = FetchRequestAction
 | SetPageAction
 | SetQueryAction
 | ToggleTagAction
-| SetFilterOptionsAction
-| SetCategoryOptionsAction
+| FetchFilterOptionsRequestAction
+| FetchFilterOptionsSuccessAction
+| FetchFilterOptionsFailureAction
+| FetchCategoryOptionsRequestAction
+| FetchCategoryOptionsSuccessAction
+| FetchCategoryOptionsFailureAction
 
 // q=Hose&p=2&dFR[wunderSizes][0]=36D&hFR[categories][0]=Bademode%20%26%20Strandkleidung&nR[productPrice][<=][0]=70&nR[productPrice][>=][0]=36&tR[0]=sale
 // const queryStringToFilterValues = (queryString?:string):Object => !queryString ? ({}) : ({
@@ -235,14 +261,36 @@ export const toggleTag = (identifier:ListIdentifier, tag:string):ToggleTagAction
   payload: tag
 })
 
-export const setFilterOptions = (identifier:ListIdentifier, filterKey:FilterKey, options:FilterOption[]):SetFilterOptionsAction => ({
-  type: at.SET_FILTER_OPTIONS,
-  meta: {identifier, filterKey},
-  payload: options
+export const fetchFilterOptionsRequest = (identifier:ListIdentifier, filterKey:FilterKey):FetchFilterOptionsRequestAction => ({
+  type: at.FETCH_FILTER_OPTIONS_REQUEST,
+  meta: {identifier, filterKey}
 })
 
-export const setCategoryOptions = (identifier:ListIdentifier, options:CategoryOption[]):SetCategoryOptionsAction => ({
-  type: at.SET_CATEGORY_OPTIONS,
+export const fetchFilterOptionsSuccess = (identifier:ListIdentifier, filterKey:FilterKey, result:FilterOptionsSearchResult):FetchFilterOptionsSuccessAction => ({
+  type: at.FETCH_FILTER_OPTIONS_SUCCESS,
+  meta: {identifier, filterKey},
+  payload: result
+})
+
+export const fetchFilterOptionsFailure = (identifier:ListIdentifier, filterKey:FilterKey, error:string):FetchFilterOptionsFailureAction => ({
+  type: at.FETCH_FILTER_OPTIONS_FAILURE,
+  meta: {identifier, filterKey},
+  payload: error
+})
+
+export const fetchCategoryOptionsRequest = (identifier:ListIdentifier):FetchCategoryOptionsRequestAction => ({
+  type: at.FETCH_CATEGORY_OPTIONS_REQUEST,
+  meta: {identifier}
+})
+
+export const fetchCategoryOptionsSuccess = (identifier:ListIdentifier, result:CategoryOptionsSearchResult):FetchCategoryOptionsSuccessAction => ({
+  type: at.FETCH_CATEGORY_OPTIONS_SUCCESS,
   meta: {identifier},
-  payload: options
+  payload: result
+})
+
+export const fetchCategoryOptionsFailure = (identifier:ListIdentifier, error:string):FetchCategoryOptionsFailureAction => ({
+  type: at.FETCH_CATEGORY_OPTIONS_FAILURE,
+  meta: {identifier},
+  payload: error
 })

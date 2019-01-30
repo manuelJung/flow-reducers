@@ -28,6 +28,13 @@ type ListState = {
     +price: [number,number],
     +category: CategoryOption[]
   |},
+  +fetchingOptions: {|
+    color: boolean,
+    brand: boolean,
+    size: boolean,
+    shop: boolean,
+    category: boolean,
+  |},
   +exhaustiveHits: boolean,
   +exhaustiveFilters: boolean,
   +numPages: number,
@@ -91,9 +98,13 @@ export default function reducer(state:State=defaultState, action:Action):State{
     case at.SET_CONTEXT:
     case at.SET_PAGE:
     case at.SET_QUERY:
-    case at.TOGGLE_TAG:
-    case at.SET_FILTER_OPTIONS:
-    case at.SET_CATEGORY_OPTIONS: {
+    case at.FETCH_CATEGORY_OPTIONS_REQUEST:
+    case at.FETCH_CATEGORY_OPTIONS_SUCCESS:
+    case at.FETCH_CATEGORY_OPTIONS_FAILURE:
+    case at.FETCH_FILTER_OPTIONS_REQUEST:
+    case at.FETCH_FILTER_OPTIONS_SUCCESS:
+    case at.FETCH_FILTER_OPTIONS_FAILURE:
+    case at.TOGGLE_TAG: {
       const {identifier} = action.meta
       return {
         ...state,
@@ -163,6 +174,13 @@ const initialListState:ListState = {
     shop: [],
     price: [0,100],
     category: [],
+  },
+  fetchingOptions: {
+    brand: false,
+    size: false,
+    color: false,
+    shop: false,
+    category: false
   },
   exhaustiveHits: true,
   exhaustiveFilters: true,
@@ -314,19 +332,65 @@ function listReducer(state:ListState=initialListState, action:Action):ListState{
         }
       }
     }
-    case at.SET_FILTER_OPTIONS: {
+    case at.FETCH_FILTER_OPTIONS_REQUEST: {
       const {filterKey} = action.meta
       return {
         ...state,
+        fetchingOptions: {
+          ...state.fetchingOptions,
+          [filterKey]: true
+        }
+      }
+    }
+    case at.FETCH_FILTER_OPTIONS_FAILURE: {
+      const {filterKey} = action.meta
+      return {
+        ...state,
+        fetchingOptions: {
+          ...state.fetchingOptions,
+          [filterKey]: false
+        }
+      }
+    }
+    case at.FETCH_FILTER_OPTIONS_SUCCESS: {
+      const {filterKey} = action.meta
+      return {
+        ...state,
+        fetchingOptions: {
+          ...state.fetchingOptions,
+          [filterKey]: false
+        },
         filterOptions: {
           ...state.filterOptions,
           [filterKey]: action.payload
         }
       }
     }
-    case at.SET_CATEGORY_OPTIONS: {
+    case at.FETCH_CATEGORY_OPTIONS_REQUEST: {
       return {
         ...state,
+        fetchingOptions: {
+          ...state.fetchingOptions,
+          category: true
+        }
+      }
+    }
+    case at.FETCH_CATEGORY_OPTIONS_FAILURE: {
+      return {
+        ...state,
+        fetchingOptions: {
+          ...state.fetchingOptions,
+          category: false
+        }
+      }
+    }
+    case at.FETCH_CATEGORY_OPTIONS_SUCCESS: {
+      return {
+        ...state,
+        fetchingOptions: {
+          ...state.fetchingOptions,
+          category: false
+        },
         filterOptions: {
           ...state.filterOptions,
           category: action.payload
