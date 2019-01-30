@@ -14,24 +14,21 @@ type Props = {
 }
 
 export default React.memo<Props>(function ({label, filterKey, identifier}:Props){
+  const handleOpen = () => dispatchEvent({type: 'DropdownFilter/OPEN_DROPDOWN', meta: {filterKey} })
+  const handleClose = () => dispatchEvent({type: 'DropdownFilter/CLOSE_DROPDOWN', meta: {filterKey} })
   return (
     <div className='DropdownFilter'>
-    <Dropdown 
-      onOpen={() => dispatchEvent({type: 'DropdownFilter/OPEN_DROPDOWN', meta: {filterKey} })}
-      onClose={() => dispatchEvent({type: 'DropdownFilter/CLOSE_DROPDOWN', meta: {filterKey} })}
-      label={label}
-      children={() => (
-        <ListFilter pure identifier={identifier} filterKey={filterKey} children={props => (
-          <div className='content'>
-            {props.data.options.map(opt => (
-              <div key={opt} className='option' onClick={() => props.toggleOption(opt)}>
-                {opt}
-              </div>
-            ))}
-          </div>
-        )}/>
-      )}
-    />
+    <Dropdown onOpen={handleOpen} onClose={handleClose} label={label} >{() =>
+      <ListFilter pure identifier={identifier} filterKey={filterKey}>{props =>
+        <div className='content'>
+          {props.data.options.map(opt => (
+            <div key={opt} className='option' onClick={() => props.toggleOption(opt)}>
+              {opt}
+            </div>
+          ))}
+        </div>
+      }</ListFilter>
+    }</Dropdown>
     </div>
   )
 })
