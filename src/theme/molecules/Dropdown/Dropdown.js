@@ -1,5 +1,6 @@
 // @flow
 import React from 'react'
+import type {Node} from 'react'
 import {Wrapper, Content} from './style'
 
 export type RenderProps = {
@@ -9,9 +10,8 @@ export type RenderProps = {
 }
 
 export type Props = {
-  label: any | (props:RenderProps) => any ,
-  render: (props:RenderProps) => any,
-  globalId: string,
+  label: ((props:RenderProps) => Node) | string,
+  render: (props:RenderProps) => Node,
   onOpen?: () => void,
   onClose?: () => void,
 }
@@ -20,9 +20,9 @@ export type State = {
   open: boolean
 }
 
-class Dropdown extends React.Component<Props,State> {
+export default class Dropdown extends React.Component<Props,State> {
   
-  uniqueId = 'dropdown-' + this.props.globalId
+  uniqueId = 'dropdown-' + Math.random().toString(36).substr(2, 9)
 
   state = { open: false }
 
@@ -37,11 +37,11 @@ class Dropdown extends React.Component<Props,State> {
     this.setState({ open: false })
   }
 
-  elIsInDropdown = ({parentElement: el}:any) => {
+  elIsInDropdown = ({parentElement: el}:*) => {
     return el ? el.id === this.uniqueId || this.elIsInDropdown(el) : false
   }
 
-  listener = e => {
+  listener = (e:*) => {
     if(!this.state.open) return 
     if(!this.elIsInDropdown(e.target)) this.closeDropdown()
   }
@@ -68,7 +68,7 @@ class Dropdown extends React.Component<Props,State> {
 
     return (
       <Wrapper className='Dropdown' id={this.uniqueId} onClick={this.openDropdown}>
-        {typeof label === 'function' ? label(renderProps) : <div>label</div>}
+        {typeof label === 'function' ? label(renderProps) : <div className='label'>{label}</div>}
         {open && <Content open={open}>
         {render(renderProps)}
         </Content>}
@@ -76,6 +76,3 @@ class Dropdown extends React.Component<Props,State> {
     )
   }
 }
-
-
-export default Dropdown
