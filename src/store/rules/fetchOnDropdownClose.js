@@ -18,7 +18,7 @@ addRule({
     yield action(TOGGLE_FILTER)
     return 'ADD_RULE_BEFORE'
   },
-  addUntil: function* (action) {
+  addUntil: function* (action) { // eslint-disable-line require-yield
     return 'RECREATE_RULE'
   }
 })

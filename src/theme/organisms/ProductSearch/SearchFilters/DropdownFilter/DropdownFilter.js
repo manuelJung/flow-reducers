@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import type {Node} from 'react'
 import Dropdown from 'theme/molecules/Dropdown'
 import ListFilter from 'modules/products/hocs/ListFilter'
 import {dispatchEvent} from 'redux-interrupt'

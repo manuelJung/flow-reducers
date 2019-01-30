@@ -2,6 +2,7 @@
 import algoliasearchHelper from 'algoliasearch-helper'
 import algoliasearch from 'algoliasearch'
 import type {Product, FilterKey, FilterOption, CategoryOption, FilterValues} from '../entities'
+import {compose} from 'redux'
 
 export type ListSearchResult = {
   hits: Product[],
@@ -47,7 +48,6 @@ export const fetchProduct = (objectID:string):Promise<ProductSearchResult> => {
     .then(result => result ? result : Promise.reject('404'))
 }
 
-const getFilterOptions = (filter:Object):FilterOption[] => sort(Object.keys(filter.data))
 const getCategoryOptions = (filter:Object):CategoryOption[] => !filter ? [] : filter.data.map(f => ({
   name: f.name,
   path: f.path,
@@ -121,10 +121,10 @@ export const fetchProductList = (filterValues:FilterValues):Promise<ListSearchRe
       numPages: content.nbPages,
       numHits: content.nbHits,
       tags: content._state.tagRefinements,
-      colorOptions: getFilterOptions(content.disjunctiveFacets[3]),
-      sizeOptions: getFilterOptions(content.disjunctiveFacets[0]),
-      brandOptions: getFilterOptions(content.disjunctiveFacets[1]),
-      shopOptions: getFilterOptions(content.disjunctiveFacets[2]),
+      colorOptions: compose(sort, Object.keys)(content._rawResults[0].facets[searchKeys['color']]),
+      sizeOptions: compose(sort, Object.keys)(content._rawResults[0].facets[searchKeys['size']]),
+      brandOptions: compose(sort, Object.keys)(content._rawResults[0].facets[searchKeys['brand']]),
+      shopOptions: compose(sort, Object.keys)(content._rawResults[0].facets[searchKeys['shop']]),
       categories: getCategoryOptions(content.hierarchicalFacets[0]),
       maxPrice: content.disjunctiveFacets[4].stats.max,
       minPrice: content.disjunctiveFacets[4].stats.min,
@@ -133,7 +133,6 @@ export const fetchProductList = (filterValues:FilterValues):Promise<ListSearchRe
 }
 
 export const fetchListFilterOptions = (filterKey:FilterKey, filterValues:FilterValues, query:string):Promise<FilterOptionsSearchResult> => {
-  const compare = (a,b) => a.value.toLowerCase() > b.value.toLowerCase() ? 1 : -1
   const helper = createListHelper({...filterValues, context: ''})
   return helper
     .searchForFacetValues(searchKeys[filterKey], query, 100)
