@@ -9,12 +9,14 @@ import {initList} from '../actions'
 
 export type InjectedProps = {
   identifier: Identifier,
+  updateKey?: string,
   create: () => void
 }
 
 type Props = {
   identifier: Identifier,
   pure?: boolean,
+  updateKey?: string,
   filters?: $Shape<FilterValues>,
   children?: (props:$Diff<InjectedProps,{}>) => any
 }
@@ -36,7 +38,8 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
     areOwnPropsEqual: (a,b) => {
       if(!b.pure){ if(a.children !== b.children) return false }
       return (
-        a.identifier === b.identifier
+        a.identifier === b.identifier &&
+        a.updateKey === b.updateKey
       )
     }
   }
@@ -48,7 +51,10 @@ export default hoc(class ProductListInitializer extends React.Component<Injected
     this.props.create()
   }
   componentDidUpdate(prevProps){
-    if(prevProps.identifier !== this.props.identifier){
+    if(
+      prevProps.identifier !== this.props.identifier ||
+      prevProps.updateKey !== this.props.updateKey
+    ){
       this.props.create()
     }
   }

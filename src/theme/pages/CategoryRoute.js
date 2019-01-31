@@ -25,7 +25,7 @@ export default React.memo<Props>(function SearchRoute (props:Props) {
       <Helmet title='Category-Route'/>
       <CategoryContext position='top' identifier={path} />
       <CategoryRequest identifier={path} children={category => category.hasFetched && (
-        <ProductSearch identifier='fashion-route' filters={{ 
+        <ProductSearch identifier='fashion-route' updateKey={path} filters={{ 
           category: category.data ? category.data.category : '' 
         }} />
       )}/>

@@ -8,13 +8,14 @@ import type {FilterValues} from 'modules/products/entities'
 
 type Props = {
   identifier: string,
-  filters?: $Shape<FilterValues>
+  filters?: $Shape<FilterValues>,
+  updateKey?: string
 }
 
-export default React.memo<Props>(function ProductSearch ({identifier, filters}:Props) {
+export default React.memo<Props>(function ProductSearch ({identifier, filters, updateKey}:Props) {
   return (
     <div className='ProductSearch'>
-      <SearchInitializer pure identifier={identifier} filters={filters} />
+      <SearchInitializer pure identifier={identifier} updateKey={updateKey} filters={filters} />
       <div className='ResetButton'/>
       <div className='CategoryTree'/>
       <SearchFilters identifier={identifier}/>
