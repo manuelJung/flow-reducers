@@ -48,12 +48,12 @@ export const fetchProduct = (objectID:string):Promise<ProductSearchResult> => {
     .then(result => result ? result : Promise.reject('404'))
 }
 
-const getCategoryOptions = (filter:Object):CategoryOption[] => !filter ? [] : filter.data.map(f => ({
+const getCategoryOptions = (filter:Object):CategoryOption[] => !(filter && filter.data) ? [] : filter.data.map(f => ({
   name: f.name,
   path: f.path,
   count: f.count,
   selected: f.isRefined,
-  options: getCategoryOptions(f.data)
+  options: getCategoryOptions(f)
 }))
 
 const createListHelper = (filterValues:FilterValues):any => {

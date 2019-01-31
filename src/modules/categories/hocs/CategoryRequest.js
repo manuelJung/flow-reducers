@@ -7,7 +7,7 @@ import type {Category, Identifier} from '../entities'
 import {getCategory, hasFetchedCategories} from '../selectors'
 
 export type InjectedProps = {
-  category: Category | null,
+  data: Category | null,
   hasFetched: boolean,
   identifier: Identifier
 }
@@ -19,7 +19,7 @@ type Props = {
 }
 
 const mapStateToProps = (state:RootState, props) => ({
-  category: getCategory(state.categories, props.identifier),
+  data: getCategory(state.categories, props.identifier),
   hasFetched: hasFetchedCategories(state.categories)
 })
 
