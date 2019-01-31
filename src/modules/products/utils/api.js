@@ -113,6 +113,7 @@ export const fetchProductList = (filterValues:FilterValues):Promise<ListSearchRe
 
   return helper.searchOnce()
     .then(result => result.content)
+    .then(r => console.log(r) || r)
     .then(content => ({
       hits: content.hits,
       page: content.page,
@@ -121,10 +122,10 @@ export const fetchProductList = (filterValues:FilterValues):Promise<ListSearchRe
       numPages: content.nbPages,
       numHits: content.nbHits,
       tags: content._state.tagRefinements,
-      colorOptions: compose(sort, Object.keys)(content._rawResults[0].facets[searchKeys['color']]),
-      sizeOptions: compose(sort, Object.keys)(content._rawResults[0].facets[searchKeys['size']]),
-      brandOptions: compose(sort, Object.keys)(content._rawResults[0].facets[searchKeys['brand']]),
-      shopOptions: compose(sort, Object.keys)(content._rawResults[0].facets[searchKeys['shop']]),
+      colorOptions: compose(sort, Object.keys)(content.disjunctiveFacets.find(row => row.name === searchKeys['color']).data),
+      sizeOptions: compose(sort, Object.keys)(content.disjunctiveFacets.find(row => row.name === searchKeys['size']).data),
+      brandOptions: compose(sort, Object.keys)(content.disjunctiveFacets.find(row => row.name === searchKeys['brand']).data),
+      shopOptions: compose(sort, Object.keys)(content.disjunctiveFacets.find(row => row.name === searchKeys['shop']).data),
       categories: getCategoryOptions(content.hierarchicalFacets[0]),
       maxPrice: content.disjunctiveFacets[4].stats.max,
       minPrice: content.disjunctiveFacets[4].stats.min,
