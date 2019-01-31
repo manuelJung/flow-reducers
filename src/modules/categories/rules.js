@@ -5,8 +5,6 @@ import * as selectors from './selectors'
 import * as api from './utils/api'
 import * as actions from './actions'
 
-// import type {Context, Category, CategoryPath} from './entities'
-
 addRule({
   id: 'categories/FETCH_CATEGORIES',
   condition: (_, getState) => {
@@ -21,13 +19,13 @@ addRule({
   id: 'categories/FETCH_CATEGORY_CONTEXT',
   target: at.FETCH_CONTEXT_REQUEST,
   consequence: ({action, getState}) => {
-    const {categoryPath} = action.meta
+    const {identifier} = action.meta
     const state = getState()
-    const category = selectors.getCategory(state.categories, categoryPath)
-    if(!category) return actions.fetchContextFailure(categoryPath, 'categories not found')
+    const category = selectors.getCategory(state.categories, identifier)
+    if(!category) return actions.fetchContextFailure(identifier, 'categories not found')
     return api.fetchCategoryContext(category).then(
-      result => actions.fetchContextSuccess(categoryPath, result),
-      error => actions.fetchContextFailure(categoryPath, error.toString())
+      result => actions.fetchContextSuccess(identifier, result),
+      error => actions.fetchContextFailure(identifier, error.toString())
     )
   }
 })
@@ -60,8 +58,8 @@ addRule({
   zIndex: 1,
   condition: (action, getState) => {
     const state = getState()
-    const {categoryPath} = action.meta
-    return selectors.isFetchingCategoryContext(state.categories, categoryPath)
+    const {identifier} = action.meta
+    return selectors.isFetchingCategoryContext(state.categories, identifier)
   },
   consequence: ({action, effect}) => undefined
 })

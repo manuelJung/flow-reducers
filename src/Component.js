@@ -10,11 +10,11 @@ export default function Component(){
   
   return (
     <div id='Component'>
-      <CategoryContext position='top' categoryPath='/shop/bekleidung/kleider/abendkleider' />
+      <CategoryContext position='top' identifier='/shop/bekleidung/kleider/abendkleider' />
       <ProductSearch identifier='default' />
       <PageArticle urlKey='looks' />
       <StaticBlock identifier='Sale_Category_Text1' />
-      <CategoryContext position='bottom' categoryPath='/shop/bekleidung/kleider/abendkleider' />
+      <CategoryContext position='bottom' identifier='/shop/bekleidung/kleider/abendkleider' />
     </div>
   )
 }

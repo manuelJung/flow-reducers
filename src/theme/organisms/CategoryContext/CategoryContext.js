@@ -4,17 +4,15 @@ import CategoryContextRenderer from 'modules/categories/hocs/CategoryContextRequ
 import Story from 'theme/molecules/Story'
 import BootstrapContent from 'theme/molecules/BootstrapContent'
 
-import type {CategoryPath} from 'modules/categories/entities'
-
 type Props = {
-  categoryPath: CategoryPath,
+  identifier: string,
   position: 'top' | 'bottom'
 }
 
-export default function CategoryContext ({categoryPath, position}:Props) {
+export default function CategoryContext ({identifier, position}:Props) {
   return (
     <div className='CategoryContext'>
-      <CategoryContextRenderer categoryPath={categoryPath} children={props => {
+      <CategoryContextRenderer identifier={identifier} children={props => {
         if(props.isFetching){
           return <div>loading...</div>
         }

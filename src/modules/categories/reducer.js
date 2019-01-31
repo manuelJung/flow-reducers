@@ -1,13 +1,13 @@
 // @flow
 import * as at from './const'
-import type {CategoryPath, Category, Context} from './entities'
+import type {Identifier, Category, Context} from './entities'
 import type {Action} from './actions'
 
 export type State = {
-  +categories: {+[id:CategoryPath]:Category},
-  +rootCategoryPaths: CategoryPath[],
+  +categories: {+[id:Identifier]:Category},
+  +rootIdentifiers: Identifier[],
   +hasFetched: boolean,
-  +categoryContexts: {+[id:CategoryPath]:ContextState} // eslint-disable-line no-use-before-define
+  +categoryContexts: {+[id:Identifier]:ContextState} // eslint-disable-line no-use-before-define
 }
 
 type ContextState = {
@@ -18,7 +18,7 @@ type ContextState = {
 
 export const defaultState = {
   categories: {},
-  rootCategoryPaths: [],
+  rootIdentifiers: [],
   hasFetched: false,
   categoryContexts: {}
 }
@@ -30,18 +30,18 @@ export default function reducer (state:State=defaultState, action:Action):State 
         ...state,
         hasFetched: true,
         categories: action.payload.categories,
-        rootCategoryPaths: action.payload.rootCategoryPaths
+        rootIdentifiers: action.payload.rootCategoryPaths
       }
     }
     case at.FETCH_CONTEXT_REQUEST:
     case at.FETCH_CONTEXT_SUCCESS:
     case at.FETCH_CONTEXT_FAILURE: {
-      const {categoryPath} = action.meta
+      const {identifier} = action.meta
       return {
         ...state,
         categoryContexts: {
           ...state.categoryContexts,
-          [categoryPath]: contextReducer(state.categoryContexts[categoryPath], action)
+          [identifier]: contextReducer(state.categoryContexts[identifier], action)
         }
       }
     }

@@ -3,12 +3,12 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import type { RootState } from 'store/rootReducer'
-import type {Context, CategoryPath} from '../entities'
+import type {Context, Identifier} from '../entities'
 import {getCategoryContextRequest} from '../selectors'
 import {fetchContextRequest as fetch} from '../actions'
 
 export type InjectedProps = {
-  categoryPath: CategoryPath,
+  identifier: Identifier,
   data: Context | null,
   isFetching: boolean,
   shouldFetch: boolean,
@@ -17,17 +17,17 @@ export type InjectedProps = {
 }
 
 type Props = {
-  categoryPath: CategoryPath,
+  identifier: Identifier,
   pure?: boolean,
   children?: (props:$Diff<InjectedProps,{}>) => any
 }
 
-const mapStateToProps = (state:RootState, props) => getCategoryContextRequest(state.categories, props.categoryPath)
+const mapStateToProps = (state:RootState, props) => getCategoryContextRequest(state.categories, props.identifier)
 
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ fetch }, dispatch)
 
 const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
-  fetch: () => {dp.fetch(props.categoryPath)}
+  fetch: () => {dp.fetch(props.identifier)}
 })
 
 
@@ -40,7 +40,7 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
     areOwnPropsEqual: (a,b) => {
       if(!b.pure){ if(a.children !== b.children) return false }
       return (
-        a.categoryPath === b.categoryPath
+        a.identifier === b.identifier
       )
     }
   }

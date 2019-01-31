@@ -1,6 +1,6 @@
 // @flow
 import * as at from './const'
-import type {Context, CategoryPath} from './entities'
+import type {Context, Identifier} from './entities'
 import type {FetchCategoriesResponse} from './utils/api'
 
 export type SetCategoriesAction = {
@@ -11,14 +11,14 @@ export type SetCategoriesAction = {
 export type FetchContextRequestAction = {
   type: typeof at.FETCH_CONTEXT_REQUEST,
   meta: {
-    categoryPath: CategoryPath
+    identifier: Identifier
   }
 }
 
 export type FetchContextSuccessAction = {
   type: typeof at.FETCH_CONTEXT_SUCCESS,
   meta: {
-    categoryPath: CategoryPath
+    identifier: Identifier
   },
   payload: Context
 }
@@ -26,7 +26,7 @@ export type FetchContextSuccessAction = {
 export type FetchContextFailureAction = {
   type: typeof at.FETCH_CONTEXT_FAILURE,
   meta: {
-    categoryPath: CategoryPath
+    identifier: Identifier
   },
   payload: string
 }
@@ -42,19 +42,19 @@ export const setCategories = (response:FetchCategoriesResponse):SetCategoriesAct
   payload: response
 })
 
-export const fetchContextRequest = (categoryPath:CategoryPath):FetchContextRequestAction => ({
+export const fetchContextRequest = (identifier:Identifier):FetchContextRequestAction => ({
   type: at.FETCH_CONTEXT_REQUEST,
-  meta: { categoryPath }
+  meta: { identifier }
 })
 
-export const fetchContextSuccess = (categoryPath:CategoryPath, context:Context):FetchContextSuccessAction => ({
+export const fetchContextSuccess = (identifier:Identifier, context:Context):FetchContextSuccessAction => ({
   type: at.FETCH_CONTEXT_SUCCESS,
-  meta: { categoryPath },
+  meta: { identifier },
   payload: context
 })
 
-export const fetchContextFailure = (categoryPath:CategoryPath, error:string):FetchContextFailureAction => ({
+export const fetchContextFailure = (identifier:Identifier, error:string):FetchContextFailureAction => ({
   type: at.FETCH_CONTEXT_FAILURE,
-  meta: { categoryPath },
+  meta: { identifier },
   payload: error
 })
