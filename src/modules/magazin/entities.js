@@ -32,7 +32,7 @@ export type MagazinArticle = {
   updatedAt: string,
   parentId: string,
   objectID: string,
-  useStore: boolean,
+  useStory: boolean,
   story: mixed
 }
 
