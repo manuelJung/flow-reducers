@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@researchgate/react-intersection-observer": "^0.7.4",
     "algoliasearch": "^3.32.0",
     "algoliasearch-helper": "^2.26.1",
     "re-reselect": "^2.2.0",
