@@ -67,7 +67,6 @@ Atome sind keine gestylten Komponenten. Statdessen injected sie Logik, welche si
 - LazyComponent
 - Intl
 - ObjectID
-- DevComponent
 
 ## Header & Footler
 
