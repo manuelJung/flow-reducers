@@ -87,3 +87,4 @@ Atome sind keine gestylten Komponenten. Statdessen injected sie Logik, welche si
 - routing
 - storefinder
 - browser
+- cart
