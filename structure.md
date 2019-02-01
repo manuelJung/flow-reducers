@@ -74,3 +74,16 @@ Atome sind keine gestylten Komponenten. Statdessen injected sie Logik, welche si
 
   `theme/wucu/Header`
   `theme/wucu/Footer`
+
+
+# Modules
+
+- categories
+- magazine
+- pages
+- products
+- staticBlocks
+- grouped
+- routing
+- storefinder
+- browser
