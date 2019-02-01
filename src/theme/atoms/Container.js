@@ -3,11 +3,11 @@ import type {Component, Node} from 'react'
 import styled from 'styled-components'
 import {ms} from 'theme'
 
-type Props = {
+type Props = {|
   children: Node
-}
+|}
 
-const Container:Component<Props> = styled.div`
+const Container:Component<Props> = styled.section`
   margin: 0 auto;
 
   @media (max-width: ${ms.TABLET-1}px) {

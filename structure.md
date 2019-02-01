@@ -62,6 +62,7 @@ Atome sind keine gestylten Komponenten. Statdessen injected sie Logik, welche si
 - Modal
 - Toggle
 - Timeout
+- Icon
 - LazyComponent
 - Intl
 - ObjectID
