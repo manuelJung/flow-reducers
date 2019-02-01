@@ -4,7 +4,8 @@ import type {Node} from 'react'
 
 type Props = {|
   timeout: number,
-  children: Node
+  children: Node,
+  onFinnish?: () => void
 |}
 
 type State = {
@@ -22,10 +23,11 @@ export default class Timeout extends React.Component<Props,State> {
   state = {visible: false}
   
   componentDidMount(){
-    this.timeout = setTimeout(
-      () => this.setState && this.setState({visible:true}), 
-      this.props.timeout
-    )
+    this.timeout = setTimeout(() => {
+      if(!this.state) return
+      this.setState({visible:true})
+      if(this.props.onFinnish) this.props.onFinnish()
+    }, this.props.timeout)
   }
 
   render(){

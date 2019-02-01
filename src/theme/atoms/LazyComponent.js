@@ -10,7 +10,8 @@ type Props = {|
   offsetTop?: number, // num pixels Child should be visible before Component comes into Viewport (from top)
   offsetBottom?: number, // num pixels Child should be visible before Component comes into Viewport (from bottom)
   prerenderVisible?: boolean, // if true, Child is always visible to Prerenderer
-  defaultHeight?: number // height while Child is not visible
+  defaultHeight?: number, // height while Child is not visible
+  onMount?: () => void
 |}
 
 type State = {
@@ -35,6 +36,7 @@ export default class LazyComponent extends React.Component<Props,State> {
   handleChange = e => {
     if(e.isIntersecting){
       this.setState({visible: true})
+      if(this.props.onMount) this.props.onMount()
     }
   }
 
