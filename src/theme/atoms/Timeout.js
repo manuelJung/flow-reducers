@@ -2,10 +2,10 @@
 import React from 'react'
 import type {Node} from 'react'
 
-type Props = {
+type Props = {|
   timeout: number,
   children: Node
-}
+|}
 
 type State = {
   visible: boolean

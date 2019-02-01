@@ -5,13 +5,13 @@ import {IS_CRAWLER} from 'prerender/const'
 
 import type {Node} from 'react'
 
-type Props = {
+type Props = {|
   children: Node,
   offsetTop?: number, // num pixels Child should be visible before Component comes into Viewport (from top)
   offsetBottom?: number, // num pixels Child should be visible before Component comes into Viewport (from bottom)
   prerenderVisible?: boolean, // if true, Child is always visible to Prerenderer
   defaultHeight?: number // height while Child is not visible
-}
+|}
 
 type State = {
   visible: boolean

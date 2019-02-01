@@ -9,12 +9,12 @@ export type RenderProps = {
   toggleDropdown: () => void
 }
 
-export type Props = {
+export type Props = {|
   label: ((props:RenderProps) => Node) | string,
   children: ((props:RenderProps) => Node) | Node,
   onOpen?: () => void,
   onClose?: () => void
-}
+|}
 
 export type State = {
   open: boolean
