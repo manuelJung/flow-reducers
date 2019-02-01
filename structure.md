@@ -54,7 +54,7 @@ Alles was mit Styling zu tun hat ist als Molekül zu betrachten. Moleküle haben
 
   `theme/default/atoms`
 
-Atome sind keine gestylten Komponenten. Statdessen injected sie Logik, welche sie in ihrem State verwalten, oder dienem der Entwicklung (z.b ObjectID). Einzige Außnahme ist das Container Atom
+Atome sind keine gestylten Komponenten. Statdessen injected sie Logik, welche sie in ihrem State verwalten, oder dienem der Entwicklung (z.b ObjectID). Somit wären sie am besten als "utility-components" zu bezeichnen. Einzige Außnahme ist das Container Atom
 
 - Container
 - MaybeLink
