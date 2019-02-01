@@ -49,6 +49,8 @@ Alles was mit Styling zu tun hat ist als Molekül zu betrachten. Moleküle haben
 - Spinner
 - ImageSlider
 - Button
+- Story
+- BootstrapContent
 
 ## atoms
 
