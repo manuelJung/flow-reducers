@@ -1,8 +1,8 @@
 [ignore]
-.*/node_modules/.*
-.*/build/.*
+<PROJECT_ROOT>/build/.*
 
 [include]
+<PROJECT_ROOT>/src/.*
 
 [libs]
 ./flow-typed

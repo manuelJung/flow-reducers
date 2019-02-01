@@ -1,8 +1,7 @@
 // @flow
 import React from 'react'
 import type {Node} from 'react'
-import Portal from 'atoms/Portal'
-import styled from 'styled-components'
+import Portal from 'theme/atoms/Portal'
 
 type RenderProps = {
   open: boolean,
@@ -32,7 +31,7 @@ export default class Modal extends React.Component<Props,State> {
   state = { open: false }
 
   static defaultProps = {
-    background: 'black'
+    background: 'rgba(0,0,0,.6)'
   }
 
   openModal = () => {
@@ -49,9 +48,9 @@ export default class Modal extends React.Component<Props,State> {
 
   getRenderProps = ():RenderProps => ({
     open           : this.state.open,
-    openDropdown   : this.openDropdown,
-    closeDropdown  : this.closeDropdown,
-    toggleDropdown : this.toggleDropdown
+    openModal   : this.openModal,
+    closeModal  : this.closeModal,
+    toggleModal : this.toggleModal
   })
 
   render(){
@@ -79,8 +78,9 @@ export default class Modal extends React.Component<Props,State> {
             style={{
             position: 'fixed',
             zIndex: 99999999999,
-            margin: '0 auto',
-            background: 'white'
+            left: '50%',
+            top: 0,
+            transform: 'translateX(-50%)'
           }}/>
         </Portal>}
       </React.Fragment>
