@@ -1,9 +1,10 @@
 // @flow
 import React from 'react'
-import Observer from '@researchgate/react-intersection-observer'
-import {IS_CRAWLER} from 'prerender/const'
-
 import type {Node} from 'react'
+import Observer from '@researchgate/react-intersection-observer'
+// import {IS_CRAWLER} from 'prerender/const'
+
+const IS_CRAWLER = false
 
 type Props = {|
   children: Node,
@@ -25,13 +26,12 @@ type State = {
 export default class LazyComponent extends React.Component<Props,State> {
 
   static defaultProps = {
-    offsetTop: 0,
-    offsetBottom: 0,
+    offset: 0,
     prerenderVisible: false,
     defaultHeight: 0
   }
 
-  state = { visible: false }
+  state = { visible: IS_CRAWLER && this.props.prerenderVisible }
 
   handleChange = e => {
     if(e.isIntersecting){
@@ -42,15 +42,21 @@ export default class LazyComponent extends React.Component<Props,State> {
 
   render(){
     const {visible} = this.state
-    const {children, prerenderVisible, defaultHeight} = this.props
+    const {children, prerenderVisible, defaultHeight, offset} = this.props
 
-    if(IS_CRAWLER && prerenderVisible){
-      return children
-    }
+    if(visible) return children
+
+    const mTop = offset + defaultHeight
+    const mBottom = offset
     
     return (
       <React.Fragment>
-        <Observer disabled={visible} onChange={this.handleChange} />
+        <Observer 
+          disabled={visible} 
+          onChange={this.handleChange} 
+          rootMargin={`${mTop}px 0px ${mBottom}px 0px`} 
+          children={<span/>}
+        />
         {visible && children}
         {visible || <div className='lazy-placeholder' style={{height: defaultHeight}} />}
       </React.Fragment>

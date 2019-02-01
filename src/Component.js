@@ -1,19 +1,26 @@
 // @flow
 import * as React from 'react'
-import Modal from 'theme/atoms/Modal'
+import LazyComponent from 'theme/atoms/LazyComponent'
 
 
 export default function Component(){
   
   return (
     <div id='Component'>
-      <Modal label='label'>
+      <div style={{
+        background: 'silver',
+        height: 1800
+      }}/>
+      <LazyComponent offset={200} defaultHeight={400} onMount={() => console.log('mount')}>
         <div style={{
-          background: 'white',
-          width: '40%',
+          background: 'green',
           height: 400
         }}/>
-      </Modal>
+      </LazyComponent>
+      <div style={{
+        background: 'silver',
+        height: 1800
+      }}/>
     </div>
   )
 }
