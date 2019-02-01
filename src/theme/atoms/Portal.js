@@ -13,6 +13,7 @@ export default function Portal ({id, selector, children}:Props){
   let element;
   if (id) element = document.getElementById(id)
   else if (selector) element = document.querySelector(selector)
-  else return null
+  
+  if(!element) return null
   return ReactDOM.createPortal(children, element)
 }
