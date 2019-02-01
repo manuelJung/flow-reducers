@@ -8,8 +8,7 @@ const IS_CRAWLER = false
 
 type Props = {|
   children: Node,
-  offsetTop?: number, // num pixels Child should be visible before Component comes into Viewport (from top)
-  offsetBottom?: number, // num pixels Child should be visible before Component comes into Viewport (from bottom)
+  offset?: number, // num pixels Child should be visible before Component comes into Viewport (from top and bottom)
   prerenderVisible?: boolean, // if true, Child is always visible to Prerenderer
   defaultHeight?: number, // height while Child is not visible
   onMount?: () => void
@@ -33,7 +32,7 @@ export default class LazyComponent extends React.Component<Props,State> {
 
   state = { visible: IS_CRAWLER && this.props.prerenderVisible }
 
-  handleChange = e => {
+  handleChange = (e:any) => {
     if(e.isIntersecting){
       this.setState({visible: true})
       if(this.props.onMount) this.props.onMount()
@@ -47,7 +46,7 @@ export default class LazyComponent extends React.Component<Props,State> {
     if(visible) return children
 
     const mTop = offset + defaultHeight
-    const mBottom = offset
+    const mBottom = offset || 0
     
     return (
       <React.Fragment>
