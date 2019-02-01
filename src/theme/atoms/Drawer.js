@@ -5,9 +5,9 @@ import Portal from 'theme/atoms/Portal'
 
 type RenderProps = {
   open: boolean,
-  openModal: () => void,
-  closeModal: () => void,
-  toggleModal: () => void
+  openDrawer: () => void,
+  closeDrawer: () => void,
+  toggleDrawer: () => void
 }
 
 type Props = {|
@@ -16,6 +16,7 @@ type Props = {|
   onOpen?: () => void,
   onClose?: () => void,
   background?: string,
+  width?: number
 |}
 
 type State = {
@@ -23,30 +24,30 @@ type State = {
 }
 
 /**
- * A Modal is super usefull when you want to hide context data until your 
+ * A Drawer is super usefull when you want to hide context data until your 
  * primary element was clicked. As soon as the user
  * clicks on the overlay, the context-content will be removed again
  */
-export default class Modal extends React.Component<Props,State> {
+export default class Drawer extends React.Component<Props,State> {
   state = { open: false }
 
-  openModal = () => {
+  openDrawer = () => {
     if(this.state.open) return
     if(this.props.onOpen) this.props.onOpen()
     this.setState({ open:true })
   }
-  closeModal = () => {
+  closeDrawer = () => {
     if(!this.state.open) return
     if(this.props.onClose) this.props.onClose()
     this.setState({ open: false })
   }
-  toggleModal = () => this.state.open ? this.closeModal() : this.openModal()
+  toggleDrawer = () => this.state.open ? this.closeDrawer() : this.openDrawer()
 
   getRenderProps = ():RenderProps => ({
     open           : this.state.open,
-    openModal   : this.openModal,
-    closeModal  : this.closeModal,
-    toggleModal : this.toggleModal
+    openDrawer   : this.openDrawer,
+    closeDrawer  : this.closeDrawer,
+    toggleDrawer : this.toggleDrawer
   })
 
   render(){
@@ -57,10 +58,10 @@ export default class Modal extends React.Component<Props,State> {
     return (
       <React.Fragment>
         {typeof label === 'string'
-          ? <div className='label' onClick={this.openModal}>{label}</div>
+          ? <div className='label' onClick={this.openDrawer}>{label}</div>
           : label(renderProps)}
-        {open && <Portal id='modal-root'>
-          <div className='overlay' onClick={this.closeModal} style={{
+        {open && <Portal id='drawer-root'>
+          <div className='overlay' onClick={this.closeDrawer} style={{
             position: 'fixed',
             zIndex: 99999999998,
             left: 0,
@@ -69,14 +70,16 @@ export default class Modal extends React.Component<Props,State> {
             bottom: 0,
             background: this.props.background || 'rgba(0,0,0,.6)'
           }}/>
-          <div className='modal-content' 
+          <div className='drawer-content' 
             children={typeof children === 'function' ? children(renderProps) : children} 
             style={{
             position: 'fixed',
             zIndex: 99999999999,
-            left: '50%',
+            left: 0,
             top: 0,
-            transform: 'translateX(-50%)'
+            bottom: 0,
+            background: 'white',
+            width: this.props.width || 400
           }}/>
         </Portal>}
       </React.Fragment>
