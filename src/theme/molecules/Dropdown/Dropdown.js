@@ -1,77 +1,49 @@
 // @flow
 import React from 'react'
 import type {Node} from 'react'
-import {Wrapper, Content} from './style'
+import {Wrapper, Content, Label} from './style'
 
-export type RenderProps = {
-  open: boolean,
-  openDropdown: () => void,
-  closeDropdown: () => void
-}
+import Toggle from 'theme/atoms/Toggle'
 
-export type Props = {
-  label: ((props:RenderProps) => Node) | string,
-  children: (props:RenderProps) => Node,
+type Props = {
+  label: string,
+  children: Node,
   onOpen?: () => void,
   onClose?: () => void,
+  onSearch?: (value:string) => void
 }
 
-export type State = {
-  open: boolean
+type State = {
+  search: string
 }
 
 export default class Dropdown extends React.Component<Props,State> {
-  
-  uniqueId = 'dropdown-' + Math.random().toString(36).substr(2, 9)
+  state = {search: ''}
 
-  state = { open: false }
-
-  openDropdown = () => {
-    if(this.state.open) return
-    if(this.props.onOpen) this.props.onOpen()
-    this.setState({ open: true })
+  handleSearchChange = (e:*) => {
+    this.setState({search: e.target.value})
+    if(this.props.onSearch) this.props.onSearch(e.target.value)
   }
-  closeDropdown = () => {
-    if(!this.state.open) return
-    if(this.props.onClose) this.props.onClose()
-    this.setState({ open: false })
-  }
-
-  elIsInDropdown = ({parentElement: el}:*) => {
-    return el ? el.id === this.uniqueId || this.elIsInDropdown(el) : false
-  }
-
-  listener = (e:*) => {
-    if(!this.state.open) return 
-    if(!this.elIsInDropdown(e.target)) this.closeDropdown()
-  }
-  
-  componentWillMount(){
-    window.addEventListener('click', this.listener)
-  }
-
-  componentWillUnmount(){
-    window.removeEventListener('click', this.listener)
-  }
-
-  getRenderProps = ():RenderProps => ({
-    open          : this.state.open,
-    openDropdown  : this.openDropdown,
-    closeDropdown : this.closeDropdown
-  })
 
   render(){
-    let {label, children} = this.props
-    let {open} = this.state
-
-    const renderProps = this.getRenderProps()
-
+    const {search} = this.state
+    const {label, children, onOpen, onClose} = this.props
+    const searchEnabled = Boolean(this.props.onSearch)
     return (
-      <Wrapper className='Dropdown' id={this.uniqueId} onClick={this.openDropdown}>
-        {typeof label === 'function' ? label(renderProps) : <div className='label'>{label}</div>}
-        {open && <Content open={open}>
-        {children(renderProps)}
-        </Content>}
+      <Wrapper className='Dropdown'>
+        <Toggle
+          label={({open}) => <Label open={open}>{label}</Label>}
+          children={({open}) => (
+            <Content open={open}>
+              {searchEnabled && <div className='search'>
+                <input type='text' placeholder='Suche...' value={search} onChange={this.handleSearchChange}/>
+              </div>}
+              {children}
+            </Content>
+          )}
+          onOpen={onOpen}
+          onClose={onClose}
+        />
       </Wrapper>
     )
   }
