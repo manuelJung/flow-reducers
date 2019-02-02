@@ -178,7 +178,7 @@ export const initList = (identifier:ListIdentifier, initialValues?:$Shape<Filter
       size: [],
       shop: [],
       category: '',
-      price: [0,100],
+      price: null,
       context: ''
     }, initialValues)
   },
