@@ -20,13 +20,13 @@ const Button:Component<Props> = styled.button`
   width: ${props => props.fullWidth ? '100%' : 'auto'};
 
   background: white;
-  color: ${props => props.secondary ? 'gray' : 'red'};
-  border: 2px solid ${props => props.secondary ? 'gray' : 'red'};
+  color: ${props => props.secondary ? '#a7a9ac' : '#993452'};
+  border: 2px solid ${props => props.secondary ? '#a7a9ac' : '#993452'};
 
   &:focus { outline:0; }
 
   ${props => props.filled && `
-    background: ${props.secondary ? 'gray' : 'red'};
+    background: ${props.secondary ? '#a7a9ac' : '#993452'};
     color: white;
   `}
 

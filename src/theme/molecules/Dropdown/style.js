@@ -24,6 +24,10 @@ export const Content = styled.div`
       outline: none;
     }
   }
+
+  > .button-wrapper {
+    margin-top: 15px;
+  }
 `
 
 export const Label = styled.div`
