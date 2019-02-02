@@ -25,25 +25,26 @@ export default class Dropdown extends React.Component<Props,State> {
     if(this.props.onSearch) this.props.onSearch(e.target.value)
   }
 
+  renderLabel = ({open, closeDropdown}:*) => (
+    <Label onClick={closeDropdown} open={open}>
+      {this.props.label}
+    </Label>
+  )
+
   render(){
     const {search} = this.state
-    const {label, children, onOpen, onClose} = this.props
+    const {children, onOpen, onClose} = this.props
     const searchEnabled = Boolean(this.props.onSearch)
     return (
       <Wrapper className='Dropdown'>
-        <Toggle
-          label={({open}) => <Label open={open}>{label}</Label>}
-          children={({open}) => (
-            <Content open={open}>
-              {searchEnabled && <div className='search'>
-                <input type='text' placeholder='Suche...' value={search} onChange={this.handleSearchChange}/>
-              </div>}
-              {children}
-            </Content>
-          )}
-          onOpen={onOpen}
-          onClose={onClose}
-        />
+        <Toggle label={this.renderLabel} onOpen={onOpen} onClose={onClose}>
+          <Content open={open}>
+            {searchEnabled && <div className='search'>
+              <input type='text' placeholder='Suche...' value={search} onChange={this.handleSearchChange}/>
+            </div>}
+            {children}
+          </Content>
+        </Toggle>
       </Wrapper>
     )
   }

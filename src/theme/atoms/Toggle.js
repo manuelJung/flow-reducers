@@ -75,11 +75,11 @@ export default class Toggle extends React.Component<Props,State> {
     const renderProps = this.getRenderProps()
 
     return (
-      <div className='Toggle' id={this.uniqueId} style={{position: 'relative'}} onClick={this.toggleDropdown}>
+      <div className='Toggle' id={this.uniqueId} style={{position: 'relative'}} onClick={this.openDropdown}>
         {/* Label */}
         {typeof label === 'function'
           ? label(renderProps)
-          : <div className='label'>{label}</div>}
+          : <div className='label' onClick={this.closeDropdown}>{label}</div>}
         {/* Content */}
         {open && (typeof children === 'function'
           ? children(renderProps)
