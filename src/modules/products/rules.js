@@ -7,6 +7,7 @@ import * as selectors from './selectors'
 
 addRule({
   id: 'products/TRIGGER_LIST_SEARCH',
+  zIndex: 10,
   target: [
     at.INIT_LIST, 
     at.SET_PAGE, 
