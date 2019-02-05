@@ -7,10 +7,9 @@ import Checkbox from 'theme/molecules/Checkbox'
 
 
 export default function Component(){
-  
   return (
     <div id='Component'>
-      <Checkbox label='Preis wählen' />
+      <Checkbox label='Preis wählen' onClick={() => console.log('click checkbox')}/>
       <div style={{
         background: 'silver',
         height: 1800

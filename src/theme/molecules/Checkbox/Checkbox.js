@@ -1,18 +1,27 @@
 // @flow
 import React from 'react'
 import {Wrapper} from './style'
+import memoEqual from 'utils/memoEqual'
 
 type Props = {|
   checked?: boolean,
-  label: string
+  label: string,
+  onClick: () => void
 |}
 
-export default function Checkbbox ({checked, label}:Props){
+function arePropsEqual (prevProps, nextProps) {
   return (
-    <Wrapper className='Checkbox' checked={checked}>
+    prevProps.checked === nextProps.checked &&
+    prevProps.label === nextProps.label
+  )
+}
+
+export default React.memo<Props>(function Checkbox ({checked, label, onClick}:Props){
+  return (
+    <Wrapper className='Checkbox' checked={checked} onMouseDown={() => onClick()}>
       {label}
       <input type='checkbox' checked={checked}/>
       <span/>
     </Wrapper>
   )
-}
+}, memoEqual('Checkbox', ['checked', 'label'], ['onClick']))
