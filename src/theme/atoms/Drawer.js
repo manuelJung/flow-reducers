@@ -2,6 +2,7 @@
 import React from 'react'
 import type {Node} from 'react'
 import Portal from 'theme/atoms/Portal'
+import memoEqual from 'utils/memoEqual'
 
 type RenderProps = {
   open: boolean,
@@ -29,6 +30,8 @@ type State = {
  * clicks on the overlay, the context-content will be removed again
  */
 export default class Drawer extends React.Component<Props,State> {
+  shouldComponentUpdate = memoEqual('Drawer', ['label', 'background', 'width', 'children'], ['onOpen', 'onClose'])
+  
   state = { open: false }
 
   openDrawer = () => {

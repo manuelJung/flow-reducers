@@ -1,6 +1,7 @@
 // @flow
 import React from 'react'
 import type {Node} from 'react'
+import memoEqual from 'utils/memoEqual'
 
 export type RenderProps = {
   open: boolean,
@@ -27,6 +28,7 @@ export type State = {
  * context-content will be removed again
  */
 export default class Toggle extends React.Component<Props,State> {
+  shouldComponentUpdate = memoEqual('Toggle', ['label', 'children'], ['onOpen', 'onClose'], this)
   
   uniqueId = 'toggle-' + Math.random().toString(36).substr(2, 9)
 
