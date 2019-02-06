@@ -1,13 +1,25 @@
 // @flow
 import type {Component, Node} from 'react'
 import styled from 'styled-components'
-import {ms} from 'theme'
+// import {ms} from 'theme'
+
+const ms = {
+	MOBILE_M: 0,
+  MOBILE_L: 375,
+  TABLET: 525,
+  LAPTOP: 768,
+  LAPTOP_L: 990,
+  LAPTOP_XL: 1200,
+  CONTAINER_S: 690,
+  CONTAINER: 910,
+  CONTAINER_L: 1110
+}
 
 type Props = {|
   children: Node
 |}
 
-const Container:Component<Props> = styled.section`
+const Container:Component<Props> = styled.div`
   margin: 0 auto;
 
   @media (max-width: ${ms.TABLET-1}px) {

@@ -5,10 +5,13 @@ import Drawer from 'theme/atoms/Drawer'
 
 import Slider from 'theme/molecules/Slider'
 
+import Header from 'theme/_Header'
+
 
 export default function Component(){
   return (
     <div id='Component'>
+      <Header/>
       <Slider price={[0,100]} min={0} max={200} onChange={console.log}/>
       <div style={{
         background: 'silver',
