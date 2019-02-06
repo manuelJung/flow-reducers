@@ -15,10 +15,9 @@ export default React.memo<Props>(function Header () {
   return (
     <Wrapper className='Header'>
       <ul className='usps'>
-        {/* $FlowFixMe */}
-        <li><Icon icon='home'/> Marktplatz für große Größen</li>{/* $FlowFixMe */}
-        <li><Icon icon='heart-o'/> Beliebte Shops & Marken</li>{/* $FlowFixMe */}
-        <li><Icon icon='shopping-cart'/> Riesige Auswahl</li>{/* $FlowFixMe */}
+        <li><Icon icon='home'/> Marktplatz für große Größen</li>
+        <li><Icon icon='heart-o'/> Beliebte Shops & Marken</li>
+        <li><Icon icon='shopping-cart'/> Riesige Auswahl</li>
         <li><Icon icon='star-o'/> Beratung & Inspiration</li>
       </ul>
       <Container className='menu'>
