@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import type {Component} from 'react'
+import type {ComponentType} from 'react'
 
 type Props = {
   secondary?: boolean,
@@ -12,7 +12,7 @@ type Props = {
   disable?: boolean
 }
 
-const Button:Component<Props> = styled.button`
+const Button:ComponentType<Props> = styled.button`
   font-size: 1em;
   padding: 0.25em 1em;
   cursor: pointer;

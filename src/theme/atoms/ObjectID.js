@@ -1,5 +1,5 @@
 // @flow
-import type {Component} from 'react'
+import type {ComponentType} from 'react'
 import styled from 'styled-components'
 import {adminMode} from 'config'
 
@@ -7,7 +7,7 @@ type Props = {|
   children: string
 |}
 
-const ObjectID:Component<Props> = styled.code.attrs({
+const ObjectID:ComponentType<Props> = styled.code.attrs({
   onClick: (e:any) => e.stopPropagation()
 })`
   &:before { content: "Object-ID: "; }

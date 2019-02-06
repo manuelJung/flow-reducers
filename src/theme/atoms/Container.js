@@ -1,5 +1,5 @@
 // @flow
-import type {Component, Node} from 'react'
+import type {ComponentType, Node} from 'react'
 import styled from 'styled-components'
 // import {ms} from 'theme'
 
@@ -16,10 +16,11 @@ const ms = {
 }
 
 type Props = {|
-  children: Node
+  children: Node,
+  className?: string
 |}
 
-const Container:Component<Props> = styled.div`
+const Container:ComponentType<Props> = styled.div`
   margin: 0 auto;
 
   @media (max-width: ${ms.TABLET-1}px) {
