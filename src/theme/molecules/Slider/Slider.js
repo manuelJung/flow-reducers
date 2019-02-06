@@ -34,6 +34,7 @@ export default class Slider extends React.Component<Props,State> {
     const {valMin, valMax} = this.state
     const {price, min, max} = this.props
     const sliderConfig = {
+      withBars: true,
       min: Math.floor(min),
       max: Math.ceil(max),
       defaultValue: [price[0], price[1]],
