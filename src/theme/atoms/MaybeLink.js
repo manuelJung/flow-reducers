@@ -8,7 +8,7 @@ type Props = {
   to: string
 }
 
-export default function MaybeLink (props:Props) {
+export default React.memo<Props>(function MaybeLink (props:Props) {
   const isRelativeLink = props.to[0] === '/'
   const isExternalLink = props.to.startsWith('http')
   const isNoFollowLink = props.to.startsWith('nofollow:')
@@ -28,7 +28,7 @@ export default function MaybeLink (props:Props) {
   }
 
   return <Link {...props} to={withMaybeLocale(props.to)} />
-}
+})
 
 const withMaybeLocale = (url='/') => {
   const locale = getLocale() // de-at

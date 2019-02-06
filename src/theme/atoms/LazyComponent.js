@@ -2,6 +2,7 @@
 import React from 'react'
 import type {Node} from 'react'
 import Observer from '@researchgate/react-intersection-observer'
+import memoEqual from 'utils/memoEqual'
 // import {IS_CRAWLER} from 'prerender/const'
 
 const IS_CRAWLER = false
@@ -23,6 +24,9 @@ type State = {
  * like big images or hardware-intensive Components. Can be turned off while prerendering
  */
 export default class LazyComponent extends React.Component<Props,State> {
+  shouldComponentUpdate = memoEqual('LazyComponent',
+  ['children', 'offset', 'prerenderVisible', 'defaultHeight'],
+  ['onMount'], this)
 
   static defaultProps = {
     offset: 0,

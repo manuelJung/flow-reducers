@@ -30,7 +30,7 @@ type State = {
  * clicks on the overlay, the context-content will be removed again
  */
 export default class Drawer extends React.Component<Props,State> {
-  shouldComponentUpdate = memoEqual('Drawer', ['label', 'background', 'width', 'children'], ['onOpen', 'onClose'])
+  shouldComponentUpdate = memoEqual('Drawer', ['label', 'background', 'width', 'children'], ['onOpen', 'onClose'], this)
   
   state = { open: false }
 

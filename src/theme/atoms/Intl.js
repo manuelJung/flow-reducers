@@ -17,9 +17,9 @@ type Props = {|
   values?: {[key:string]: string} 
 |}
 
-const IntlComponent:Component<Props> = injectIntl(function Intl(props:{...Props, intl:Intl}){
+const IntlComponent:Component<Props> = React.memo<Props>(injectIntl(function Intl(props:{...Props, intl:Intl}){
   if(props.children) return props.children(props.intl)
   return props.intl.formatMessage({id: props.id}, props.values)
-})
+}))
 
 export default IntlComponent

@@ -9,11 +9,11 @@ type Props = {|
   children: Node
 |}
 
-export default function Portal ({id, selector, children}:Props){
+export default React.memo<Props>(function Portal ({id, selector, children}:Props){
   let element;
   if (id) element = document.getElementById(id)
   else if (selector) element = document.querySelector(selector)
   
   if(!element) return null
   return ReactDOM.createPortal(children, element)
-}
+})
