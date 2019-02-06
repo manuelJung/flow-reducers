@@ -4,6 +4,7 @@ import type {Node} from 'react'
 import {Wrapper, Content, Label} from './style'
 import Button from 'theme/molecules/Button'
 import Toggle from 'theme/atoms/Toggle'
+import memoEqual from 'utils/memoEqual'
 
 type Props = {
   label: string,
@@ -18,6 +19,8 @@ type State = {
 }
 
 export default class Dropdown extends React.Component<Props,State> {
+  shouldComponentUpdate = memoEqual('Dropdown', ['label', 'children'], ['onOpen', 'onClose', 'onSearch'], this)
+
   state = {search: ''}
 
   handleSearchChange = (e:*) => {
