@@ -14,6 +14,7 @@ export default React.memo<Props>(function Header () {
   }
   return (
     <Wrapper className='Header'>
+      {/* USP Items */}
       <ul className='usps'>
         <li><Icon icon='home'/> Marktplatz für große Größen</li>
         <li><Icon icon='heart-o'/> Beliebte Shops & Marken</li>
@@ -21,15 +22,19 @@ export default React.memo<Props>(function Header () {
         <li><Icon icon='star-o'/> Beratung & Inspiration</li>
       </ul>
       <Container className='menu'>
+        {/* Logo */}
         <Link className='logo' to='/'>
           <img src='https://www.wundercurves.de/images/wundercurves_logo.svg' alt='Banner'/>
         </Link>
+        {/* Search Form */}
         <form className='search-form' onSubmit={handleSearchSubmit}>
           <input placeholder='Wundercurves durchsuchen...' />
           <button><Icon icon='search'/></button>
         </form>
+        {/* Icon List */}
         <div className='icon-list'/>
       </Container>
+      {/* Navigation */}
       <section className='navigation'/>
     </Wrapper>
   )
