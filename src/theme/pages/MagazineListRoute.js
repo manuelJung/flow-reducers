@@ -1,11 +1,11 @@
 // @flow
 import React from 'react'
-import Initializer from 'modules/magazin/hocs/ListInitializer'
-import ArticleList from 'modules/magazin/hocs/ListRequest'
+import Initializer from 'modules/magazine/hocs/ListInitializer'
+import ArticleList from 'modules/magazine/hocs/ListRequest'
 
-export default function MagazinListPage () {
+export default function MagazineListPage () {
   return (
-    <div className='MagazinListPage'>
+    <div className='MagazineListPage'>
       <Initializer identifier='default' filters={{ category: 'News', page: 3 }}/>
       <ArticleList identifier='default' children={props => (
         <div className='list'>

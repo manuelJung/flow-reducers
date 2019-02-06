@@ -1,11 +1,11 @@
 // @flow
 import algoliasearchHelper from 'algoliasearch-helper'
 import algoliasearch from 'algoliasearch'
-import type {MagazinArticle, ListingMagazinArticle, ListingFilters} from '../entities'
+import type {MagazineArticle, ListingMagazineArticle, ListingFilters} from '../entities'
 
 const client = algoliasearch('0BYMLMXGLI', '7058207f486c5d9c0a0e2d31fd10e7e5')
 
-export const fetchArticle = (urlKey:string):Promise<MagazinArticle> => {
+export const fetchArticle = (urlKey:string):Promise<MagazineArticle> => {
   return algoliasearchHelper(client, 'magazine', {
     disjunctiveFacets: ['urlKey'],
     attributesToHighlight: []
@@ -16,7 +16,7 @@ export const fetchArticle = (urlKey:string):Promise<MagazinArticle> => {
 }
 
 export type ListingResponse = {
-  hits: ListingMagazinArticle[],
+  hits: ListingMagazineArticle[],
   numPages: number,
   categories: string[]
 }

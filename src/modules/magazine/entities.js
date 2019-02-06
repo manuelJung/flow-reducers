@@ -4,7 +4,7 @@ export type ArticleIdentifier = string
 
 export type ListIdentifier = string
 
-export type MagazinArticle = {
+export type MagazineArticle = {
   urlKey: ArticleIdentifier,
   title: string,
   breadcrumbTitle: string,
@@ -19,7 +19,7 @@ export type MagazinArticle = {
   featuredOnHomepage: string,
   sponsoredArticle: boolean,
   relatedProducts: string,
-  relatedMagazinArticles: string[],
+  relatedMagazineArticles: string[],
   metaDescription: string,
   keyKeywords: string,
   test: string,
@@ -36,7 +36,7 @@ export type MagazinArticle = {
   story: mixed
 }
 
-export type ListingMagazinArticle = MagazinArticle
+export type ListingMagazineArticle = MagazineArticle
 
 export type ListingFilters = {
   category?: string,

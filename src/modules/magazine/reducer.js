@@ -1,6 +1,6 @@
 // @flow
 import * as at from './const'
-import type {MagazinArticle, ListingMagazinArticle, ArticleIdentifier, ListIdentifier} from './entities'
+import type {MagazineArticle, ListingMagazineArticle, ArticleIdentifier, ListIdentifier} from './entities'
 import type {Action} from './actions'
 
 export type State = {
@@ -11,13 +11,13 @@ export type State = {
 type ArticleState = {
   +isFetching: boolean,
   +fetchError: string | null,
-  +data: MagazinArticle | null
+  +data: MagazineArticle | null
 }
 
 type ListingState = {
   +isFetching: boolean,
   +fetchError: string | null,
-  +data: ListingMagazinArticle[] | null,
+  +data: ListingMagazineArticle[] | null,
   +filters: {
     +filterIds: string[],
     +category: string,

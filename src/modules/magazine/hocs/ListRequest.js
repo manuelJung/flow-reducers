@@ -4,12 +4,12 @@ import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import type {RootState} from 'store/rootReducer'
-import type {ListIdentifier as Identifier, ListingMagazinArticle} from '../entities'
+import type {ListIdentifier as Identifier, ListingMagazineArticle} from '../entities'
 import {getListRequest} from '../selectors'
 
 export type InjectedProps = {
   identifier: Identifier,
-  data: ListingMagazinArticle[] | null,
+  data: ListingMagazineArticle[] | null,
   isFetching: boolean,
   fetchError: null | string
 }
@@ -20,7 +20,7 @@ type Props = {
   children?: (props:$Diff<InjectedProps,{}>) => any
 }
 
-const mapStateToProps = (state:RootState, props) => getListRequest(state.magazin, props.identifier)
+const mapStateToProps = (state:RootState, props) => getListRequest(state.magazine, props.identifier)
 
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({}, dispatch)
 
@@ -31,7 +31,7 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
   mapDispatchToProps,
   mergeProps,
   {
-    areStatesEqual: (a:RootState,b:RootState) => a.magazin === b.magazin,
+    areStatesEqual: (a:RootState,b:RootState) => a.magazine === b.magazine,
     areOwnPropsEqual: (a,b) => {
       if(!b.pure){ if(a.children !== b.children) return false }
       return (

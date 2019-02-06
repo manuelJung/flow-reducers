@@ -1,5 +1,5 @@
 // @flow
-import type {MagazinArticle, ListingMagazinArticle, ArticleIdentifier, ListIdentifier} from './entities'
+import type {MagazineArticle, ListingMagazineArticle, ArticleIdentifier, ListIdentifier} from './entities'
 import type {State} from './reducer'
 import createReSelector from 're-reselect'
 
@@ -8,33 +8,33 @@ import createReSelector from 're-reselect'
 
 
 
-export const getMagazinArticle = (state:State, identifier:ArticleIdentifier):MagazinArticle|null => state.articles[identifier]
+export const getMagazineArticle = (state:State, identifier:ArticleIdentifier):MagazineArticle|null => state.articles[identifier]
   ? state.articles[identifier].data
   : null
 
-export const isFetchingMagazinArticle = (state:State, identifier:ArticleIdentifier):boolean => state.articles[identifier]
+export const isFetchingMagazineArticle = (state:State, identifier:ArticleIdentifier):boolean => state.articles[identifier]
   ? state.articles[identifier].isFetching
   : false
 
-export const shouldFetchMagazinArticle = (state:State, identifier:ArticleIdentifier):boolean => !state.articles[identifier]
+export const shouldFetchMagazineArticle = (state:State, identifier:ArticleIdentifier):boolean => !state.articles[identifier]
 
-export const getMagazinArticleFetchError = (state:State, identifier:ArticleIdentifier):string|null => state.articles[identifier]
+export const getMagazineArticleFetchError = (state:State, identifier:ArticleIdentifier):string|null => state.articles[identifier]
   ? state.articles[identifier].fetchError
   : null
 
 
-export const getMagazinArticleRequest:(state:State, identifier:ArticleIdentifier)=> * = createReSelector(
-  getMagazinArticle,
-  isFetchingMagazinArticle,
-  getMagazinArticleFetchError,
-  shouldFetchMagazinArticle,
+export const getMagazineArticleRequest:(state:State, identifier:ArticleIdentifier)=> * = createReSelector(
+  getMagazineArticle,
+  isFetchingMagazineArticle,
+  getMagazineArticleFetchError,
+  shouldFetchMagazineArticle,
   (data, isFetching, fetchError, shouldFetch) => ({data, isFetching, fetchError, shouldFetch})
 )((_,identifier) => identifier)
 
 
 // MAGAZIN LIST
 
-export const getListHits = (state:State, identifier:ListIdentifier):ListingMagazinArticle[]|null => state.articleLists[identifier]
+export const getListHits = (state:State, identifier:ListIdentifier):ListingMagazineArticle[]|null => state.articleLists[identifier]
   ? state.articleLists[identifier].data
   : null
 

@@ -1,6 +1,6 @@
 // @flow
 import * as at from './const'
-import type {MagazinArticle, ArticleIdentifier, ListIdentifier, ListingFilters} from './entities'
+import type {MagazineArticle, ArticleIdentifier, ListIdentifier, ListingFilters} from './entities'
 import type {ListingResponse} from './utils/api'
 
 export type FetchArticleRequestAction = {
@@ -11,7 +11,7 @@ export type FetchArticleRequestAction = {
 export type FetchArticleSuccessAction = {
   type: typeof at.FETCH_ARTICLE_SUCCESS,
   meta: { identifier:ArticleIdentifier },
-  payload: MagazinArticle
+  payload: MagazineArticle
 }
 
 export type FetchArticleFailureAction = {
@@ -73,7 +73,7 @@ export const fetchArticleRequest = (identifier:ArticleIdentifier):FetchArticleRe
   meta: { identifier }
 })
 
-export const fetchArticleSuccess = (identifier:ArticleIdentifier, article:MagazinArticle):FetchArticleSuccessAction => ({
+export const fetchArticleSuccess = (identifier:ArticleIdentifier, article:MagazineArticle):FetchArticleSuccessAction => ({
   type: at.FETCH_ARTICLE_SUCCESS,
   meta: { identifier },
   payload: article

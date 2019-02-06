@@ -21,8 +21,8 @@ type Props = {
 }
 
 const mapStateToProps = (state:RootState, props) => ({
-  category: getCategory(state.magazin, props.identifier),
-  options: getCategoryOptions(state.magazin, props.identifier)
+  category: getCategory(state.magazine, props.identifier),
+  options: getCategoryOptions(state.magazine, props.identifier)
 })
 
 const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({}, dispatch)
@@ -34,7 +34,7 @@ export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,
   mapDispatchToProps,
   mergeProps,
   {
-    areStatesEqual: (a:RootState,b:RootState) => a.magazin === b.magazin,
+    areStatesEqual: (a:RootState,b:RootState) => a.magazine === b.magazine,
     areOwnPropsEqual: (a,b) => {
       if(!b.pure){ if(a.children !== b.children) return false }
       return (

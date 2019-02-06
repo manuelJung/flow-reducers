@@ -7,7 +7,7 @@ import {Switch, Route} from 'react-router'
 import { Link } from 'react-router-dom'
 
 import PageRoute from 'theme/pages/PageRoute'
-import MagazinListRoute from 'theme/pages/MagazinListRoute'
+import MagazineListRoute from 'theme/pages/MagazineListRoute'
 import SearchRoute from 'theme/pages/SearchRoute'
 import CategoryRoute from 'theme/pages/CategoryRoute'
 
@@ -32,7 +32,7 @@ export default class App extends React.Component<{store:any}> {
               <Switch>
                 <Route exact path='/' component={Component} />
                 <Route exact path='/page' component={PageRoute} />
-                <Route exact path='/magazin' component={MagazinListRoute} />
+                <Route exact path='/magazin' component={MagazineListRoute} />
                 <Route exact path='/search' component={SearchRoute} />
                 <Route exact path='/fashion/:lv1' component={CategoryRoute} />
                 <Route exact path='/fashion/:lv1/:lv2' component={CategoryRoute} />

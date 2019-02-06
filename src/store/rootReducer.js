@@ -6,12 +6,12 @@ import pageReducer from 'modules/pages/reducer'
 import staticBlockReducer from 'modules/staticBlocks/reducer'
 import productReducer from 'modules/products/reducer'
 import categoriesReducer from 'modules/categories/reducer'
-import magazinReducer from 'modules/magazin/reducer'
+import magazineReducer from 'modules/magazine/reducer'
 
 import 'modules/categories/rules'
 import 'modules/products/rules'
 import 'modules/pages/rules'
-import 'modules/magazin/rules'
+import 'modules/magazine/rules'
 import 'modules/staticBlocks/rules'
 import './rules'
 
@@ -21,7 +21,7 @@ const reducers = {
   staticBlocks: staticBlockReducer,
   products: productReducer,
   categories: categoriesReducer,
-  magazin: magazinReducer,
+  magazine: magazineReducer,
 }
 
 export type Reducers = typeof reducers

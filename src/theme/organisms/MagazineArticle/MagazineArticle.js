@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import ArticleRenderer from 'modules/magazin/hocs/MagazinArticleRequest'
+import ArticleRenderer from 'modules/magazine/hocs/MagazineArticleRequest'
 import Story from 'theme/molecules/Story'
 import BootstrapContent from 'theme/molecules/BootstrapContent'
 
@@ -8,9 +8,9 @@ type Props = {
   identifier: string
 }
 
-export default React.memo<Props>(function MagazinArticle ({identifier}:Props) {
+export default React.memo<Props>(function MagazineArticle ({identifier}:Props) {
   return (
-    <div className='MagazinArticle'>
+    <div className='MagazineArticle'>
       <ArticleRenderer identifier={identifier} children={props => {
         if(props.isFetching){
           return <div>loading...</div>
