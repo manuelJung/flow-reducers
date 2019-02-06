@@ -10,7 +10,7 @@ export default function memoEqual(name:string, equalProps:string[], unequalProps
     }
     if(process.env.NODE_ENV === 'development' && !checked){
       for(let key in nextProps){
-        if(!equalProps.includes(key) || !unequalProps.includes(key)){
+        if(!equalProps.includes(key) && !unequalProps.includes(key)){
           console.warn(`${name} has an unregistered memo key "${key}"`)
         }
       }

@@ -3,17 +3,13 @@ import * as React from 'react'
 import LazyComponent from 'theme/atoms/LazyComponent'
 import Drawer from 'theme/atoms/Drawer'
 
-import Checkbox from 'theme/molecules/Checkbox'
-import Toggle from 'theme/atoms/Toggle'
+import Slider from 'theme/molecules/Slider'
 
 
 export default function Component(){
   return (
     <div id='Component'>
-      <Checkbox label='Preis wählen' onClick={() => console.log('click checkbox')}/>
-      <Toggle label='test'>
-        <div>hello</div>
-      </Toggle>
+      <Slider price={[0,100]} min={0} max={200} onChange={console.log}/>
       <div style={{
         background: 'silver',
         height: 1800
