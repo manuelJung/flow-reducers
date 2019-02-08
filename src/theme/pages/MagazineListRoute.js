@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
-import Initializer from 'modules/magazine/hocs/ListInitializer'
-import ArticleList from 'modules/magazine/hocs/ListRequest'
+import Initializer from 'modules/magazine/hocs/MagazineListInitializer'
+import ArticleList from 'modules/magazine/hocs/MagazineList'
 
 export default function MagazineListPage () {
   return (
