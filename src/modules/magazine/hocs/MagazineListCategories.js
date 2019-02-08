@@ -1,9 +1,8 @@
 // @flow
 import * as React from 'react'
 import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
 
-import type {RootState} from 'store/rootReducer'
+import type {RootState as State} from 'store/rootReducer'
 import type {ListIdentifier as Identifier} from '../entities'
 import {getCategory, getCategoryOptions} from '../selectors'
 
@@ -20,15 +19,15 @@ type OwnProps = {
 
 export type MagazineListCategoriesProps = OwnProps & InjectedProps
 
-const mapStateToProps = (state, props) => ({
+const mapState = (state, props) => ({
   activeCategory: getCategory(state.magazine, props.identifier),
   options: getCategoryOptions(state.magazine, props.identifier)
 })
 
-const mapDispatchToProps = {}
+const mapDispatch = {}
 
 const mergeProps = (sp, dp, props) => Object.assign({}, props, {
-  magazineArticle: sp
+  magazineListCategories: sp
 })
 
 const options = {

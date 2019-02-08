@@ -29,7 +29,7 @@ const mapDispatch = { fetch }
 
 const mergeProps = (sp, dp, props) => Object.assign({}, props, {
   categoryContext: Object.assign({}, sp, {
-    fetch: () => dp.fetch(props.identifier)
+    fetch: () => {dp.fetch(props.identifier)}
   })
 })
 

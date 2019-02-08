@@ -1,8 +1,8 @@
 // @flow
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import type { RootState } from 'store/rootReducer'
+
+import type { RootState as State } from 'store/rootReducer'
 import type {Category} from '../entities'
 import {getRootCategories, hasFetchedCategories} from '../selectors'
 

@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 import ProductSearch from 'theme/organisms/ProductSearch'
 import CategoryContext from 'theme/organisms/CategoryContext'
 
-import CategoryRequest from 'modules/categories/hocs/CategoryRequest'
+import Category from 'modules/categories/hocs/Category'
 
 
 type Props = {
@@ -24,7 +24,7 @@ export default React.memo<Props>(function SearchRoute (props:Props) {
     <div className='SearchRoute'>
       <Helmet title='Category-Route'/>
       <CategoryContext position='top' identifier={path} />
-      <CategoryRequest identifier={path} children={category => category.hasFetched && (
+      <Category identifier={path} children={category => category.hasFetched && (
         <ProductSearch identifier='fashion-route' updateKey={path} filters={{ 
           category: category.data ? category.data.category : '' 
         }} />

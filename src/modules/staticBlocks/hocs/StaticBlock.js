@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react'
 import {connect} from 'react-redux'
+
 import type {RootState as State} from 'store/rootReducer'
 import type {Identifier, StaticBlock} from '../entities'
 import {getStaticBlockRequest} from '../selectors'
@@ -28,7 +29,7 @@ const mapDispatch = { fetchRequest }
 
 const mergeProps = (sp, dp, props) => Object.assign({}, props, {
   staticBlock: Object.assign({}, sp, {
-    fetch: () => dp.fetchRequest(props.identifier)
+    fetch: () => {dp.fetchRequest(props.identifier)}
   })
 })
 
