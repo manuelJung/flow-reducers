@@ -50,6 +50,6 @@ export type FilterValues = {|
   size: string[],
   shop: string[],
   category: string,
-  price: null | [number,number],
+  price: any, //null | [number,number],
   context: string
 |}

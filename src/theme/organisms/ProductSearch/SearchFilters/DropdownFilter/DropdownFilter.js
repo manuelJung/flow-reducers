@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import Dropdown from 'theme/molecules/Dropdown'
-import ListFilter from 'modules/products/hocs/ListFilter'
+import ListFilter from 'modules/products/hocs/ProductListFilter'
 import {dispatchEvent} from 'redux-interrupt'
 import {Wrapper, Options, Option} from './style'
 

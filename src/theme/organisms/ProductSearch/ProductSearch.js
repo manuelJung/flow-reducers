@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import SearchInitializer from 'modules/products/hocs/ListInitializer'
+import SearchInitializer from 'modules/products/hocs/ProductListInitializer'
 
 import SearchFilters from './SearchFilters'
 

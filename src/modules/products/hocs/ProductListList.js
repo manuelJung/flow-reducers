@@ -3,12 +3,12 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 
 import type {RootState as State} from 'store/rootReducer'
-import type {ListIdentifier as Identifier, ListingMagazineArticle} from '../entities'
+import type {ListIdentifier as Identifier, Product} from '../entities'
 import {getListRequest} from '../selectors'
 
-type InjectedProps = {
-  magazineList: {
-    data: ListingMagazineArticle[] | null,
+export type InjectedProps = {
+  productList: {
+    data: Product[] | null,
     isFetching: boolean,
     fetchError: null | string
   }
@@ -20,16 +20,16 @@ type OwnProps = {
 
 export type MagazineListProps = OwnProps & InjectedProps
 
-const mapState = (state, props) => getListRequest(state.magazine, props.identifier)
+const mapState = (state, props) => getListRequest(state.products, props.identifier)
 
 const mapDispatch = {}
 
 const mergeProps = (sp, dp, props) => Object.assign({}, props, {
-  magazineList: sp
+  productList: sp
 })
 
 const options = {
-  areStatesEqual: (a,b) => a.magazine === b.magazine,
+  areStatesEqual: (a,b) => a.products === b.products,
   areOwnPropsEqual: (a,b) => {
     if(!b.pure){ if(a.children !== b.children) return false }
     for(let key in b){
@@ -43,12 +43,12 @@ const options = {
 export const hoc = /*:: <Config:InjectedProps>*/(Comp/*:: :React.AbstractComponent<Config> */) /*:: : React.AbstractComponent<$Diff<Config, $Shape<InjectedProps>>>*/ => // $FlowFixMe
 connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispatch,mergeProps,options)(Comp)
 
-export default hoc(class MagazineListRenderer extends React.Component<OwnProps&InjectedProps&{
+export default hoc(class ProductListRenderer extends React.Component<OwnProps&InjectedProps&{
   pure?:boolean,
-  children?:(props:$PropertyType<InjectedProps,"magazineList">)=>any
+  children?:(props:$PropertyType<InjectedProps,"productList">)=>any
 }> {
   render(){
-    const {children, magazineList} = this.props
-    return children ? children(magazineList) : null
+    const {children, productList} = this.props
+    return children ? children(productList) : null
   }
 })

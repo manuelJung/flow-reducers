@@ -2,7 +2,7 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 
-import type {RootState} from 'store/rootReducer'
+import type {RootState as State} from 'store/rootReducer'
 import type {ListIdentifier as Identifier, ListingFilters} from '../entities'
 import {createList} from '../actions'
 
