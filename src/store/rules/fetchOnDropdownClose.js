@@ -46,3 +46,36 @@ addRule({
     })
   }
 })
+
+
+// addRule({
+//   id: 'feature/FETCH_ON_DROPDOWN_CLOSE',
+//   target: 'DropdownFilter/OPEN_DROPDOWN',
+//   addUntil: function* (next, action){
+//     const {filterKey} = action.meta
+//     yield next('DropdownFilter/CLOSE_DROPDOWN', action => action.meta.filterKey == filterKey)
+//     return 'RECREATE_RULE'
+//   },
+//   consequence: ({ action, addRule }) => {
+//     const {filterKey, identifier} = action.meta
+//     // prevent search
+//     addRule({
+//       id: 'feature/FETCH_ON_DROPDOWN_CLOSE/KILL_TOGGLE_FETCH/' + filterKey,
+//       target: TOGGLE_FILTER,
+//       position: 'INSERT_INSTEAD',
+//       condition: action => action.meta.filterKey === filterKey,
+//       consequence: ({action}) => withSkippedRule('products/TRIGGER_LIST_SEARCH', action)
+//     })
+//     // fetch after dropdown close and after a filter was clicked
+//     addRule({
+//       id: 'feature/FETCH_ON_DROPDOWN_CLOSE/FETCH/' + filterKey,
+//       target: 'DropdownFilter/CLOSE_DROPDOWN',
+//       addWhen: function* (next){
+//         yield next(TOGGLE_FILTER, action => action.meta.filterKey === filterKey)
+//         return 'ADD_RULE'
+//       },
+//       condition: action => action.meta.filterKey === filterKey,
+//       consequence: () => fetchListRequest(identifier)
+//     })
+//   }
+// })

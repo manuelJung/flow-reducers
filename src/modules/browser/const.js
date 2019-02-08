@@ -1,0 +1,13 @@
+// @flow
+
+export const ms = {
+	MOBILE_M: 0,
+  MOBILE_L: 375,
+  TABLET: 525,
+  LAPTOP: 768,
+  LAPTOP_L: 990,
+  LAPTOP_XL: 1200,
+  CONTAINER_S: 690,
+  CONTAINER: 910,
+  CONTAINER_L: 1110
+}
