@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import ArticleRenderer from 'modules/magazine/hocs/MagazineArticleRequest'
+import ArticleRenderer from 'modules/magazine/hocs/MagazineArticle'
 import Story from 'theme/molecules/Story'
 import BootstrapContent from 'theme/molecules/BootstrapContent'
 

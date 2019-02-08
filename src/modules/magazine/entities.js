@@ -39,7 +39,7 @@ export type MagazineArticle = {
 export type ListingMagazineArticle = MagazineArticle
 
 export type ListingFilters = {
-  category?: string,
-  filterIds?: string[],
-  page?:number
+  category: string,
+  filterIds: string[],
+  page:number
 }
