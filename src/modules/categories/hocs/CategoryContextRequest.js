@@ -7,58 +7,57 @@ import type {Context, Identifier} from '../entities'
 import {getCategoryContextRequest} from '../selectors'
 import {fetchContextRequest as fetch} from '../actions'
 
-export type InjectedProps = {
-  identifier: Identifier,
-  data: Context | null,
-  isFetching: boolean,
-  shouldFetch: boolean,
-  fetchError: null | string,
-  fetch: () => void
+type InjectedProps = {
+  categoryContext: {
+    data: Context | null,
+    isFetching: boolean,
+    shouldFetch: boolean,
+    fetchError: null | string,
+    fetch: () => void
+  }
 }
 
-type Props = {
-  identifier: Identifier,
-  pure?: boolean,
-  children?: (props:$Diff<InjectedProps,{}>) => any
+type OwnProps = {
+  identifier: Identifier
 }
 
-const mapStateToProps = (state:RootState, props) => getCategoryContextRequest(state.categories, props.identifier)
+export type CategoryContextProps = OwnProps & InjectedProps
 
-const mapDispatchToProps = (dispatch: *, props) => bindActionCreators({ fetch }, dispatch)
+const mapState = (state, props) => getCategoryContextRequest(state.categories, props.identifier)
 
-const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props, {
-  fetch: () => {dp.fetch(props.identifier)}
+const mapDispatch = { fetch }
+
+const mergeProps = (sp, dp, props) => Object.assign({}, props, {
+  staticBlock: Object.assign({}, sp, {
+    fetch: () => dp.fetch(props.identifier)
+  })
 })
 
-
-export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps,
-  {
-    areStatesEqual: (a:RootState,b:RootState) => a.categories === b.categories,
-    areOwnPropsEqual: (a,b) => {
-      if(!b.pure){ if(a.children !== b.children) return false }
-      return (
-        a.identifier === b.identifier
-      )
+const options = {
+  areStatesEqual: (a,b) => a.categories === b.categories,
+  areOwnPropsEqual: (a,b) => {
+    if(!b.pure){ if(a.children !== b.children) return false }
+    for(let key in b){
+      if(key === 'children') continue
+      if(b[key] !== a[key]) return false
     }
+    return true
   }
-)(Comp)
+}
 
-export default hoc(class CategoryContextRenderer extends React.Component<InjectedProps & {children:Function} > {
-  
-  fetch = () => {
-    if(this.props.shouldFetch){
-      this.props.fetch()
-    }
-  }
 
+export const hoc = /*:: <Config:InjectedProps>*/(Comp/*:: :React.AbstractComponent<Config> */) /*:: : React.AbstractComponent<$Diff<Config, $Shape<InjectedProps>>>*/ => // $FlowFixMe
+connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispatch,mergeProps,options)(Comp)
+
+export default hoc(class CategoryContextRequestRenderer extends React.Component<OwnProps&InjectedProps&{
+  pure?:boolean,
+  children?:(props:$PropertyType<InjectedProps,"categoryContext">)=>any
+}> {
+  fetch = () => this.props.categoryContext.shouldFetch && this.props.categoryContext.fetch()
   componentDidMount = this.fetch
   componentDidUpdate = this.fetch
-
-  render() {
-    const {children, ...props} = this.props
-    return children ? children(props) : null
+  render(){
+    const {children, categoryContext} = this.props
+    return children ? children(categoryContext) : null
   }
 })

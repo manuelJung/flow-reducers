@@ -6,42 +6,51 @@ import type { RootState } from 'store/rootReducer'
 import type {Category} from '../entities'
 import {getRootCategories, hasFetchedCategories} from '../selectors'
 
-export type InjectedProps = {
-  categories: Category[],
-  hasFetched: boolean
+type InjectedProps = {
+  rootCategories: {
+    categories: Category[],
+    hasFetched: boolean
+  }
 }
 
-type Props = {
-  pure?: boolean,
-  children?: (props:$Diff<InjectedProps,{}>) => any
-}
+type OwnProps = {}
 
-const mapStateToProps = (state:RootState) => ({
+export type RootCategoryProps = OwnProps & InjectedProps
+
+const mapState = state => ({
   category: getRootCategories(state.categories),
   hasFetched: hasFetchedCategories(state.categories)
 })
 
-const mapDispatchToProps = (dispatch: *) => bindActionCreators({}, dispatch)
+const mapDispatch = {}
 
-const mergeProps = (sp, dp, props):InjectedProps => Object.assign({}, sp, props)
+const mergeProps = (sp, dp, props) => Object.assign({}, props, {
+  rootCategories: Object.assign({}, sp, dp)
+})
 
 
-export const hoc = (Comp:React.AbstractComponent<*>) => connect<typeof Comp,_,_,Props,Props,_,_,Props,_,_>(
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps,
-  {
-    areStatesEqual: (a:RootState,b:RootState) => a.categories === b.categories,
-    areOwnPropsEqual: (a,b) => {
-      if(!b.pure){ if(a.children !== b.children) return false }
-      return true
+const options = {
+  areStatesEqual: (a,b) => a.categories === b.categories,
+  areOwnPropsEqual: (a,b) => {
+    if(!b.pure){ if(a.children !== b.children) return false }
+    for(let key in b){
+      if(key === 'children') continue
+      if(b[key] !== a[key]) return false
     }
+    return true
   }
-)(Comp)
+}
 
-export default hoc(class RootCategoriesRenderer extends React.Component<InjectedProps  & {children:Function}> {
-  render() {
-    const {children, ...props} = this.props
-    return children ? children(props) : null
-  } 
+
+export const hoc = /*:: <Config:InjectedProps>*/(Comp/*:: :React.AbstractComponent<Config> */) /*:: : React.AbstractComponent<$Diff<Config, $Shape<InjectedProps>>>*/ => // $FlowFixMe
+connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispatch,mergeProps,options)(Comp)
+
+export default hoc(class CategoryRequestRenderer extends React.Component<OwnProps&InjectedProps&{
+  pure?:boolean,
+  children?:(props:$PropertyType<InjectedProps,"rootCategories">)=>any
+}> {
+  render(){
+    const {children, rootCategories} = this.props
+    return children ? children(rootCategories) : null
+  }
 })

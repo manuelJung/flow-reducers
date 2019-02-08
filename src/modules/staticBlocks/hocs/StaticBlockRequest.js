@@ -27,7 +27,9 @@ const mapState = (state, props) => getStaticBlockRequest(state.staticBlocks, pro
 const mapDispatch = { fetchRequest }
 
 const mergeProps = (sp, dp, props) => Object.assign({}, props, {
-  staticBlock: Object.assign({}, sp, dp)
+  staticBlock: Object.assign({}, sp, {
+    fetch: () => dp.fetchRequest(props.identifier)
+  })
 })
 
 const options = {

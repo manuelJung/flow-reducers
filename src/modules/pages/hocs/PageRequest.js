@@ -28,7 +28,9 @@ const mapState = (state, props) => getPageRequest(state.pages, props.identifier)
 const mapDispatch = { fetchRequest }
 
 const mergeProps = (sp, dp, props) => Object.assign({}, props, {
-  page: Object.assign({}, sp, dp)
+  page: Object.assign({}, sp, {
+    fetch: () => dp.fetchRequest(props.identifier)
+  })
 })
 
 const options = {
