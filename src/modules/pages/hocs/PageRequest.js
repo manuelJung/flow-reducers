@@ -35,7 +35,7 @@ const options = {
   areStatesEqual: (a,b) => a.pages === b.pages,
   areOwnPropsEqual: (a,b) => {
     if(!b.pure){ if(a.children !== b.children) return false }
-    return a.test === b.test
+    return a.identifier === b.identifier
   }
 }
 
@@ -44,10 +44,13 @@ const options = {
 export const hoc = /*:: <Config:InjectedProps>*/(Comp/*:: :React.AbstractComponent<Config> */) /*:: : React.AbstractComponent<$Diff<Config, $Shape<InjectedProps>>>*/ => // $FlowFixMe
 connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispatch,mergeProps,options)(Comp)
 
-export default hoc(class Hoc extends React.Component<OwnProps&InjectedProps&{
+export default hoc(class PageRequestRenderer extends React.Component<OwnProps&InjectedProps&{
   pure?:boolean,
   children?:(props:$PropertyType<InjectedProps,"page">)=>any
 }> {
+  fetch = () => this.props.page.shouldFetch && this.props.page.fetch()
+  componentDidMount = this.fetch
+  componentDidUpdate = this.fetch
   render(){
     const {children, page} = this.props
     return children ? children(page) : null
