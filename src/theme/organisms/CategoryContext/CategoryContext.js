@@ -1,6 +1,6 @@
 // @flow
 import React from 'react'
-import CategoryContextRenderer from 'modules/categories/hocs/CategoryContextRequest'
+import CategoryContextRenderer from 'modules/categories/hocs/CategoryContext'
 import Story from 'theme/molecules/Story'
 import BootstrapContent from 'theme/molecules/BootstrapContent'
 

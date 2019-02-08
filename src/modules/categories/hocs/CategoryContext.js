@@ -1,8 +1,8 @@
 // @flow
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import type { RootState } from 'store/rootReducer'
+
+import type { RootState as State } from 'store/rootReducer'
 import type {Context, Identifier} from '../entities'
 import {getCategoryContextRequest} from '../selectors'
 import {fetchContextRequest as fetch} from '../actions'
@@ -28,7 +28,7 @@ const mapState = (state, props) => getCategoryContextRequest(state.categories, p
 const mapDispatch = { fetch }
 
 const mergeProps = (sp, dp, props) => Object.assign({}, props, {
-  staticBlock: Object.assign({}, sp, {
+  categoryContext: Object.assign({}, sp, {
     fetch: () => dp.fetch(props.identifier)
   })
 })
