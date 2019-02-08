@@ -35,7 +35,11 @@ const options = {
   areStatesEqual: (a,b) => a.pages === b.pages,
   areOwnPropsEqual: (a,b) => {
     if(!b.pure){ if(a.children !== b.children) return false }
-    return a.identifier === b.identifier
+    for(let key in b){
+      if(key === 'children') continue
+      if(b[key] !== a[key]) return false
+    }
+    return true
   }
 }
 
