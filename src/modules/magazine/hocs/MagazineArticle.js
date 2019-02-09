@@ -3,7 +3,7 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import type {RootState as State} from 'store/rootReducer'
+import type {RootState as State, Dispatch} from 'store/rootReducer'
 import type {ArticleIdentifier as Identifier, MagazineArticle} from '../entities'
 import {getMagazineArticleRequest} from '../selectors'
 import {fetchArticleRequest} from '../actions'
@@ -47,7 +47,7 @@ const options = {
 }
 
 export const hoc = /*:: <Config:InjectedProps>*/(Comp/*:: :React.AbstractComponent<Config> */) /*:: : React.AbstractComponent<$Diff<Config, $Shape<InjectedProps>>>*/ => // $FlowFixMe
-connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispatch,mergeProps,options)(Comp)
+connect/*:: <Config&InjectedProps, OwnProps, _, _, State, Dispatch>*/(mapState,mapDispatch,mergeProps,options)(Comp)
 
 export default hoc(class MagazineArticleRenderer extends React.Component<OwnProps&InjectedProps&{
   pure?:boolean,

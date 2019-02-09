@@ -2,7 +2,7 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 
-import type {RootState as State} from 'store/rootReducer'
+import type {RootState as State, Dispatch} from 'store/rootReducer'
 import type {ListIdentifier as Identifier, FilterValues} from '../entities'
 import {initList} from '../actions'
 
@@ -45,7 +45,7 @@ const options = {
 
 
 export const hoc = /*:: <Config:InjectedProps>*/(Comp/*:: :React.AbstractComponent<Config> */) /*:: : React.AbstractComponent<$Diff<Config, $Shape<InjectedProps>>>*/ => // $FlowFixMe
-connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispatch,mergeProps,options)(Comp)
+connect/*:: <Config&InjectedProps, OwnProps, _, _, State, Dispatch>*/(mapState,mapDispatch,mergeProps,options)(Comp)
 
 export default hoc(class ProductListInitializer extends React.Component<OwnProps&InjectedProps&{
   pure?:boolean,
