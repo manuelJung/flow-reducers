@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 
-import type {RootState as State, Dispatch} from 'store/rootReducer'
+import type {RootState as State, Dispatch} from 'store/rootReducer' // eslint-disable-line no-unused-vars
 import type {Context, Identifier} from '../entities'
 import {getCategoryContextRequest} from '../selectors'
 import {fetchContextRequest as fetch} from '../actions'

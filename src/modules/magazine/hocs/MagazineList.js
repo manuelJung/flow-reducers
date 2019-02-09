@@ -2,7 +2,7 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 
-import type {RootState as State, Dispatch} from 'store/rootReducer'
+import type {RootState as State, Dispatch} from 'store/rootReducer' // eslint-disable-line no-unused-vars
 import type {ListIdentifier as Identifier, ListingMagazineArticle} from '../entities'
 import {getListRequest} from '../selectors'
 

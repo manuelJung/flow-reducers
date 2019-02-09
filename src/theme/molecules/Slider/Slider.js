@@ -31,7 +31,7 @@ export default class Slider extends React.Component<Props,State> {
   handleAfterChange = (price:[number,number]) => this.props.onChange(price)
 
   render(){
-    const {valMin, valMax} = this.state
+    // const {valMin, valMax} = this.state
     const {price, min, max} = this.props
     const sliderConfig = {
       withBars: true,

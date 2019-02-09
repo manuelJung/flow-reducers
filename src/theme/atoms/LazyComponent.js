@@ -45,7 +45,7 @@ export default class LazyComponent extends React.Component<Props,State> {
 
   render(){
     const {visible} = this.state
-    const {children, prerenderVisible, defaultHeight, offset} = this.props
+    const {children, defaultHeight, offset} = this.props
 
     if(visible) return children
 

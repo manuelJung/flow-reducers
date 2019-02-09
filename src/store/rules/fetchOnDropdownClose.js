@@ -1,7 +1,7 @@
 // @flow
 import {addRule} from 'redux-interrupt'
 import {fetchListRequest} from 'modules/products/actions'
-import {TOGGLE_FILTER, FETCH_LIST_REQUEST} from 'modules/products/const'
+import {TOGGLE_FILTER} from 'modules/products/const'
 
 
 addRule({
@@ -19,7 +19,7 @@ addRule({
       position: 'INSERT_INSTEAD',
       condition: action => action.meta.filterKey === filterKey,
       addUntil: function* (next){
-        yield next('DropdownFilter/CLOSE_DROPDOWN', action => action.meta.filterKey == filterKey)
+        yield next('DropdownFilter/CLOSE_DROPDOWN', action => action.meta.filterKey === filterKey)
         return 'REMOVE_RULE'
       },
       consequence: ({action}) => ({
@@ -34,7 +34,7 @@ addRule({
       condition: action => action.meta.filterKey === filterKey,
       concurrency: 'ONCE',
       addUntil: function* (next){
-        yield next('DropdownFilter/CLOSE_DROPDOWN', action => action.meta.filterKey == filterKey)
+        yield next('DropdownFilter/CLOSE_DROPDOWN', action => action.meta.filterKey === filterKey)
         return 'REMOVE_RULE'
       },
       consequence: ({addRule}) => addRule({

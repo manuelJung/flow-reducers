@@ -19,7 +19,7 @@ export default React.memo<Props>(function ({label, filterKey, identifier}:Props)
   const handleSearch = value => dispatchEvent({type: 'DropdownFilter/SEARCH', meta: {filterKey, identifier}, payload: value })
   return (
     <Wrapper className='DropdownFilter'>
-    <Dropdown onOpen={handleOpen} onClose={handleClose} label={label}>
+    <Dropdown onOpen={handleOpen} onClose={handleClose} label={label} onSearch={handleSearch}>
       <ListFilter pure identifier={identifier} filterKey={filterKey}>{props =>
         <Options className='content'>
           {props.data.options.map(opt => (

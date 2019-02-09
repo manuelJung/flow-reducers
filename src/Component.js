@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react'
 import LazyComponent from 'theme/atoms/LazyComponent'
-import Drawer from 'theme/atoms/Drawer'
 
 import Slider from 'theme/molecules/Slider'
 

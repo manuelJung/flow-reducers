@@ -1,6 +1,6 @@
 // @flow
 import {addRule} from 'redux-interrupt'
-import {INIT_LIST, TOGGLE_CATEGORY} from 'modules/products/const'
+import {TOGGLE_CATEGORY} from 'modules/products/const'
 import {setContext} from 'modules/products/actions'
 import {getCategoryRequest, getCategoryPathByCategoryName} from 'modules/categories/selectors'
 
