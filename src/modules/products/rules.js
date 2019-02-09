@@ -24,6 +24,7 @@ addRule({
   id: 'products/SEARCH_LIST',
   target: at.FETCH_LIST_REQUEST,
   concurrency: 'SWITCH',
+  concurrencyFilter: action => action.meta.identifier,
   consequence: ({action, getState}) => {
     const state = getState()
     const {identifier} = action.meta
@@ -39,6 +40,8 @@ addRule({
 addRule({
   id: 'products/SEARCH_PRODUCT',
   target: at.FETCH_REQUEST,
+  concurrency: 'FIRST',
+  concurrencyFilter: action => action.meta.identifier,
   consequence: ({action}) => api.fetchProduct(action.meta.identifier).then(
     result => actions.fetchSuccess(action.meta.identifier, result),
     error => actions.fetchFailure(action.meta.identifier, error.toString())

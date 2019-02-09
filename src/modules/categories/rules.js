@@ -18,6 +18,8 @@ addRule({
 addRule({
   id: 'categories/FETCH_CATEGORY_CONTEXT',
   target: at.FETCH_CONTEXT_REQUEST,
+  concurrency: 'FIRST',
+  concurrencyFilter: action => action.meta.identifier,
   consequence: ({action, getState}) => {
     const {identifier} = action.meta
     const state = getState()
@@ -51,15 +53,3 @@ addRule({
   }
 })
 
-addRule({
-  id: 'categories/DOUBLE_FETCH_CATEGORY_CONTEXT',
-  target: at.FETCH_CONTEXT_REQUEST,
-  position: 'INSERT_INSTEAD',
-  zIndex: 1,
-  condition: (action, getState) => {
-    const state = getState()
-    const {identifier} = action.meta
-    return selectors.isFetchingCategoryContext(state.categories, identifier)
-  },
-  consequence: ({action, effect}) => undefined
-})

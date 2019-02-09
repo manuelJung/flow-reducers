@@ -9,6 +9,8 @@ import * as actions from './actions'
 addRule({
   id: 'core/FETCH_STATIC_BLOCK',
   target: at.FETCH_REQUEST,
+  concurrency: 'FIRST',
+  concurrencyFilter: action => action.meta.identifier,
   consequence: ({action}) => api.fetchBlock(action.meta.identifier).then(
     result => actions.fetchSuccess(result),
     error => actions.fetchFailure(action.meta.identifier, error)

@@ -8,6 +8,8 @@ import * as actions from './actions'
 addRule({
   id: 'core/FETCH_PAGE',
   target: at.FETCH_REQUEST,
+  concurrency: 'FIRST',
+  concurrencyFilter: action => action.meta.identifier,
   consequence: ({action}) => api.fetchPage(action.meta.identifier).then(
     result => actions.fetchSuccess(action.meta.identifier, result),
     error => actions.fetchFailure(action.meta.identifier, error)
