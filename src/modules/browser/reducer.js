@@ -33,7 +33,7 @@ export type State = {
 }
 
 const reducer:(state:State)=>State = createResponsiveStateReducer({
-  extraSmall: ms.MOBILE_M-1,
+  extraSmall: ms.MOBILE-1,
   small: ms.TABLET-1,
   medium: ms.LAPTOP-1,
   large: ms.LAPTOP_L-1,

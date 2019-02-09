@@ -3,9 +3,10 @@ import {applyMiddleware, compose, createStore} from 'redux'
 import makeRootReducer from './rootReducer'
 import ruleMiddleware from 'redux-interrupt'
 import history from './history'
+import {responsiveStoreEnhancer} from 'redux-responsive'
 import { routerMiddleware } from 'react-router-redux'
 
-import type {RootState} from './rootReducer'
+import type {RootState, Action, Dispatch} from './rootReducer'
 
 export default (initialState:any = {}) => {
   // ======================================================
@@ -16,7 +17,7 @@ export default (initialState:any = {}) => {
   // ======================================================
   // Store Enhancers
   // ======================================================
-  const enhancers = []
+  const enhancers = [responsiveStoreEnhancer]
 
   let composeEnhancers = compose
 
@@ -34,9 +35,10 @@ export default (initialState:any = {}) => {
   // ======================================================
   // Store Instantiation and HMR Setup
   // ======================================================
-  const store = createStore<RootState, {type:string}, Function>(
+  const store = createStore<RootState, Action, Dispatch>(
     makeRootReducer(),
     initialState,
+    // $FlowFixMe
     composeEnhancers(
       applyMiddleware(...middleware),
       ...enhancers

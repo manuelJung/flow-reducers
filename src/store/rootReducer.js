@@ -8,6 +8,7 @@ import staticBlockReducer from 'modules/staticBlocks/reducer'
 import productReducer from 'modules/products/reducer'
 import categoriesReducer from 'modules/categories/reducer'
 import magazineReducer from 'modules/magazine/reducer'
+import browserReducer from 'modules/browser/reducer'
 
 import type {Action as PageAction} from 'modules/pages/actions'
 import type {Action as StaticBlockAction} from 'modules/staticBlocks/actions'
@@ -22,7 +23,7 @@ import 'modules/magazine/rules'
 import 'modules/staticBlocks/rules'
 import './rules'
 
-type Action = PageAction
+export type Action = PageAction
 | StaticBlockAction
 | ProductAction
 | CategoriesAction
@@ -30,6 +31,7 @@ type Action = PageAction
 
 const reducers = {
   routing: routerReducer,
+  browser: browserReducer,
   pages: pageReducer,
   staticBlocks: staticBlockReducer,
   products: productReducer,
@@ -42,4 +44,4 @@ type $ExtractFunctionReturn = <V>(v: (...args: any) => V) => V
 export type RootState = $ObjMap<Reducers, $ExtractFunctionReturn>
 export type Dispatch = ReduxDispatch<Action>
 
-export default () => combineReducers<Reducers,{type:string}>(reducers)
+export default () => combineReducers<Reducers,Action>(reducers)
