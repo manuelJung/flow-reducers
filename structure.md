@@ -29,7 +29,7 @@ Organismen sind die Verbindungen zu den Modulen. Hier werden ListInitializer auf
 - ProductList
 - MagazineList
 - ProductQuickview
-- Grouped
+- GroupedArticle
 
 ## molecules
 
@@ -37,18 +37,18 @@ Organismen sind die Verbindungen zu den Modulen. Hier werden ListInitializer auf
 
 Alles was mit Styling zu tun hat ist als Molekül zu betrachten. Moleküle haben keine Verbindung zu den Modulen sondern sind "pure" und rendern sich nur anhand ihrer Props oder States.
 
-- ProductWidget
-- MagazineWidget
+- ProductWidget ✅
+- MagazineWidget ✅
 - ProductGrid
 - MagazineGrid
 - Breadcrumbs
 - Pagination
-- Dropdown
-- Slider
-- Checkbox
+- Dropdown ✅
+- Slider ✅
+- Checkbox ✅
 - Spinner
 - ImageSlider
-- Button
+- Button ✅
 - Story
 - BootstrapContent
 
@@ -58,17 +58,17 @@ Alles was mit Styling zu tun hat ist als Molekül zu betrachten. Moleküle haben
 
 Atome sind keine gestylten Komponenten. Statdessen injected sie Logik, welche sie in ihrem State verwalten, oder dienem der Entwicklung (z.b ObjectID). Somit wären sie am besten als "utility-components" zu bezeichnen. Einzige Außnahme ist das Container Atom
 
-- Container
-- MaybeLink
-- Portal
-- Drawer
-- Modal
-- Toggle
-- Timeout
-- Icon
-- LazyComponent
-- Intl
-- ObjectID
+- Container ✅
+- MaybeLink ✅
+- Portal ✅
+- Drawer ✅
+- Modal ✅
+- Toggle ✅
+- Timeout ✅
+- Icon ✅
+- LazyComponent ✅
+- Intl ✅
+- ObjectID ✅
 
 ## Header & Footler
 
@@ -78,13 +78,13 @@ Atome sind keine gestylten Komponenten. Statdessen injected sie Logik, welche si
 
 # Modules
 
-- categories
-- magazine
-- pages
-- products
-- staticBlocks
+- categories ✅
+- magazine ✅
+- pages ✅
+- products ✅
+- staticBlocks ✅
 - grouped
 - routing
 - storefinder
 - browser
-- cart
+- user ✅
