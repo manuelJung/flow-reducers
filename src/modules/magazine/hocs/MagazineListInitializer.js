@@ -14,6 +14,7 @@ type InjectedProps = {
 
 type OwnProps = {
   identifier: Identifier,
+  updateKey?: string,
   filters?: $Shape<ListingFilters>
 }
 
@@ -53,7 +54,10 @@ export default hoc(class MagazineListInitializer extends React.Component<OwnProp
     this.props.magazineListInitializer.create()
   }
   componentDidUpdate(prevProps){
-    if(prevProps.identifier !== this.props.identifier){
+    if(
+      prevProps.identifier !== this.props.identifier ||
+      prevProps.updateKey !== this.props.updateKey
+    ){
       this.props.magazineListInitializer.create()
     }
   }
