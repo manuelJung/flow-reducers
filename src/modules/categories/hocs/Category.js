@@ -48,7 +48,7 @@ connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispa
 
 export default hoc(class CategoryRequestRenderer extends React.Component<OwnProps&InjectedProps&{
   pure?:boolean,
-  children?:(props:$PropertyType<InjectedProps,"category">)=>any
+  children?:(props:$PropertyType<InjectedProps,"category">)=>React.Node
 }> {
   render(){
     const {children, category} = this.props

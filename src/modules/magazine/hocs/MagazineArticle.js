@@ -51,7 +51,7 @@ connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispa
 
 export default hoc(class MagazineArticleRenderer extends React.Component<OwnProps&InjectedProps&{
   pure?:boolean,
-  children?:(props:$PropertyType<InjectedProps,"magazineArticle">)=>any
+  children?:(props:$PropertyType<InjectedProps,"magazineArticle">)=>React.Node
 }> {
   fetch = () => this.props.magazineArticle.shouldFetch && this.props.magazineArticle.fetch()
   componentDidMount = this.fetch

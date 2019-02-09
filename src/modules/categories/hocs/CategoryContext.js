@@ -51,7 +51,7 @@ connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispa
 
 export default hoc(class CategoryContextRequestRenderer extends React.Component<OwnProps&InjectedProps&{
   pure?:boolean,
-  children?:(props:$PropertyType<InjectedProps,"categoryContext">)=>any
+  children?:(props:$PropertyType<InjectedProps,"categoryContext">)=>React.Node
 }> {
   fetch = () => this.props.categoryContext.shouldFetch && this.props.categoryContext.fetch()
   componentDidMount = this.fetch

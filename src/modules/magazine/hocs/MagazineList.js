@@ -45,7 +45,7 @@ connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispa
 
 export default hoc(class MagazineListRenderer extends React.Component<OwnProps&InjectedProps&{
   pure?:boolean,
-  children?:(props:$PropertyType<InjectedProps,"magazineList">)=>any
+  children?:(props:$PropertyType<InjectedProps,"magazineList">)=>React.Node
 }> {
   render(){
     const {children, magazineList} = this.props

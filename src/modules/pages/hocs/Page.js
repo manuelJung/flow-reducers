@@ -53,7 +53,7 @@ connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispa
 
 export default hoc(class PageRequestRenderer extends React.Component<OwnProps&InjectedProps&{
   pure?:boolean,
-  children?:(props:$PropertyType<InjectedProps,"page">)=>any
+  children?:(props:$PropertyType<InjectedProps,"page">)=>React.Node
 }> {
   fetch = () => this.props.page.shouldFetch && this.props.page.fetch()
   componentDidMount = this.fetch

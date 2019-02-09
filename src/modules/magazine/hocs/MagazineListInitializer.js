@@ -47,7 +47,7 @@ connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispa
 
 export default hoc(class MagazineListInitializer extends React.Component<OwnProps&InjectedProps&{
   pure?:boolean,
-  children?:(props:$PropertyType<InjectedProps,"magazineListInitializer">)=>any
+  children?:(props:$PropertyType<InjectedProps,"magazineListInitializer">)=>React.Node
 }> {
   componentDidMount(){
     this.props.magazineListInitializer.create()

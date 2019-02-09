@@ -50,7 +50,7 @@ connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispa
 
 export default hoc(class ProductRenderer extends React.Component<OwnProps&InjectedProps&{
   pure?:boolean,
-  children?:(props:$PropertyType<InjectedProps,"product">)=>any
+  children?:(props:$PropertyType<InjectedProps,"product">)=>React.Node
 }> {
   fetch = () => this.props.product.shouldFetch && this.props.product.fetch()
   componentDidMount = this.fetch

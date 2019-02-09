@@ -50,7 +50,7 @@ connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispa
 
 export default hoc(class StaticBlockRenderer extends React.Component<OwnProps&InjectedProps&{
   pure?:boolean,
-  children?:(props:$PropertyType<InjectedProps,"staticBlock">)=>any
+  children?:(props:$PropertyType<InjectedProps,"staticBlock">)=>React.Node
 }> {
   fetch = () => this.props.staticBlock.shouldFetch && this.props.staticBlock.fetch()
   componentDidMount = this.fetch

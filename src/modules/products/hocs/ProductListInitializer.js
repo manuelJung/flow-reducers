@@ -49,7 +49,7 @@ connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispa
 
 export default hoc(class ProductListInitializer extends React.Component<OwnProps&InjectedProps&{
   pure?:boolean,
-  children?:(props:$PropertyType<InjectedProps,"productListInitializer">)=>any
+  children?:(props:$PropertyType<InjectedProps,"productListInitializer">)=>React.Node
 }> {
   componentDidMount(){
     this.props.productListInitializer.create()

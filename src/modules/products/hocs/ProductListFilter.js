@@ -52,7 +52,7 @@ connect/*:: <Config&InjectedProps, OwnProps, _, _, State, _>*/(mapState,mapDispa
 
 export default hoc(class ProductListFilterRenderer extends React.Component<OwnProps&InjectedProps&{
   pure?:boolean,
-  children?:(props:$PropertyType<InjectedProps,"productListFilter">)=>any
+  children?:(props:$PropertyType<InjectedProps,"productListFilter">)=>React.Node
 }> {
   render(){
     const {children, productListFilter} = this.props
