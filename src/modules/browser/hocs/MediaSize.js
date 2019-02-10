@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import type {RootState as State, Dispatch} from 'store/rootReducer' // eslint-disable-line no-unused-vars
 import type {MediaSize} from '../entities'
-import {greaterThan, lessThan} from '../selectors'
+import {greaterThan} from '../selectors'
 
 type InjectedProps = {
   mediaSize: boolean
@@ -22,9 +22,9 @@ const mapState = (state, props) => {
     return greaterThan(state.browser, props.minSize)
   }
   if (props.maxSize) {
-    return lessThan(state.browser, props.maxSize)
+    return !greaterThan(state.browser, props.maxSize)
   }
-  return false
+  return true
 }
 
 const mapDispatch = null
